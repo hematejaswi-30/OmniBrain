@@ -1,0 +1,6 @@
+{
+  "name": "OmniBrain",
+  "version": "1.0.0",
+  "description": "Unified workspace with Graphify shared memory plane",
+  "agent_manager": "Antigravity 2.0"
+}

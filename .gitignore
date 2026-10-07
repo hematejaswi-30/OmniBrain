@@ -1,0 +1,11 @@
+# Python / Node / System ignore rules
+node_modules/
+.next/
+__pycache__/
+*.py[cod]
+.env
+.env*.local
+.env.local
+.DS_Store
+tsconfig.tsbuildinfo
+temp-app/
