@@ -1,10 +1,10 @@
 {
   "0": "README.md",
   "1": "package.json",
-  "2": "createServerClient",
+  "2": "next",
   "3": "compilerOptions",
   "4": "ConstellationCanvas.tsx",
-  "5": "next",
+  "5": "dashboard/page.tsx",
   "6": "dependencies",
   "7": "ingest-router.ts",
   "8": "devDependencies",

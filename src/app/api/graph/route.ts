@@ -92,18 +92,22 @@ const SEED_GRAPH = {
     },
   ],
   links: [
-    // Links to Graphify & AI Architecture
+    // Primary Spoke Links to Hubs
     { source: 'doc_readme', target: 'hub_ai' },
     { source: 'doc_agents', target: 'hub_ai' },
     { source: 'item_graphify', target: 'hub_ai' },
-
-    // Links to Backend & Microservices
     { source: 'doc_arch', target: 'hub_backend' },
     { source: 'item_docker', target: 'hub_backend' },
-    { source: 'doc_readme', target: 'hub_backend' },
-
-    // Links to Italian Culinary Techniques
     { source: 'item_carbonara', target: 'hub_cooking' },
+
+    // Inter-Hub Cosmic Bridges (Graphify Data Web structure)
+    { source: 'hub_ai', target: 'hub_backend' },
+
+    // Cross-Source Semantic Spiderweb Filaments
+    { source: 'doc_readme', target: 'doc_agents' },
+    { source: 'doc_readme', target: 'item_graphify' },
+    { source: 'doc_arch', target: 'item_docker' },
+    { source: 'doc_arch', target: 'doc_readme' },
   ],
 };
 

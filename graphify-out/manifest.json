@@ -42,9 +42,9 @@
     "semantic_hash": ""
   },
   "src/app/api/graph/route.ts": {
-    "mtime": 1792531028.5021596,
-    "seen": 1792531808.8073463,
-    "ast_hash": "31869576ddffcebd19c39c61b821ca4f",
+    "mtime": 1792532209.214879,
+    "seen": 1792532330.35399,
+    "ast_hash": "620c5d6010719267eee560c1e72c51b5",
     "semantic_hash": ""
   },
   "src/app/api/highlights/route.ts": {
@@ -102,9 +102,9 @@
     "semantic_hash": ""
   },
   "src/components/ConstellationCanvas.tsx": {
-    "mtime": 1792531192.3141685,
-    "seen": 1792531808.8086298,
-    "ast_hash": "19b9857d5b65b039e439744ea2ba0fbe",
+    "mtime": 1792532256.376918,
+    "seen": 1792532330.356681,
+    "ast_hash": "1b3e04c6d36f9b5a96e709abb28ec3ad",
     "semantic_hash": ""
   },
   "src/components/Header.tsx": {
