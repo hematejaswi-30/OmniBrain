@@ -34,19 +34,40 @@ const DEFAULT_HIGHLIGHTS: Highlight[] = [
 ];
 
 export default function PinnedShelf() {
-  const [highlights, setHighlights] = useState<Highlight[]>(DEFAULT_HIGHLIGHTS);
+  const [highlights, setHighlights] = useState<Highlight[]>([]);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCleanUser, setIsCleanUser] = useState(false);
+
+  const syncHighlights = () => {
+    const hasSimUser = typeof window !== 'undefined' && !!localStorage.getItem('omnibrain_simulated_user');
+    setIsCleanUser(hasSimUser);
+
+    if (hasSimUser) {
+      // In clean user mode, start with clean empty shelf
+      setHighlights([]);
+      return;
+    }
+
+    // In guest mode, load from localStorage or default highlights
+    try {
+      const stored = localStorage.getItem('omnibrain_guest_highlights');
+      if (stored) {
+        setHighlights(JSON.parse(stored));
+        return;
+      }
+    } catch {}
+
+    // Fallback to default sample highlights for demo guests
+    setHighlights(DEFAULT_HIGHLIGHTS);
+  };
 
   useEffect(() => {
-    fetch('/api/highlights')
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data) && data.length > 0) {
-          setHighlights(data);
-        }
-      })
-      .catch(err => console.error('Failed to load pinned highlights', err));
+    syncHighlights();
+
+    const handleAuthChange = () => syncHighlights();
+    window.addEventListener('omnibrain_auth_change', handleAuthChange);
+    return () => window.removeEventListener('omnibrain_auth_change', handleAuthChange);
   }, []);
 
   const handleCopy = (id: string, text: string) => {
@@ -56,8 +77,15 @@ export default function PinnedShelf() {
   };
 
   const handleDelete = (id: string) => {
-    setHighlights(prev => prev.filter(h => h.id !== id));
-    fetch(`/api/highlights?id=${id}`, { method: 'DELETE' }).catch(() => {});
+    setHighlights(prev => {
+      const updated = prev.filter(h => h.id !== id);
+      try {
+        if (!isCleanUser) {
+          localStorage.setItem('omnibrain_guest_highlights', JSON.stringify(updated));
+        }
+      } catch {}
+      return updated;
+    });
   };
 
   return (
@@ -77,7 +105,7 @@ export default function PinnedShelf() {
 
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="text-zinc-500 hover:text-white p-1 rounded transition-colors text-xs flex items-center gap-1 font-mono"
+          className="text-zinc-500 hover:text-white p-1 rounded transition-colors text-xs flex items-center gap-1 font-mono cursor-pointer"
         >
           <span>{isCollapsed ? 'Expand' : 'Collapse'}</span>
           {isCollapsed ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronUp className="w-3.5 h-3.5" />}
@@ -85,55 +113,61 @@ export default function PinnedShelf() {
       </div>
 
       {!isCollapsed && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-3">
-          {highlights.map(h => (
-            <div 
-              key={h.id} 
-              className="group relative bg-[#0a0a0e] border border-[#23232b] hover:border-amber-500/40 rounded-md p-3 flex flex-col justify-between transition-all duration-200 shadow-sm"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[9px] font-mono uppercase tracking-wider text-amber-400 bg-amber-950/40 border border-amber-800/40 px-1.5 py-0.5 rounded">
-                    {h.topic_cluster}
-                  </span>
-                  <span className="text-[9px] font-mono text-zinc-500">
-                    {h.source_badge}
-                  </span>
+        highlights.length === 0 ? (
+          <div className="pt-4 pb-2 text-center text-xs text-zinc-500 font-sans">
+            No pinned directives yet. Open a cluster <strong className="text-zinc-300">OmniDoc</strong> below and click the pin icon to save high-priority directives to this shelf.
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-3">
+            {highlights.map(h => (
+              <div 
+                key={h.id} 
+                className="group relative bg-[#0a0a0e] border border-[#23232b] hover:border-amber-500/40 rounded-md p-3 flex flex-col justify-between transition-all duration-200 shadow-sm"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[9px] font-mono uppercase tracking-wider text-amber-400 bg-amber-950/40 border border-amber-800/40 px-1.5 py-0.5 rounded">
+                      {h.topic_cluster}
+                    </span>
+                    <span className="text-[9px] font-mono text-zinc-500">
+                      {h.source_badge}
+                    </span>
+                  </div>
+                  <p className="text-xs text-zinc-300 leading-relaxed italic line-clamp-3">
+                    "{h.highlight_text}"
+                  </p>
                 </div>
-                <p className="text-xs text-zinc-300 leading-relaxed italic line-clamp-3">
-                  "{h.highlight_text}"
-                </p>
-              </div>
 
-              <div className="pt-3 mt-2 border-t border-zinc-800/60 flex items-center justify-between">
-                <button
-                  onClick={() => handleCopy(h.id, h.highlight_text)}
-                  className="text-[10px] font-mono text-zinc-400 hover:text-white flex items-center gap-1 transition-colors"
-                >
-                  {copiedId === h.id ? (
-                    <>
-                      <Check className="w-3 h-3 text-emerald-400" />
-                      <span className="text-emerald-400">Copied</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3 h-3" />
-                      <span>Copy Directive</span>
-                    </>
-                  )}
-                </button>
+                <div className="pt-3 mt-2 border-t border-zinc-800/60 flex items-center justify-between">
+                  <button
+                    onClick={() => handleCopy(h.id, h.highlight_text)}
+                    className="text-[10px] font-mono text-zinc-400 hover:text-white flex items-center gap-1 transition-colors cursor-pointer"
+                  >
+                    {copiedId === h.id ? (
+                      <>
+                        <Check className="w-3 h-3 text-emerald-400" />
+                        <span className="text-emerald-400">Copied</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-3 h-3" />
+                        <span>Copy Directive</span>
+                      </>
+                    )}
+                  </button>
 
-                <button
-                  onClick={() => handleDelete(h.id)}
-                  className="opacity-0 group-hover:opacity-100 text-zinc-600 hover:text-rose-400 p-1 transition-opacity"
-                  title="Remove from Shelf"
-                >
-                  <Trash2 className="w-3 h-3" />
-                </button>
+                  <button
+                    onClick={() => handleDelete(h.id)}
+                    className="opacity-0 group-hover:opacity-100 text-zinc-600 hover:text-rose-400 p-1 transition-opacity cursor-pointer"
+                    title="Remove from Shelf"
+                  >
+                    <Trash2 className="w-3 h-3" />
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )
       )}
     </section>
   );

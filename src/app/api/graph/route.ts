@@ -107,12 +107,20 @@ const SEED_GRAPH = {
   ],
 };
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const mode = searchParams.get('mode');
+
+    // If explicit clean user mode requested, return fresh user graph
+    if (mode === 'clean') {
+      return NextResponse.json({ nodes: [], links: [] });
+    }
+
     const supabase = createServerClient();
     const { data: { user } } = await supabase.auth.getUser();
 
-    // If no logged in user or empty database, return rich starter graph
+    // If no logged in user and not clean mode, return rich starter demo graph for guests
     if (!user) {
       return NextResponse.json(SEED_GRAPH);
     }
@@ -122,14 +130,14 @@ export async function GET() {
       .select('id, title, source_type, cluster_name, is_bookmarked, summary, raw_content, source_url')
       .eq('user_id', user.id);
 
+    // If user has 0 saved items, start with a clean slate
     if (!items || items.length === 0) {
-      return NextResponse.json(SEED_GRAPH);
+      return NextResponse.json({ nodes: [], links: [] });
     }
 
-    // Merge seed documents with user's live database items
+    // Live graph strictly constructed from user's saved items
     const nodesMap = new Map();
-    SEED_GRAPH.nodes.forEach(n => nodesMap.set(n.id, n));
-    const links = [...SEED_GRAPH.links];
+    const links: { source: string; target: string }[] = [];
 
     items.forEach((item) => {
       const hubId = `hub_${item.cluster_name.toLowerCase().replace(/\s+/g, '_')}`;

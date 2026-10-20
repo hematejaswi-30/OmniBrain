@@ -36,11 +36,20 @@ const SEED_CLUSTERS = [
   },
 ];
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const mode = searchParams.get('mode');
+
+    // If explicit clean user mode requested, start with empty list
+    if (mode === 'clean') {
+      return NextResponse.json([], { status: 200 });
+    }
+
     const supabase = createServerClient();
     const { data: { user } } = await supabase.auth.getUser();
 
+    // If no logged in user and not clean mode, return sample demo clusters
     if (!user) {
       return NextResponse.json(SEED_CLUSTERS, { status: 200 });
     }
@@ -51,8 +60,9 @@ export async function GET() {
       .select('id, title, source_type, summary, cluster_name, is_bookmarked')
       .eq('user_id', user.id);
 
+    // If logged in user has no items yet, return clean empty list
     if (error || !items || items.length === 0) {
-      return NextResponse.json(SEED_CLUSTERS, { status: 200 });
+      return NextResponse.json([], { status: 200 });
     }
 
     // Group items in memory

@@ -33,7 +33,10 @@ export default function ClusterCardsGrid({ refreshTrigger }: ClusterCardsGridPro
 
   const fetchClusters = () => {
     setIsLoading(true);
-    fetch('/api/clusters')
+    const isSimulated = typeof window !== 'undefined' && !!localStorage.getItem('omnibrain_simulated_user');
+    const url = isSimulated ? '/api/clusters?mode=clean' : '/api/clusters';
+
+    fetch(url)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) setClusters(data);
@@ -44,6 +47,10 @@ export default function ClusterCardsGrid({ refreshTrigger }: ClusterCardsGridPro
 
   useEffect(() => {
     fetchClusters();
+
+    const handleAuthChange = () => fetchClusters();
+    window.addEventListener('omnibrain_auth_change', handleAuthChange);
+    return () => window.removeEventListener('omnibrain_auth_change', handleAuthChange);
   }, [refreshTrigger]);
 
   const openSynthesis = (name: string) => {

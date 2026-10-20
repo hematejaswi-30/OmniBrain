@@ -8,6 +8,7 @@ import { Loader2, ArrowUpRight, Sparkles, Send, FileText, Compass, ExternalLink 
 import Header from '@/components/Header';
 import PinnedShelf from '@/components/PinnedShelf';
 import ClusterCardsGrid from '@/components/ClusterCardsGrid';
+import OnboardingBanner from '@/components/OnboardingBanner';
 
 export default function DashboardPage() {
   const [inputValue, setInputValue] = useState('');
@@ -73,6 +74,9 @@ export default function DashboardPage() {
 
       {/* Main Body */}
       <main className="max-w-6xl mx-auto px-6 py-8">
+        {/* Onboarding Interactive Walkthrough */}
+        <OnboardingBanner onSampleClick={(sample) => setInputValue(sample)} />
+
         {/* Toast Alert */}
         {toast && (
           <div className="mb-6 p-3.5 bg-gradient-to-r from-emerald-950/80 to-zinc-900 border border-emerald-600/50 rounded-lg text-xs text-emerald-300 flex items-center justify-between shadow-lg animate-in fade-in duration-200">
