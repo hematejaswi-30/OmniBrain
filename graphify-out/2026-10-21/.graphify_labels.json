@@ -1,0 +1,17 @@
+{
+  "0": "README.md",
+  "1": "package.json",
+  "2": "next",
+  "3": "compilerOptions",
+  "4": "graph/page.tsx",
+  "5": "react",
+  "6": "dependencies",
+  "7": "ingest-router.ts",
+  "8": "devDependencies",
+  "9": "next-env.d.ts",
+  "10": "layout.tsx",
+  "11": "AGENTS.md",
+  "12": "postcss.config.js",
+  "13": "next_dev_types_root_params_d",
+  "14": "next_dev_types_routes_d"
+}
