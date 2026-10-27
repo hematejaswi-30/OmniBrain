@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from 'react';
 import SynthesisDrawer, { SelectedNodeData } from './SynthesisDrawer';
-import { Sparkles, ArrowRight, Layers, FileText } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 export interface ClusterItem {
   id: string;
@@ -62,34 +62,22 @@ export default function ClusterCardsGrid({ refreshTrigger }: ClusterCardsGridPro
     setIsDrawerOpen(true);
   };
 
-  const getBadgeStyle = (type: string) => {
-    switch (type?.toLowerCase()) {
-      case 'whatsapp':
-        return 'bg-emerald-950/50 text-emerald-300 border-emerald-700/50';
-      case 'gdrive':
-      case 'drive':
-        return 'bg-blue-950/50 text-blue-300 border-blue-700/50';
-      case 'instagram':
-      case 'reel':
-        return 'bg-rose-950/50 text-rose-300 border-rose-700/50';
-      case 'document':
-        return 'bg-indigo-950/50 text-indigo-300 border-indigo-700/50';
-      default:
-        return 'bg-zinc-800 text-zinc-300 border-zinc-700';
-    }
+  // 60-30-10 Classy Principle: Quiet, neutral badges (no neon rainbow)
+  const getBadgeStyle = () => {
+    return 'bg-[#EAE5DC] dark:bg-[#2B2A27] text-[#4A453E] dark:text-[#C4BEB3] border-[#D6CEC1] dark:border-[#3B3935]';
   };
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {isLoading ? (
-          <div className="text-zinc-500 text-xs font-mono animate-pulse col-span-full py-8 text-center flex items-center justify-center gap-2">
-            <div className="w-3.5 h-3.5 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+          <div className="text-[#6B655C] dark:text-[#9E9990] text-xs font-mono animate-pulse col-span-full py-8 text-center flex items-center justify-center gap-2">
+            <div className="w-3.5 h-3.5 border-2 border-[#2F4A3A] dark:border-[#B08D57] border-t-transparent rounded-full animate-spin" />
             <span>Scanning active knowledge clusters...</span>
           </div>
         ) : clusters.length === 0 ? (
-          <div className="text-zinc-500 text-xs italic col-span-full py-8 text-center bg-[#101015] border border-zinc-800 rounded-lg p-6">
-            No topic clusters discovered yet. Start by pasting a note or link in the Universal Omni Dock above.
+          <div className="text-[#6B655C] dark:text-[#9E9990] text-xs italic col-span-full py-8 text-center bg-[#F4EFE7] dark:bg-[#232321] border border-[#E4DDD2] dark:border-[#33312E] rounded p-6">
+            No topic clusters discovered yet. Start by pasting a note or link in the Universal Ingestion Dock above.
           </div>
         ) : (
           clusters.map(c => {
@@ -97,33 +85,33 @@ export default function ClusterCardsGrid({ refreshTrigger }: ClusterCardsGridPro
             return (
               <article 
                 key={c.cluster_name} 
-                className="group relative bg-gradient-to-b from-[#14141a] to-[#0f0f13] border border-[#27272a] hover:border-indigo-500/50 p-4 rounded-lg flex flex-col justify-between transition-all duration-200 hover:-translate-y-0.5 shadow-sm hover:shadow-[0_4px_20px_rgba(99,102,241,0.12)]"
+                className="group relative bg-[#F4EFE7] dark:bg-[#232321] border border-[#E4DDD2] dark:border-[#33312E] hover:border-[#2F4A3A] dark:hover:border-[#B08D57] p-5 rounded-lg flex flex-col justify-between transition-colors shadow-none"
               >
                 <div>
-                  <div className="flex items-start justify-between mb-2">
-                    <h3 className="font-semibold text-sm text-white group-hover:text-indigo-200 transition-colors flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 group-hover:scale-125 transition-transform" />
+                  <div className="flex items-start justify-between mb-2.5">
+                    <h3 className="font-serif font-semibold text-base text-[#2B2B2B] dark:text-[#EDE8DF] tracking-tight flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#2F4A3A] dark:bg-[#B08D57]" />
                       {c.cluster_name}
                     </h3>
-                    <span className="text-[10px] font-mono text-zinc-400 bg-[#1c1c24] border border-[#27272a] px-2 py-0.5 rounded-full">
+                    <span className="text-[10px] font-mono text-[#6B655C] dark:text-[#9E9990] bg-[#EAE5DC] dark:bg-[#2B2A27] border border-[#D6CEC1] dark:border-[#3B3935] px-2 py-0.5 rounded">
                       {itemCount} {itemCount === 1 ? 'item' : 'items'}
                     </span>
                   </div>
 
                   {c.description && (
-                    <p className="text-xs text-zinc-400 mb-3.5 line-clamp-2 leading-relaxed">
+                    <p className="text-xs text-[#6B655C] dark:text-[#9E9990] mb-4 line-clamp-2 leading-relaxed font-sans">
                       {c.description}
                     </p>
                   )}
 
                   {c.items && c.items.length > 0 && (
-                    <div className="space-y-1.5 border-t border-[#1f1f26] pt-3 mb-3 text-xs">
+                    <div className="space-y-2 border-t border-[#E8E2D8] dark:border-[#31302D] pt-3.5 mb-4 text-xs font-sans">
                       {c.items.slice(0, 3).map(it => (
                         <div key={it.id} className="flex items-center gap-2 truncate">
-                          <span className={`text-[9px] font-mono border px-1.5 py-0.5 rounded uppercase font-medium ${getBadgeStyle(it.source_type)}`}>
-                            {it.source_type === 'whatsapp' ? 'WA' : it.source_type === 'gdrive' ? 'DRIVE' : it.source_type === 'instagram' ? 'REEL' : it.source_type === 'document' ? '.MD' : 'WEB'}
+                          <span className={`text-[9px] font-mono border px-1.5 py-0.5 rounded uppercase font-medium shrink-0 ${getBadgeStyle()}`}>
+                            {it.source_type === 'whatsapp' ? 'WA' : it.source_type === 'gdrive' ? 'DOC' : it.source_type === 'instagram' ? 'REEL' : it.source_type === 'document' ? '.MD' : 'WEB'}
                           </span>
-                          <span className="truncate text-zinc-300 group-hover:text-zinc-100 transition-colors">
+                          <span className="truncate text-[#4A453D] dark:text-[#C4BEB3]">
                             {it.title}
                           </span>
                         </div>
@@ -132,16 +120,16 @@ export default function ClusterCardsGrid({ refreshTrigger }: ClusterCardsGridPro
                   )}
                 </div>
 
-                <div className="border-t border-[#1f1f26] pt-3 flex items-center justify-between mt-auto">
-                  <div className="flex gap-1 flex-wrap max-w-[65%]">
+                <div className="border-t border-[#E8E2D8] dark:border-[#31302D] pt-3.5 flex items-center justify-between mt-auto">
+                  <div className="flex gap-1.5 flex-wrap max-w-[65%]">
                     {c.entities && c.entities.length > 0 ? (
                       c.entities.slice(0, 2).map(tag => (
-                        <span key={tag} className="text-[9px] font-mono text-zinc-500 bg-[#18181f] border border-[#27272a] px-1.5 py-0.5 rounded truncate max-w-[90px]">
+                        <span key={tag} className="text-[9px] font-mono text-[#6B655C] dark:text-[#9E9990] bg-[#EAE5DC] dark:bg-[#2B2A27] border border-[#D6CEC1] dark:border-[#3B3935] px-1.5 py-0.5 rounded truncate max-w-[95px]">
                           #{tag}
                         </span>
                       ))
                     ) : (
-                      <span className="text-[9px] font-mono text-zinc-500 bg-[#18181f] px-1.5 py-0.5 rounded">
+                      <span className="text-[9px] font-mono text-[#6B655C] dark:text-[#9E9990] bg-[#EAE5DC] dark:bg-[#2B2A27] border border-[#D6CEC1] dark:border-[#3B3935] px-1.5 py-0.5 rounded">
                         #OmniBrain
                       </span>
                     )}
@@ -149,11 +137,10 @@ export default function ClusterCardsGrid({ refreshTrigger }: ClusterCardsGridPro
 
                   <button 
                     onClick={() => openSynthesis(c.cluster_name)}
-                    className="text-xs font-semibold text-white bg-indigo-950/80 hover:bg-indigo-600 border border-indigo-700/60 hover:border-indigo-400 px-3 py-1.5 rounded-md transition-all flex items-center gap-1.5 shadow-sm cursor-pointer"
+                    className="text-xs font-medium text-[#FAF7F2] dark:text-[#1C1C1C] bg-[#2F4A3A] hover:bg-[#243B2E] dark:bg-[#B08D57] dark:hover:bg-[#9E7C48] px-3.5 py-1.5 rounded transition-colors flex items-center gap-1.5 cursor-pointer shadow-none font-sans"
                   >
-                    <Sparkles className="w-3 h-3 text-indigo-300" />
                     <span>Synthesize</span>
-                    <ArrowRight className="w-3 h-3 text-indigo-300 group-hover:translate-x-0.5 transition-transform" />
+                    <ArrowRight className="w-3 h-3" />
                   </button>
                 </div>
               </article>

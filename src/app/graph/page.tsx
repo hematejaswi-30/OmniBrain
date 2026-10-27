@@ -49,22 +49,36 @@ export default function GraphPage() {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [showGuide, setShowGuide] = useState(true);
   const [isCleanUser, setIsCleanUser] = useState(false);
+  const [focusedNodeId, setFocusedNodeId] = useState<string | null>(null);
 
-  // Initialize theme from localStorage (default 'light')
+  const clusterHubs = graphData.nodes.filter(n => n.type === 'hub');
+
+  // Initialize theme from documentElement and listen for global theme changes
   useEffect(() => {
-    try {
-      const savedTheme = localStorage.getItem('omnibrain_graph_theme');
-      if (savedTheme === 'dark' || savedTheme === 'light') {
-        setTheme(savedTheme);
-      }
-    } catch {}
+    const syncTheme = () => {
+      try {
+        const isDark = document.documentElement.classList.contains('dark') || localStorage.getItem('omnibrain_theme') === 'dark';
+        setTheme(isDark ? 'dark' : 'light');
+      } catch {}
+    };
+    syncTheme();
+
+    window.addEventListener('omnibrain_theme_change', syncTheme);
+    return () => window.removeEventListener('omnibrain_theme_change', syncTheme);
   }, []);
 
   const handleToggleTheme = () => {
-    const nextTheme = theme === 'light' ? 'dark' : 'light';
+    const isCurrentDark = document.documentElement.classList.contains('dark');
+    const nextTheme = isCurrentDark ? 'light' : 'dark';
     setTheme(nextTheme);
     try {
-      localStorage.setItem('omnibrain_graph_theme', nextTheme);
+      localStorage.setItem('omnibrain_theme', nextTheme);
+      if (nextTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+      window.dispatchEvent(new Event('omnibrain_theme_change'));
     } catch {}
   };
 
@@ -80,6 +94,27 @@ export default function GraphPage() {
       if (res.ok) {
         const data = await res.json();
         setGraphData(data);
+
+        // Auto-focus node from ?focus=<nodeId> query parameter
+        if (typeof window !== 'undefined') {
+          const params = new URLSearchParams(window.location.search);
+          const focusId = params.get('focus');
+          if (focusId && Array.isArray(data.nodes)) {
+            const matched = data.nodes.find((n: any) => n.id === focusId);
+            if (matched) {
+              setSelectedNode({
+                id: matched.id,
+                type: matched.type,
+                label: matched.label,
+                source: matched.source,
+                summary: matched.summary,
+                raw_content: matched.raw_content,
+                source_url: matched.source_url,
+              });
+              setIsDrawerOpen(true);
+            }
+          }
+        }
       }
     } catch (err) {
       console.error('Failed to load graph data:', err);
@@ -126,7 +161,7 @@ export default function GraphPage() {
 
   return (
     <div className={`min-h-screen flex flex-col overflow-hidden transition-colors duration-300 ${
-      isLight ? 'bg-[#f8fafc] text-slate-900' : 'bg-[#07070a] text-[#fafafa]'
+      isLight ? 'bg-[#FAF7F2] text-[#2B2B2B]' : 'bg-[#1C1C1C] text-[#EDE8DF]'
     }`}>
       {/* Top Header Navigation */}
       <Header currentView="graph" />
@@ -135,69 +170,60 @@ export default function GraphPage() {
         {/* Floating HUD Controls */}
         <div className="absolute top-4 left-4 z-10 flex flex-col gap-2 max-w-sm">
           {/* Main Controls Card */}
-          <div className={`backdrop-blur-md p-3.5 rounded-xl border shadow-xl space-y-3 transition-colors ${
+          <div className={`p-4 rounded-xl border space-y-3 transition-colors ${
             isLight 
-              ? 'bg-white/95 border-slate-200 shadow-slate-200/50 text-slate-800' 
-              : 'bg-[#0f0f15]/90 border-[#27272a] shadow-2xl text-white'
+              ? 'bg-[#F4EFE7]/95 border-[#E4DDD2] text-[#2B2B2B] shadow-sm' 
+              : 'bg-[#242422]/95 border-[#33312E] text-[#EDE8DF] shadow-none'
           }`}>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <div className="w-2.5 h-2.5 rounded-full bg-indigo-600 shadow-[0_0_8px_rgba(99,102,241,0.6)]" />
-                <span className="text-xs font-bold tracking-tight">Constellation Map</span>
-                <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded font-semibold ${
-                  isLight ? 'bg-indigo-50 text-indigo-700 border border-indigo-200' : 'bg-indigo-950 text-indigo-300'
+                <span className="w-2 h-2 rounded-full bg-[#2F4A3A] dark:bg-[#B08D57]" />
+                <span className="font-serif text-sm font-semibold tracking-tight">Constellation Map</span>
+                <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded font-medium ${
+                  isLight ? 'bg-[#EBF1EC] text-[#2F4A3A] border border-[#D5DFD7]' : 'bg-[#2B261D] text-[#B08D57] border border-[#3E372B]'
                 }`}>
-                  {isLight ? 'Paper Studio' : 'Cosmic Nebula'}
+                  {isLight ? 'Editorial Paper' : 'Dark Luxury'}
                 </span>
               </div>
 
               {/* Theme Toggle Button */}
               <button
                 onClick={handleToggleTheme}
-                className={`p-1.5 rounded-md border flex items-center gap-1 text-[11px] font-mono transition-colors cursor-pointer ${
+                className={`p-1.5 rounded border flex items-center gap-1 text-[11px] font-mono transition-colors cursor-pointer ${
                   isLight 
-                    ? 'bg-slate-100 hover:bg-slate-200 border-slate-300 text-slate-700' 
-                    : 'bg-zinc-800 hover:bg-zinc-700 border-zinc-700 text-zinc-300'
+                    ? 'bg-[#EDE7DE] hover:bg-[#E2DDD3] border-[#DCD4C7] text-[#4A453D]' 
+                    : 'bg-[#2E2D2A] hover:bg-[#383632] border-[#3F3D38] text-[#C4BEB3]'
                 }`}
-                title={`Switch to ${isLight ? 'Dark Nebula' : 'Light Paper'} Mode`}
+                title={`Switch to ${isLight ? 'Dark Luxury' : 'Editorial Paper'} Mode`}
               >
-                {isLight ? (
-                  <>
-                    <Moon className="w-3.5 h-3.5 text-indigo-600" />
-                    <span>Dark</span>
-                  </>
-                ) : (
-                  <>
-                    <Sun className="w-3.5 h-3.5 text-amber-400" />
-                    <span>Light</span>
-                  </>
-                )}
+                <span>{isLight ? '🌙' : '☀️'}</span>
+                <span>{isLight ? 'Dark' : 'Light'}</span>
               </button>
             </div>
 
-            <p className={`text-[11px] leading-relaxed ${isLight ? 'text-slate-600' : 'text-zinc-400'}`}>
-              Luminous links connect rounded <span className="font-mono font-medium text-indigo-600 dark:text-indigo-300">.md</span> files and source notes directly into central knowledge clusters.
+            <p className={`text-[11px] leading-relaxed font-sans ${isLight ? 'text-[#6B655C]' : 'text-[#9E9990]'}`}>
+              Interconnected <span className="font-mono font-medium text-[#2F4A3A] dark:text-[#B08D57]">.md</span> files and source notes mapped around core topic clusters.
             </p>
 
             {/* Quick Search */}
             <div className="relative">
-              <Search className="w-3.5 h-3.5 text-zinc-400 absolute left-2.5 top-2.5" />
+              <Search className="w-3.5 h-3.5 text-[#8F897F] absolute left-2.5 top-2.5" />
               <input
                 type="text"
                 placeholder="Search nodes & .md files..."
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                className={`w-full border rounded-lg pl-8 pr-3 py-1.5 text-xs outline-none font-mono transition-all ${
+                className={`w-full border rounded pl-8 pr-3 py-1.5 text-xs outline-none font-sans transition-colors ${
                   isLight 
-                    ? 'bg-slate-50 border-slate-200 focus:border-indigo-500 text-slate-800 placeholder-slate-400' 
-                    : 'bg-[#161620] border-[#27272a] focus:border-indigo-500 text-zinc-200 placeholder-zinc-500'
+                    ? 'bg-[#FFFFFF] border-[#DDD5C7] focus:border-[#2F4A3A] text-[#2B2B2B] placeholder-[#948D82]' 
+                    : 'bg-[#1C1C1C] border-[#383632] focus:border-[#B08D57] text-[#EDE8DF] placeholder-[#757169]'
                 }`}
               />
             </div>
 
             {/* Source Type Filter Chips */}
-            <div className={`space-y-1.5 pt-1 border-t ${isLight ? 'border-slate-100' : 'border-zinc-800'}`}>
-              <div className={`text-[10px] font-mono uppercase tracking-wider ${isLight ? 'text-slate-500' : 'text-zinc-500'}`}>
+            <div className={`space-y-1.5 pt-1 border-t ${isLight ? 'border-[#E8E2D8]' : 'border-[#31302D]'}`}>
+              <div className={`text-[10px] font-mono uppercase tracking-wider ${isLight ? 'text-[#6B655C]' : 'text-[#9E9990]'}`}>
                 Filter Provenance:
               </div>
               <div className="flex flex-wrap gap-1.5 text-[10px] font-mono">
@@ -205,87 +231,125 @@ export default function GraphPage() {
                   onClick={() => setFilterSource(null)}
                   className={`px-2 py-0.5 rounded border transition-colors cursor-pointer ${
                     filterSource === null 
-                      ? 'bg-indigo-600 text-white border-indigo-600 font-semibold shadow-sm' 
+                      ? isLight ? 'bg-[#2F4A3A] text-[#FAF7F2] border-[#2F4A3A]' : 'bg-[#B08D57] text-[#1C1C1C] border-[#B08D57]'
                       : isLight 
-                        ? 'bg-slate-100 text-slate-600 border-slate-200 hover:text-slate-900' 
-                        : 'bg-zinc-800/60 text-zinc-400 border-zinc-700 hover:text-white'
+                        ? 'bg-[#ECE6DC] text-[#5C574F] border-[#DCD4C7] hover:text-[#2B2B2B]' 
+                        : 'bg-[#2A2927] text-[#B5B0A6] border-[#383634] hover:text-white'
                   }`}
                 >
-                  All Sources ({displayedNodes.length})
+                  All ({displayedNodes.length})
                 </button>
                 <button
                   onClick={() => setFilterSource('document')}
-                  className={`flex items-center gap-1 px-2 py-0.5 rounded border transition-colors cursor-pointer ${
+                  className={`px-2 py-0.5 rounded border transition-colors cursor-pointer ${
                     filterSource === 'document' 
-                      ? 'bg-indigo-600 text-white border-indigo-600 font-semibold' 
+                      ? isLight ? 'bg-[#2F4A3A] text-[#FAF7F2] border-[#2F4A3A]' : 'bg-[#B08D57] text-[#1C1C1C] border-[#B08D57]'
                       : isLight 
-                        ? 'bg-indigo-50 text-indigo-700 border-indigo-200' 
-                        : 'bg-zinc-800/60 text-indigo-400 border-zinc-700 hover:text-white'
+                        ? 'bg-[#ECE6DC] text-[#5C574F] border-[#DCD4C7]' 
+                        : 'bg-[#2A2927] text-[#B5B0A6] border-[#383634]'
                   }`}
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" /> .MD Files
+                  .MD Docs
                 </button>
                 <button
                   onClick={() => setFilterSource('whatsapp')}
-                  className={`flex items-center gap-1 px-2 py-0.5 rounded border transition-colors cursor-pointer ${
+                  className={`px-2 py-0.5 rounded border transition-colors cursor-pointer ${
                     filterSource === 'whatsapp' 
-                      ? 'bg-emerald-600 text-white border-emerald-600 font-semibold' 
+                      ? isLight ? 'bg-[#2F4A3A] text-[#FAF7F2] border-[#2F4A3A]' : 'bg-[#B08D57] text-[#1C1C1C] border-[#B08D57]'
                       : isLight 
-                        ? 'bg-emerald-50 text-emerald-700 border-emerald-200' 
-                        : 'bg-zinc-800/60 text-emerald-400 border-zinc-700 hover:text-white'
+                        ? 'bg-[#ECE6DC] text-[#5C574F] border-[#DCD4C7]' 
+                        : 'bg-[#2A2927] text-[#B5B0A6] border-[#383634]'
                   }`}
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> WhatsApp
+                  WhatsApp
                 </button>
                 <button
                   onClick={() => setFilterSource('gdrive')}
-                  className={`flex items-center gap-1 px-2 py-0.5 rounded border transition-colors cursor-pointer ${
+                  className={`px-2 py-0.5 rounded border transition-colors cursor-pointer ${
                     filterSource === 'gdrive' 
-                      ? 'bg-blue-600 text-white border-blue-600 font-semibold' 
+                      ? isLight ? 'bg-[#2F4A3A] text-[#FAF7F2] border-[#2F4A3A]' : 'bg-[#B08D57] text-[#1C1C1C] border-[#B08D57]'
                       : isLight 
-                        ? 'bg-blue-50 text-blue-700 border-blue-200' 
-                        : 'bg-zinc-800/60 text-blue-400 border-zinc-700 hover:text-white'
+                        ? 'bg-[#ECE6DC] text-[#5C574F] border-[#DCD4C7]' 
+                        : 'bg-[#2A2927] text-[#B5B0A6] border-[#383634]'
                   }`}
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500" /> Drive
+                  Drive
                 </button>
                 <button
                   onClick={() => setFilterSource('instagram')}
-                  className={`flex items-center gap-1 px-2 py-0.5 rounded border transition-colors cursor-pointer ${
+                  className={`px-2 py-0.5 rounded border transition-colors cursor-pointer ${
                     filterSource === 'instagram' 
-                      ? 'bg-rose-600 text-white border-rose-600 font-semibold' 
+                      ? isLight ? 'bg-[#2F4A3A] text-[#FAF7F2] border-[#2F4A3A]' : 'bg-[#B08D57] text-[#1C1C1C] border-[#B08D57]'
                       : isLight 
-                        ? 'bg-rose-50 text-rose-700 border-rose-200' 
-                        : 'bg-zinc-800/60 text-rose-400 border-zinc-700 hover:text-white'
+                        ? 'bg-[#ECE6DC] text-[#5C574F] border-[#DCD4C7]' 
+                        : 'bg-[#2A2927] text-[#B5B0A6] border-[#383634]'
                   }`}
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500" /> Reels
+                  Reels
                 </button>
               </div>
             </div>
 
+            {/* Master Clusters Quick-Jump Bar (Auto-Center on click) */}
+            {clusterHubs.length > 0 && (
+              <div className={`space-y-1.5 pt-2 border-t ${isLight ? 'border-[#E8E2D8]' : 'border-[#31302D]'}`}>
+                <div className={`text-[10px] font-mono uppercase tracking-wider flex items-center justify-between ${isLight ? 'text-[#6B655C]' : 'text-[#9E9990]'}`}>
+                  <span>Center Master Cluster:</span>
+                  <span className="text-[9px] text-[#2F4A3A] dark:text-[#B08D57] font-semibold">Click to Center 🎯</span>
+                </div>
+                <div className="flex flex-col gap-1">
+                  {clusterHubs.map(hub => {
+                    const isSelected = selectedNode?.id === hub.id;
+                    return (
+                      <button
+                        key={hub.id}
+                        onClick={() => {
+                          setFocusedNodeId(hub.id);
+                          handleNodeClick(hub);
+                        }}
+                        className={`w-full text-left px-2.5 py-1.5 rounded text-xs font-serif flex items-center justify-between border transition-all cursor-pointer ${
+                          isSelected
+                            ? isLight
+                              ? 'bg-[#2F4A3A] text-[#FAF7F2] border-[#2F4A3A] shadow-xs'
+                              : 'bg-[#B08D57] text-[#1C1C1C] border-[#B08D57] shadow-xs'
+                            : isLight
+                              ? 'bg-[#FFFFFF] hover:bg-[#EDE7DE] border-[#DDD5C7] text-[#2B2B2B]'
+                              : 'bg-[#1C1C1C] hover:bg-[#2E2D2A] border-[#383632] text-[#EDE8DF]'
+                        }`}
+                        title={`Click to smoothly center camera on ${hub.label}`}
+                      >
+                        <span className="truncate font-medium">{hub.label}</span>
+                        <span className="text-[10px] font-mono opacity-80 ml-2">🎯 Center</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
             {/* Reset / Status */}
             <div className={`flex items-center justify-between pt-2 border-t text-[10px] ${
-              isLight ? 'border-slate-100 text-slate-500' : 'border-zinc-800 text-zinc-400'
+              isLight ? 'border-[#E8E2D8] text-[#6B655C]' : 'border-[#31302D] text-[#9E9990]'
             }`}>
-              <span className="flex items-center gap-1">
-                <span className="text-amber-500 font-bold">★</span> Gold halo = Bookmarked
+              <span className="flex items-center gap-1 font-mono">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#2F4A3A] dark:bg-[#B08D57]" /> Bounded Physics Active
               </span>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setShowGuide(!showGuide)}
-                  className="hover:underline flex items-center gap-1 text-indigo-600 dark:text-indigo-400 cursor-pointer"
+                  className="hover:underline flex items-center gap-1 text-[#2F4A3A] dark:text-[#B08D57] cursor-pointer"
                 >
                   <HelpCircle className="w-3 h-3" />
-                  <span>{showGuide ? 'Hide Guide' : 'Legend'}</span>
+                  <span>{showGuide ? 'Hide' : 'Legend'}</span>
                 </button>
                 <button
                   onClick={() => {
                     setFilterSource(null);
                     setSearchQuery('');
+                    setFocusedNodeId(null);
                   }}
                   className={`p-1 rounded transition-colors flex items-center gap-1 cursor-pointer ${
-                    isLight ? 'hover:bg-slate-100 text-slate-600' : 'hover:bg-zinc-800 text-zinc-400'
+                    isLight ? 'hover:bg-[#EDE7DE] text-[#6B655C]' : 'hover:bg-[#2E2D2A] text-[#9E9990]'
                   }`}
                   title="Reset View"
                 >
@@ -298,33 +362,32 @@ export default function GraphPage() {
 
           {/* Interactive Guide Card */}
           {showGuide && (
-            <div className={`backdrop-blur-md p-3 rounded-lg border shadow-lg space-y-2 text-xs animate-in fade-in duration-150 ${
-              isLight ? 'bg-white/95 border-slate-200 text-slate-700' : 'bg-[#0f0f15]/90 border-[#27272a] text-zinc-300'
+            <div className={`p-4 rounded-xl border space-y-2 text-xs animate-in fade-in duration-150 ${
+              isLight ? 'bg-[#F4EFE7]/95 border-[#E4DDD2] text-[#2B2B2B]' : 'bg-[#242422]/95 border-[#33312E] text-[#EDE8DF]'
             }`}>
               <div className="flex items-center justify-between">
-                <span className="font-semibold text-[11px] font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 flex items-center gap-1.5">
-                  <Info className="w-3.5 h-3.5" />
-                  How to Read the Constellation
+                <span className="font-serif font-semibold text-xs text-[#2B2B2B] dark:text-[#EDE8DF] flex items-center gap-1.5">
+                  How to Read the Map
                 </span>
                 <button 
                   onClick={() => setShowGuide(false)}
-                  className="text-slate-400 hover:text-slate-600 text-xs px-1 cursor-pointer"
+                  className="text-[#8F897F] hover:text-[#2B2B2B] dark:hover:text-white text-xs px-1 cursor-pointer"
                 >
                   ✕
                 </button>
               </div>
-              <ul className="space-y-1.5 text-[11px] leading-relaxed">
+              <ul className="space-y-1.5 text-[11px] leading-relaxed font-sans text-[#4A453D] dark:text-[#C4BEB3]">
                 <li className="flex items-start gap-1.5">
-                  <span className="text-indigo-500 font-bold">📄</span>
-                  <span><strong>Rounded Cards:</strong> Ingested <code className="font-mono text-[10px] bg-slate-100 dark:bg-zinc-800 px-1 py-0.5 rounded">.md</code> files, WhatsApp chats, and reels.</span>
+                  <span className="text-[#2F4A3A] dark:text-[#B08D57] font-bold">📄</span>
+                  <span><strong>Source Cards:</strong> Ingested <code className="font-mono text-[10px] bg-[#EAE5DC] dark:bg-[#2B2A27] px-1 py-0.5 rounded">.md</code> files, WhatsApp chats, and reels.</span>
                 </li>
                 <li className="flex items-start gap-1.5">
-                  <span className="text-amber-500 font-bold">◆</span>
-                  <span><strong>Central Hubs:</strong> Topic clusters. Click a hub to synthesize a full multi-source <strong>OmniDoc</strong>.</span>
+                  <span className="text-[#2F4A3A] dark:text-[#B08D57] font-bold">◆</span>
+                  <span><strong>Central Hubs:</strong> Topic clusters. Click a hub to synthesize a multi-source <strong>OmniDoc</strong>.</span>
                 </li>
                 <li className="flex items-start gap-1.5">
-                  <span className="text-blue-500 font-bold">⚡</span>
-                  <span><strong>Flowing Lines:</strong> Directional particles show provenance linking sources to their master clusters.</span>
+                  <span className="text-[#2F4A3A] dark:text-[#B08D57] font-bold">⚡</span>
+                  <span><strong>Filaments:</strong> Directional particles show provenance linking sources to their master clusters.</span>
                 </li>
               </ul>
             </div>
@@ -334,22 +397,22 @@ export default function GraphPage() {
         {/* Clean User Empty State Notice */}
         {isCleanUser && graphData.nodes.length === 0 && !isLoading && (
           <div className="absolute inset-0 flex items-center justify-center z-10 p-6 pointer-events-none">
-            <div className={`pointer-events-auto max-w-md p-6 rounded-xl border shadow-2xl text-center space-y-3 ${
-              isLight ? 'bg-white/95 border-slate-200 text-slate-800' : 'bg-[#121218]/95 border-zinc-800 text-white'
+            <div className={`pointer-events-auto max-w-md p-6 rounded-xl border text-center space-y-3 ${
+              isLight ? 'bg-[#F4EFE7] border-[#E4DDD2] text-[#2B2B2B]' : 'bg-[#242422] border-[#33312E] text-[#EDE8DF]'
             }`}>
-              <div className="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-950/60 border border-indigo-300 dark:border-indigo-800 text-indigo-600 flex items-center justify-center mx-auto">
+              <div className="w-10 h-10 rounded bg-[#EAE5DC] dark:bg-[#2B2A27] border border-[#D6CEC1] dark:border-[#3B3935] text-[#2F4A3A] dark:text-[#B08D57] flex items-center justify-center mx-auto">
                 <Compass className="w-5 h-5" />
               </div>
-              <h3 className="text-sm font-bold">Your Personal Constellation is Ready</h3>
-              <p className="text-xs text-slate-500 dark:text-zinc-400 leading-relaxed">
+              <h3 className="font-serif text-base font-semibold">Your Personal Constellation is Ready</h3>
+              <p className="text-xs text-[#6B655C] dark:text-[#9E9990] leading-relaxed font-sans">
                 You are currently in Clean User Mode with 0 saved items. Ingest your first document or note on the Dashboard to watch your knowledge graph grow!
               </p>
               <div className="pt-2 flex items-center justify-center gap-2">
                 <Link
                   href="/dashboard"
-                  className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-lg shadow-md transition-colors inline-flex items-center gap-1.5"
+                  className="px-4 py-2 bg-[#2F4A3A] hover:bg-[#243B2E] dark:bg-[#B08D57] dark:hover:bg-[#9E7C48] text-[#FAF7F2] dark:text-[#1C1C1C] text-xs font-medium rounded transition-colors inline-flex items-center gap-1.5 shadow-none"
                 >
-                  <span>Go to Universal Ingestion Dock</span>
+                  <span>Go to Ingestion Dock</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
@@ -363,6 +426,7 @@ export default function GraphPage() {
             data={{ nodes: displayedNodes, links: displayedLinks }}
             onNodeClick={handleNodeClick}
             theme={theme}
+            focusedNodeId={focusedNodeId}
           />
         )}
 

@@ -4,14 +4,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { 
-  Compass, 
-  Sparkles, 
-  FileText, 
-  ChevronRight, 
   X, 
   HelpCircle, 
-  CheckCircle, 
-  Layers,
   ArrowRight
 } from 'lucide-react';
 
@@ -51,42 +45,36 @@ export default function OnboardingBanner({ onSampleClick }: OnboardingBannerProp
       <div className="flex justify-end mb-4">
         <button
           onClick={handleRestore}
-          className="text-[11px] font-mono text-zinc-400 hover:text-indigo-300 flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#121217] border border-[#27272a] hover:border-indigo-500/40 transition-colors shadow-sm"
+          className="text-[11px] font-mono text-[#6B655C] dark:text-[#9E9990] hover:text-[#2B2B2B] dark:hover:text-[#EDE8DF] flex items-center gap-1.5 px-3 py-1 rounded bg-[#F4EFE7] dark:bg-[#242422] border border-[#E4DDD2] dark:border-[#33312E] transition-colors"
         >
-          <HelpCircle className="w-3.5 h-3.5 text-indigo-400" />
-          <span>Show 3-Step Quick Start Guide</span>
+          <HelpCircle className="w-3.5 h-3.5" />
+          <span>Show Quick Guide</span>
         </button>
       </div>
     );
   }
 
   return (
-    <div className="relative overflow-hidden bg-gradient-to-r from-[#12121c] via-[#101018] to-[#0c0c12] border border-indigo-900/40 rounded-xl p-5 mb-7 shadow-xl">
-      {/* Ambient background glow */}
-      <div className="absolute top-0 right-0 w-96 h-full bg-indigo-600/10 blur-3xl pointer-events-none" />
-
+    <div className="bg-[#F4EFE7] dark:bg-[#242422] border border-[#E4DDD2] dark:border-[#33312E] rounded-xl p-5 mb-8 transition-colors">
       {/* Header bar */}
-      <div className="flex items-center justify-between pb-3.5 border-b border-zinc-800/80">
+      <div className="flex items-center justify-between pb-3.5 border-b border-[#E4DDD2] dark:border-[#33312E]">
         <div className="flex items-center gap-2.5">
-          <div className="w-6 h-6 rounded-lg bg-indigo-600/20 border border-indigo-500/40 flex items-center justify-center text-indigo-400">
-            <Sparkles className="w-3.5 h-3.5" />
-          </div>
           <div>
-            <h3 className="text-xs font-bold text-white tracking-wide uppercase font-mono flex items-center gap-2">
-              OmniBrain Quick-Start Walkthrough
-              <span className="text-[10px] font-mono normal-case text-indigo-400 bg-indigo-950/80 border border-indigo-800/80 px-2 py-0.5 rounded-full">
+            <h3 className="font-serif text-sm font-semibold text-[#2B2B2B] dark:text-[#EDE8DF] tracking-tight flex items-center gap-2">
+              OmniBrain Guide
+              <span className="text-[10px] font-mono normal-case text-[#6B655C] dark:text-[#9E9990] bg-[#EAE5DC] dark:bg-[#2B2A27] border border-[#D6CEC1] dark:border-[#3B3935] px-2 py-0.5 rounded">
                 Step {activeStep} of 3
               </span>
             </h3>
-            <p className="text-[11px] text-zinc-400 mt-0.5">
-              Learn how OmniBrain transforms raw fragments into unified knowledge briefs & constellation graphs.
+            <p className="text-xs text-[#6B655C] dark:text-[#9E9990] mt-0.5 font-sans">
+              How OmniBrain organizes raw fragments into an interconnected knowledge constellation.
             </p>
           </div>
         </div>
 
         <button
           onClick={handleDismiss}
-          className="text-zinc-500 hover:text-white p-1 rounded-md hover:bg-zinc-800/60 transition-colors"
+          className="text-[#6B655C] dark:text-[#9E9990] hover:text-[#2B2B2B] dark:hover:text-[#EDE8DF] p-1 rounded hover:bg-[#EAE5DC] dark:hover:bg-[#2A2927] transition-colors"
           title="Dismiss Guide"
         >
           <X className="w-4 h-4" />
@@ -98,21 +86,21 @@ export default function OnboardingBanner({ onSampleClick }: OnboardingBannerProp
         {/* Step 1 */}
         <div 
           onClick={() => setActiveStep(1)}
-          className={`cursor-pointer rounded-lg p-3.5 border transition-all duration-200 ${
+          className={`cursor-pointer rounded p-4 border transition-colors ${
             activeStep === 1 
-              ? 'bg-indigo-950/30 border-indigo-500/70 shadow-md shadow-indigo-950/30' 
-              : 'bg-[#0a0a0f] border-zinc-800/70 hover:border-zinc-700'
+              ? 'bg-[#FAF7F2] dark:bg-[#1C1C1C] border-[#2F4A3A] dark:border-[#B08D57]' 
+              : 'bg-[#EDE7DE] dark:bg-[#1E1E1D] border-[#E1D9CC] dark:border-[#33312E] hover:border-[#D1C8BA]'
           }`}
         >
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[10px] font-mono text-indigo-400 font-semibold uppercase tracking-wider flex items-center gap-1.5">
-              <span className="w-4 h-4 rounded-full bg-indigo-900 border border-indigo-600 text-[10px] flex items-center justify-center text-white">1</span>
+            <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-[#2F4A3A] dark:text-[#B08D57] flex items-center gap-1.5">
+              <span className="w-4 h-4 rounded-full bg-[#EAE5DC] dark:bg-[#2B2A27] text-[10px] flex items-center justify-center text-[#2B2B2B] dark:text-[#EDE8DF]">1</span>
               Ingest Fragments
             </span>
-            <span className="text-[9px] font-mono text-zinc-500">Universal Dock</span>
+            <span className="text-[9px] font-mono text-[#6B655C] dark:text-[#9E9990]">Dock</span>
           </div>
-          <p className="text-xs text-zinc-300 leading-relaxed mb-3">
-            Paste WhatsApp dev notes, Instagram reels, Drive specs, or raw markdown notes into the dock below.
+          <p className="text-xs text-[#4A453D] dark:text-[#C4BEB3] leading-relaxed mb-3 font-sans">
+            Paste WhatsApp dev notes, Instagram reels, Drive specs, or raw markdown into the dock below.
           </p>
           {onSampleClick && (
             <button
@@ -120,7 +108,7 @@ export default function OnboardingBanner({ onSampleClick }: OnboardingBannerProp
                 e.stopPropagation();
                 onSampleClick('Architecture_Spec.md: PostgreSQL HNSW vector indexing');
               }}
-              className="text-[10px] font-mono text-indigo-300 hover:text-white flex items-center gap-1 underline underline-offset-2"
+              className="text-[10px] font-mono text-[#2F4A3A] dark:text-[#B08D57] hover:underline flex items-center gap-1"
             >
               <span>Auto-fill Sample Spec</span>
               <ArrowRight className="w-3 h-3" />
@@ -131,53 +119,52 @@ export default function OnboardingBanner({ onSampleClick }: OnboardingBannerProp
         {/* Step 2 */}
         <div 
           onClick={() => setActiveStep(2)}
-          className={`cursor-pointer rounded-lg p-3.5 border transition-all duration-200 ${
+          className={`cursor-pointer rounded p-4 border transition-colors ${
             activeStep === 2 
-              ? 'bg-indigo-950/30 border-indigo-500/70 shadow-md shadow-indigo-950/30' 
-              : 'bg-[#0a0a0f] border-zinc-800/70 hover:border-zinc-700'
+              ? 'bg-[#FAF7F2] dark:bg-[#1C1C1C] border-[#2F4A3A] dark:border-[#B08D57]' 
+              : 'bg-[#EDE7DE] dark:bg-[#1E1E1D] border-[#E1D9CC] dark:border-[#33312E] hover:border-[#D1C8BA]'
           }`}
         >
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[10px] font-mono text-cyan-400 font-semibold uppercase tracking-wider flex items-center gap-1.5">
-              <span className="w-4 h-4 rounded-full bg-cyan-950 border border-cyan-600 text-[10px] flex items-center justify-center text-white">2</span>
+            <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-[#2F4A3A] dark:text-[#B08D57] flex items-center gap-1.5">
+              <span className="w-4 h-4 rounded-full bg-[#EAE5DC] dark:bg-[#2B2A27] text-[10px] flex items-center justify-center text-[#2B2B2B] dark:text-[#EDE8DF]">2</span>
               Explore Clusters
             </span>
-            <span className="text-[9px] font-mono text-zinc-500">OmniDoc Synthesis</span>
+            <span className="text-[9px] font-mono text-[#6B655C] dark:text-[#9E9990]">Synthesis</span>
           </div>
-          <p className="text-xs text-zinc-300 leading-relaxed mb-3">
-            OmniBrain clusters related items by semantic proximity. Click <strong>Synthesize</strong> to review aggregated OmniDocs and pin directives.
+          <p className="text-xs text-[#4A453D] dark:text-[#C4BEB3] leading-relaxed mb-3 font-sans">
+            OmniBrain clusters related items by semantic proximity. Click Synthesize to review aggregated OmniDocs.
           </p>
-          <div className="text-[10px] font-mono text-cyan-300 flex items-center gap-1">
-            <Layers className="w-3 h-3" />
-            <span>Cross-source clustering</span>
-          </div>
+          <span className="text-[10px] font-mono text-[#6B655C] dark:text-[#9E9990] flex items-center gap-1">
+            <span>Automated Clustering</span>
+          </span>
         </div>
 
         {/* Step 3 */}
         <div 
           onClick={() => setActiveStep(3)}
-          className={`cursor-pointer rounded-lg p-3.5 border transition-all duration-200 ${
+          className={`cursor-pointer rounded p-4 border transition-colors ${
             activeStep === 3 
-              ? 'bg-indigo-950/30 border-indigo-500/70 shadow-md shadow-indigo-950/30' 
-              : 'bg-[#0a0a0f] border-zinc-800/70 hover:border-zinc-700'
+              ? 'bg-[#FAF7F2] dark:bg-[#1C1C1C] border-[#2F4A3A] dark:border-[#B08D57]' 
+              : 'bg-[#EDE7DE] dark:bg-[#1E1E1D] border-[#E1D9CC] dark:border-[#33312E] hover:border-[#D1C8BA]'
           }`}
         >
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[10px] font-mono text-amber-400 font-semibold uppercase tracking-wider flex items-center gap-1.5">
-              <span className="w-4 h-4 rounded-full bg-amber-950 border border-amber-600 text-[10px] flex items-center justify-center text-white">3</span>
+            <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-[#2F4A3A] dark:text-[#B08D57] flex items-center gap-1.5">
+              <span className="w-4 h-4 rounded-full bg-[#EAE5DC] dark:bg-[#2B2A27] text-[10px] flex items-center justify-center text-[#2B2B2B] dark:text-[#EDE8DF]">3</span>
               Constellation Map
             </span>
-            <span className="text-[9px] font-mono text-zinc-500">2D Spatial View</span>
+            <span className="text-[9px] font-mono text-[#6B655C] dark:text-[#9E9990]">Spatial</span>
           </div>
-          <p className="text-xs text-zinc-300 leading-relaxed mb-3">
-            Open the Constellation Graph to view interconnected rounded <span className="font-mono text-indigo-300">.md</span> cards and live flow lines.
+          <p className="text-xs text-[#4A453D] dark:text-[#C4BEB3] leading-relaxed mb-3 font-sans">
+            Open the Constellation Graph to view interconnected rounded .md cards and live flow lines.
           </p>
           <Link
             href="/graph"
-            className="text-[10px] font-mono text-amber-300 hover:text-white flex items-center gap-1 underline underline-offset-2"
+            className="text-[10px] font-mono text-[#2F4A3A] dark:text-[#B08D57] hover:underline flex items-center gap-1"
           >
-            <span>Open Constellation Graph</span>
-            <Compass className="w-3 h-3" />
+            <span>Open Constellation Map</span>
+            <ArrowRight className="w-3 h-3" />
           </Link>
         </div>
       </div>

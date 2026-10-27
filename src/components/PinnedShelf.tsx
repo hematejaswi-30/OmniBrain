@@ -89,23 +89,21 @@ export default function PinnedShelf() {
   };
 
   return (
-    <section className="bg-gradient-to-b from-[#131318] to-[#0f0f14] border border-[#27272a] hover:border-zinc-700 rounded-lg p-4 mb-6 shadow-sm transition-all duration-200">
-      <div className="flex items-center justify-between border-b border-[#27272a]/80 pb-3">
+    <section className="bg-[#F4EFE7] dark:bg-[#242422] border border-[#E4DDD2] dark:border-[#33312E] rounded-xl p-5 mb-8 transition-colors">
+      <div className="flex items-center justify-between border-b border-[#E4DDD2] dark:border-[#33312E] pb-3.5">
         <div className="flex items-center gap-2">
-          <div className="w-5 h-5 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 text-xs">
-            ★
-          </div>
-          <h2 className="font-semibold text-xs text-white tracking-wide uppercase font-mono">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#2F4A3A] dark:bg-[#B08D57]" />
+          <h2 className="font-serif text-sm font-semibold text-[#2B2B2B] dark:text-[#EDE8DF] tracking-tight">
             Pinned Highlights & Directives
           </h2>
-          <span className="text-[10px] font-mono text-amber-400 bg-amber-950/40 border border-amber-800/40 px-2 py-0.5 rounded-full font-medium">
+          <span className="text-[10px] font-mono text-[#6B655C] dark:text-[#9E9990] bg-[#EAE5DC] dark:bg-[#2B2A27] border border-[#D6CEC1] dark:border-[#3B3935] px-2 py-0.5 rounded font-medium">
             {highlights.length} Pinned
           </span>
         </div>
 
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="text-zinc-500 hover:text-white p-1 rounded transition-colors text-xs flex items-center gap-1 font-mono cursor-pointer"
+          className="text-[#6B655C] dark:text-[#9E9990] hover:text-[#2B2B2B] dark:hover:text-[#EDE8DF] p-1 rounded transition-colors text-xs flex items-center gap-1 font-mono cursor-pointer"
         >
           <span>{isCollapsed ? 'Expand' : 'Collapse'}</span>
           {isCollapsed ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronUp className="w-3.5 h-3.5" />}
@@ -114,39 +112,39 @@ export default function PinnedShelf() {
 
       {!isCollapsed && (
         highlights.length === 0 ? (
-          <div className="pt-4 pb-2 text-center text-xs text-zinc-500 font-sans">
-            No pinned directives yet. Open a cluster <strong className="text-zinc-300">OmniDoc</strong> below and click the pin icon to save high-priority directives to this shelf.
+          <div className="pt-4 pb-2 text-center text-xs text-[#6B655C] dark:text-[#9E9990] font-sans">
+            No pinned directives yet. Open a cluster <strong className="text-[#2B2B2B] dark:text-[#EDE8DF]">OmniDoc</strong> below and click the pin icon to save directives to this shelf.
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-3">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 pt-4">
             {highlights.map(h => (
               <div 
                 key={h.id} 
-                className="group relative bg-[#0a0a0e] border border-[#23232b] hover:border-amber-500/40 rounded-md p-3 flex flex-col justify-between transition-all duration-200 shadow-sm"
+                className="group relative bg-[#FAF7F2] dark:bg-[#1E1E1D] border border-[#E1D9CC] dark:border-[#33312E] rounded p-4 flex flex-col justify-between transition-colors shadow-none"
               >
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-[9px] font-mono uppercase tracking-wider text-amber-400 bg-amber-950/40 border border-amber-800/40 px-1.5 py-0.5 rounded">
+                    <span className="text-[9px] font-mono uppercase tracking-wider text-[#4A453E] dark:text-[#C4BEB3] bg-[#EAE5DC] dark:bg-[#2B2A27] border border-[#D6CEC1] dark:border-[#3B3935] px-1.5 py-0.5 rounded">
                       {h.topic_cluster}
                     </span>
-                    <span className="text-[9px] font-mono text-zinc-500">
+                    <span className="text-[9px] font-mono text-[#6B655C] dark:text-[#9E9990]">
                       {h.source_badge}
                     </span>
                   </div>
-                  <p className="text-xs text-zinc-300 leading-relaxed italic line-clamp-3">
-                    "{h.highlight_text}"
+                  <p className="text-xs text-[#4A453D] dark:text-[#C4BEB3] leading-relaxed italic line-clamp-3 font-serif">
+                    &ldquo;{h.highlight_text}&rdquo;
                   </p>
                 </div>
 
-                <div className="pt-3 mt-2 border-t border-zinc-800/60 flex items-center justify-between">
+                <div className="pt-3 mt-3 border-t border-[#E8E2D8] dark:border-[#31302D] flex items-center justify-between">
                   <button
                     onClick={() => handleCopy(h.id, h.highlight_text)}
-                    className="text-[10px] font-mono text-zinc-400 hover:text-white flex items-center gap-1 transition-colors cursor-pointer"
+                    className="text-[10px] font-mono text-[#2F4A3A] dark:text-[#B08D57] hover:underline flex items-center gap-1 transition-colors cursor-pointer"
                   >
                     {copiedId === h.id ? (
                       <>
-                        <Check className="w-3 h-3 text-emerald-400" />
-                        <span className="text-emerald-400">Copied</span>
+                        <Check className="w-3 h-3" />
+                        <span>Copied</span>
                       </>
                     ) : (
                       <>
@@ -158,7 +156,7 @@ export default function PinnedShelf() {
 
                   <button
                     onClick={() => handleDelete(h.id)}
-                    className="opacity-0 group-hover:opacity-100 text-zinc-600 hover:text-rose-400 p-1 transition-opacity cursor-pointer"
+                    className="opacity-0 group-hover:opacity-100 text-[#8F897F] hover:text-[#8A4A4A] p-1 transition-opacity cursor-pointer"
                     title="Remove from Shelf"
                   >
                     <Trash2 className="w-3 h-3" />
