@@ -3,19 +3,13 @@
 
 import React, { useState } from 'react';
 import { 
-  FileText, 
-  Sparkles, 
   Copy, 
   Check, 
   Bookmark, 
   Download, 
-  Layers, 
   ExternalLink,
   ChevronRight,
-  GitBranch,
-  Terminal,
-  Clock,
-  Pin
+  GitBranch
 } from 'lucide-react';
 
 interface SourceChip {
@@ -75,54 +69,25 @@ export default function OmniDocViewer({
     setTimeout(() => setPinnedId(null), 2500);
   };
 
-  const getSourceBadgeColor = (type: string) => {
+  // 60-30-10 Classy Principle: Quiet, neutral badges (no neon rainbow)
+  const getSourceBadgeLabel = (type: string) => {
     switch (type.toLowerCase()) {
       case 'whatsapp':
-        return {
-          bg: 'bg-emerald-950/40',
-          border: 'border-emerald-600/40',
-          text: 'text-emerald-400',
-          dot: 'bg-emerald-400',
-          label: 'WhatsApp Note',
-        };
+        return 'WhatsApp Note';
       case 'gdrive':
       case 'drive':
-        return {
-          bg: 'bg-blue-950/40',
-          border: 'border-blue-600/40',
-          text: 'text-blue-400',
-          dot: 'bg-blue-400',
-          label: 'Google Doc / .md',
-        };
+        return 'Spec / .md';
       case 'instagram':
       case 'reel':
-        return {
-          bg: 'bg-rose-950/40',
-          border: 'border-rose-600/40',
-          text: 'text-rose-400',
-          dot: 'bg-rose-400',
-          label: 'Instagram Reel',
-        };
+        return 'Reel Media';
       case 'web':
-        return {
-          bg: 'bg-purple-950/40',
-          border: 'border-purple-600/40',
-          text: 'text-purple-400',
-          dot: 'bg-purple-400',
-          label: 'Web Page / Doc',
-        };
+        return 'Web Architecture';
       default:
-        return {
-          bg: 'bg-cyan-950/40',
-          border: 'border-cyan-600/40',
-          text: 'text-cyan-400',
-          dot: 'bg-cyan-400',
-          label: 'Markdown Note',
-        };
+        return 'Document';
     }
   };
 
-  // Helper to parse markdown lines with rich styling
+  // Helper to parse markdown lines with editorial styling
   const renderFormattedMarkdown = (content: string) => {
     const lines = content.split('\n');
     const elements: React.JSX.Element[] = [];
@@ -136,9 +101,9 @@ export default function OmniDocViewer({
       if (trimmed.startsWith('###')) {
         const titleText = trimmed.replace(/^###\s*/, '');
         elements.push(
-          <div key={`h3-${index}`} className="pt-2 pb-1 border-b border-[#27272a]/80 mb-3">
-            <h3 className="text-sm font-semibold tracking-wide text-white flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
+          <div key={`h3-${index}`} className="pt-3 pb-1 border-b border-[#E8E2D8] dark:border-[#31302D] mb-3">
+            <h3 className="font-serif text-base font-semibold tracking-tight text-[#2B2B2B] dark:text-[#EDE8DF] flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#2F4A3A] dark:bg-[#B08D57]" />
               {titleText}
             </h3>
           </div>
@@ -150,8 +115,8 @@ export default function OmniDocViewer({
       if (trimmed.startsWith('**Executive Overview**')) {
         currentSection = 'overview';
         elements.push(
-          <div key={`sec-ov-${index}`} className="mt-4 mb-2 flex items-center gap-1.5">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-cyan-400 font-semibold">
+          <div key={`sec-ov-${index}`} className="mt-5 mb-2 flex items-center gap-1.5">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-[#2F4A3A] dark:text-[#B08D57] font-semibold">
               EXECUTIVE OVERVIEW
             </span>
           </div>
@@ -162,12 +127,11 @@ export default function OmniDocViewer({
       if (trimmed.startsWith('**Key Architectural Directives**') || trimmed.startsWith('**Key Directives**')) {
         currentSection = 'directives';
         elements.push(
-          <div key={`sec-dir-${index}`} className="mt-4 mb-2 flex items-center justify-between">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-indigo-400 font-semibold flex items-center gap-1.5">
-              <Sparkles className="w-3 h-3 text-indigo-400" />
+          <div key={`sec-dir-${index}`} className="mt-5 mb-2 flex items-center justify-between">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-[#2F4A3A] dark:text-[#B08D57] font-semibold flex items-center gap-1.5">
               KEY DIRECTIVES & ACTION ITEMS
             </span>
-            <span className="text-[9px] font-mono text-zinc-500">Click ★ to pin</span>
+            <span className="text-[9px] font-mono text-[#8F897F]">Click bookmark to pin</span>
           </div>
         );
         return;
@@ -176,8 +140,8 @@ export default function OmniDocViewer({
       if (trimmed.startsWith('**Primary Sources Cited**') || trimmed.startsWith('**Sources Cited**')) {
         currentSection = 'sources';
         elements.push(
-          <div key={`sec-src-${index}`} className="mt-4 mb-2">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-400 font-semibold">
+          <div key={`sec-src-${index}`} className="mt-5 mb-2">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-[#6B655C] dark:text-[#9E9990] font-semibold">
               PRIMARY SOURCES CITED
             </span>
           </div>
@@ -195,13 +159,13 @@ export default function OmniDocViewer({
         elements.push(
           <div 
             key={`bullet-${index}`} 
-            className="group relative bg-[#131317] hover:bg-[#18181f] border border-[#27272a] hover:border-zinc-600 rounded-md p-3 my-2 transition-all duration-200"
+            className="group relative bg-[#FAF7F2] dark:bg-[#232321] border border-[#E1D9CC] dark:border-[#383632] hover:border-[#2F4A3A] dark:hover:border-[#B08D57] rounded p-3.5 my-2 transition-colors"
           >
             <div className="flex items-start justify-between gap-2">
-              <div className="flex-1 text-xs text-zinc-300 leading-relaxed">
+              <div className="flex-1 text-xs text-[#2B2B2B] dark:text-[#EDE8DF] leading-relaxed font-sans">
                 {boldMatch ? (
                   <>
-                    <span className="font-semibold text-white bg-zinc-800/80 px-1.5 py-0.5 rounded border border-zinc-700 mr-1.5 text-[11px] font-mono">
+                    <span className="font-semibold text-[#2B2B2B] dark:text-[#EDE8DF] bg-[#EAE5DC] dark:bg-[#2B2A27] px-1.5 py-0.5 rounded border border-[#D6CEC1] dark:border-[#3B3935] mr-1.5 text-[11px] font-mono">
                       {boldMatch[1]}
                     </span>
                     <span>{renderInlineCode(boldMatch[2])}</span>
@@ -213,11 +177,11 @@ export default function OmniDocViewer({
 
               <button
                 onClick={() => handlePin(itemContent, `item-${index}`)}
-                className="opacity-0 group-hover:opacity-100 text-zinc-400 hover:text-amber-400 p-1 transition-opacity rounded hover:bg-zinc-800"
+                className="opacity-0 group-hover:opacity-100 text-[#8F897F] hover:text-[#2F4A3A] dark:hover:text-[#B08D57] p-1 transition-opacity rounded cursor-pointer"
                 title="Pin this directive to Pinned Shelf"
               >
                 {pinnedId === `item-${index}` ? (
-                  <Check className="w-3.5 h-3.5 text-emerald-400" />
+                  <Check className="w-3.5 h-3.5 text-[#2F4A3A] dark:text-[#B08D57]" />
                 ) : (
                   <Bookmark className="w-3.5 h-3.5" />
                 )}
@@ -234,14 +198,14 @@ export default function OmniDocViewer({
           elements.push(
             <div 
               key={`p-${index}`} 
-              className="bg-gradient-to-r from-cyan-950/20 to-indigo-950/20 border-l-2 border-cyan-500 rounded-r-md p-3.5 my-2 text-xs text-zinc-200 leading-relaxed shadow-sm"
+              className="bg-[#F4EFE7] dark:bg-[#232321] border-l-2 border-[#2F4A3A] dark:border-[#B08D57] rounded-r p-3.5 my-2 text-xs text-[#2B2B2B] dark:text-[#EDE8DF] leading-relaxed font-sans"
             >
               {renderInlineCode(trimmed)}
             </div>
           );
         } else {
           elements.push(
-            <p key={`p-${index}`} className="text-xs text-zinc-300 leading-relaxed my-2">
+            <p key={`p-${index}`} className="text-xs text-[#4A453D] dark:text-[#C4BEB3] leading-relaxed my-2 font-sans">
               {renderInlineCode(trimmed)}
             </p>
           );
@@ -261,7 +225,7 @@ export default function OmniDocViewer({
         return (
           <code 
             key={i} 
-            className="font-mono text-[11px] bg-[#1a1a22] text-cyan-300 border border-[#2e2e38] px-1.5 py-0.5 rounded mx-0.5"
+            className="font-mono text-[11px] bg-[#ECE6DC] dark:bg-[#2A2927] text-[#2F4A3A] dark:text-[#B08D57] border border-[#DCD4C7] dark:border-[#383634] px-1.5 py-0.5 rounded mx-0.5"
           >
             {code}
           </code>
@@ -272,28 +236,28 @@ export default function OmniDocViewer({
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#0d0d11] text-zinc-200">
+    <div className="flex flex-col h-full bg-[#FAF7F2] dark:bg-[#1C1C1C] text-[#2B2B2B] dark:text-[#EDE8DF]">
       {/* OmniDoc Sub-Header */}
-      <div className="px-5 py-3 border-b border-[#27272a] bg-[#121217]/80 flex items-center justify-between">
+      <div className="px-6 py-3 border-b border-[#E4DDD2] dark:border-[#33312E] bg-[#F4EFE7] dark:bg-[#232321] flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-400 font-medium">
-            OmniDoc Master · <span className="text-white">{clusterTitle}</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-[#2F4A3A] dark:bg-[#B08D57]" />
+          <span className="text-[11px] font-mono uppercase tracking-wider text-[#6B655C] dark:text-[#9E9990] font-medium">
+            OmniDoc · <span className="text-[#2B2B2B] dark:text-[#EDE8DF] font-semibold">{clusterTitle}</span>
           </span>
         </div>
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-2">
           <button
             onClick={handleCopy}
-            className="flex items-center gap-1 px-2.5 py-1 text-[11px] font-medium text-zinc-300 hover:text-white bg-[#18181f] border border-[#27272a] hover:border-zinc-600 rounded transition-colors"
+            className="flex items-center gap-1 px-2.5 py-1 text-[11px] font-medium text-[#4A453D] dark:text-[#C4BEB3] hover:text-[#2B2B2B] dark:hover:text-[#EDE8DF] bg-[#FAF7F2] dark:bg-[#2A2927] border border-[#DDD5C7] dark:border-[#383632] rounded transition-colors cursor-pointer"
             title="Copy Raw Markdown"
           >
-            {copied ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+            {copied ? <Check className="w-3 h-3 text-[#2F4A3A] dark:text-[#B08D57]" /> : <Copy className="w-3 h-3" />}
             <span>{copied ? 'Copied' : 'Copy .md'}</span>
           </button>
           <button
             onClick={handleDownload}
-            className="p-1 text-zinc-400 hover:text-white bg-[#18181f] border border-[#27272a] hover:border-zinc-600 rounded transition-colors"
+            className="p-1.5 text-[#6B655C] dark:text-[#9E9990] hover:text-[#2B2B2B] dark:hover:text-[#EDE8DF] bg-[#FAF7F2] dark:bg-[#2A2927] border border-[#DDD5C7] dark:border-[#383632] rounded transition-colors cursor-pointer"
             title="Download OmniDoc .md"
           >
             <Download className="w-3.5 h-3.5" />
@@ -301,67 +265,66 @@ export default function OmniDocViewer({
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
+      <div className="flex-1 overflow-y-auto px-6 py-5 space-y-5">
         {/* ========================================================================= */}
-        {/* CONSTITUENT SOURCES NETWORK (Visual Connector & Rounded MD Files)         */}
+        {/* CONSTITUENT SOURCES NETWORK                                               */}
         {/* ========================================================================= */}
-        <div className="bg-[#131317] border border-[#27272a] rounded-lg p-3.5 shadow-md">
+        <div className="bg-[#F4EFE7] dark:bg-[#232321] border border-[#E4DDD2] dark:border-[#33312E] rounded-lg p-4">
           <div className="flex items-center justify-between mb-2.5">
-            <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-wider text-zinc-400">
-              <GitBranch className="w-3 h-3 text-cyan-400" />
-              <span>Multi-Source Provenance Map</span>
+            <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-wider text-[#6B655C] dark:text-[#9E9990]">
+              <GitBranch className="w-3 h-3 text-[#2F4A3A] dark:text-[#B08D57]" />
+              <span>Multi-Source Provenance</span>
             </div>
-            <span className="text-[9px] font-mono text-zinc-500 bg-[#1c1c24] px-1.5 py-0.5 rounded">
-              {parsedSources.length} Linked Nodes
+            <span className="text-[9px] font-mono text-[#6B655C] dark:text-[#9E9990] bg-[#EAE5DC] dark:bg-[#2B2A27] px-1.5 py-0.5 rounded">
+              {parsedSources.length} Sources
             </span>
           </div>
 
-          <p className="text-[11px] text-zinc-400 mb-3">
-            This OmniDoc is synthesized from {parsedSources.length} linked sources into one unified master markdown document:
+          <p className="text-xs text-[#6B655C] dark:text-[#9E9990] mb-3.5 font-sans">
+            Synthesized from {parsedSources.length} constituent sources into this master brief:
           </p>
 
           {/* Master Doc Tree Visualization */}
-          <div className="relative pl-3 border-l-2 border-indigo-500/50 space-y-2 py-1">
+          <div className="relative pl-3 border-l-2 border-[#2F4A3A] dark:border-[#B08D57] space-y-2 py-1">
             {/* Main MD Node badge */}
-            <div className="flex items-center gap-2 text-xs font-mono font-medium text-white bg-indigo-950/40 border border-indigo-500/50 px-2.5 py-1 rounded-md shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-indigo-400 shadow-[0_0_6px_rgba(129,140,248,0.9)]" />
-              <span>[MAIN] {clusterTitle.toLowerCase().replace(/\s+/g, '_')}_master.md</span>
+            <div className="flex items-center gap-2 text-xs font-mono font-medium text-[#2B2B2B] dark:text-[#EDE8DF] bg-[#FAF7F2] dark:bg-[#1E1E1D] border border-[#DDD5C7] dark:border-[#383632] px-2.5 py-1 rounded">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#2F4A3A] dark:bg-[#B08D57]" />
+              <span>{clusterTitle.toLowerCase().replace(/\s+/g, '_')}_master.md</span>
             </div>
 
             {/* Connecting lines to child md/source files */}
             <div className="pl-4 space-y-2">
               {parsedSources.map((src) => {
-                const style = getSourceBadgeColor(src.source_type);
+                const label = getSourceBadgeLabel(src.source_type);
                 const isSelected = selectedSource?.id === src.id;
 
                 return (
                   <div key={src.id} className="relative flex flex-col">
-                    {/* Horizontal connector line indicator */}
                     <div className="flex items-center gap-2">
-                      <div className="w-3 h-[2px] bg-zinc-700" />
+                      <div className="w-3 h-[1px] bg-[#D6CEC1] dark:bg-[#3B3935]" />
                       <button
                         onClick={() => setSelectedSource(isSelected ? null : src)}
-                        className={`flex items-center gap-2 text-[11px] font-mono px-2.5 py-1 rounded-md border transition-all ${style.bg} ${style.border} ${style.text} hover:brightness-125 cursor-pointer shadow-sm`}
+                        className="flex items-center gap-2 text-[11px] font-mono px-2.5 py-1 rounded border border-[#E1D9CC] dark:border-[#383632] bg-[#FAF7F2] dark:bg-[#1E1E1D] text-[#4A453D] dark:text-[#C4BEB3] hover:border-[#2F4A3A] dark:hover:border-[#B08D57] cursor-pointer transition-colors"
                       >
-                        <span className={`w-1.5 h-1.5 rounded-full ${style.dot}`} />
-                        <span className="font-semibold">[{style.label}]</span>
-                        <span className="truncate max-w-[200px] text-zinc-200">{src.title}</span>
-                        <ChevronRight className={`w-3 h-3 transition-transform ${isSelected ? 'rotate-90 text-white' : 'text-zinc-500'}`} />
+                        <span className="w-1 h-1 rounded-full bg-[#2F4A3A] dark:bg-[#B08D57]" />
+                        <span className="font-semibold text-[#2B2B2B] dark:text-[#EDE8DF]">[{label}]</span>
+                        <span className="truncate max-w-[200px] text-[#6B655C] dark:text-[#9E9990]">{src.title}</span>
+                        <ChevronRight className={`w-3 h-3 transition-transform ${isSelected ? 'rotate-90 text-[#2B2B2B] dark:text-white' : 'text-[#8F897F]'}`} />
                       </button>
                     </div>
 
                     {/* Expandable Snippet Preview */}
                     {isSelected && (
-                      <div className="ml-5 mt-1.5 p-2.5 bg-[#09090b] border border-zinc-700 rounded-md text-[11px] text-zinc-300 font-mono shadow-inner">
-                        <div className="text-[9px] uppercase tracking-wider text-zinc-500 mb-1 flex justify-between">
+                      <div className="ml-5 mt-2 p-3 bg-[#FAF7F2] dark:bg-[#1C1C1C] border border-[#DDD5C7] dark:border-[#383632] rounded text-xs text-[#4A453D] dark:text-[#C4BEB3] font-mono">
+                        <div className="text-[9px] uppercase tracking-wider text-[#6B655C] dark:text-[#9E9990] mb-1 flex justify-between">
                           <span>Verified Source Excerpt</span>
                           {src.url && (
-                            <a href={src.url} target="_blank" rel="noreferrer" className="text-cyan-400 hover:underline flex items-center gap-0.5">
+                            <a href={src.url} target="_blank" rel="noreferrer" className="text-[#2F4A3A] dark:text-[#B08D57] hover:underline flex items-center gap-0.5">
                               Link <ExternalLink className="w-2.5 h-2.5" />
                             </a>
                           )}
                         </div>
-                        <p className="whitespace-pre-wrap">{src.snippet || 'No raw preview available.'}</p>
+                        <p className="whitespace-pre-wrap leading-relaxed">{src.snippet || 'No raw preview available.'}</p>
                       </div>
                     )}
                   </div>
