@@ -7,43 +7,17 @@
   },
   "nodes": [
     {
-      "id": "src_components_header_headerprops",
-      "label": "HeaderProps",
+      "id": "src_app_api_search_route_seeditem",
+      "label": "SeedItem",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 13,
-      "community_name": "Header.tsx",
+      "community": 2,
+      "community_name": "next",
       "file_type": "code",
-      "norm_label": "headerprops",
-      "source_file": "src/components/Header.tsx",
-      "source_location": "L10"
-    },
-    {
-      "id": "src_lib_auth_mode_simulateduser",
-      "label": "SimulatedUser",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "Header.tsx",
-      "file_type": "code",
-      "norm_label": "simulateduser",
-      "source_file": "src/lib/auth-mode.ts",
+      "norm_label": "seeditem",
+      "source_file": "src/app/api/search/route.ts",
       "source_location": "L6"
-    },
-    {
-      "id": "src_lib_auth_mode_usermode",
-      "label": "UserMode",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "Header.tsx",
-      "file_type": "code",
-      "norm_label": "usermode",
-      "source_file": "src/lib/auth-mode.ts",
-      "source_location": "L4"
     },
     {
       "id": "src_components_constellationcanvas_constellationcanvasprops",
@@ -124,6 +98,19 @@
       "source_location": "L8"
     },
     {
+      "id": "src_components_header_headerprops",
+      "label": "HeaderProps",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "dashboard/page.tsx",
+      "file_type": "code",
+      "norm_label": "headerprops",
+      "source_file": "src/components/Header.tsx",
+      "source_location": "L10"
+    },
+    {
       "id": "src_components_omnidocviewer_omnidocviewerprops",
       "label": "OmniDocViewerProps",
       "_callable": true,
@@ -134,7 +121,7 @@
       "file_type": "code",
       "norm_label": "omnidocviewerprops",
       "source_file": "src/components/OmniDocViewer.tsx",
-      "source_location": "L29"
+      "source_location": "L23"
     },
     {
       "id": "src_components_omnidocviewer_sourcechip",
@@ -147,7 +134,7 @@
       "file_type": "code",
       "norm_label": "sourcechip",
       "source_file": "src/components/OmniDocViewer.tsx",
-      "source_location": "L21"
+      "source_location": "L15"
     },
     {
       "id": "src_components_onboardingbanner_onboardingbannerprops",
@@ -160,7 +147,7 @@
       "file_type": "code",
       "norm_label": "onboardingbannerprops",
       "source_file": "src/components/OnboardingBanner.tsx",
-      "source_location": "L18"
+      "source_location": "L12"
     },
     {
       "id": "src_components_pinnedshelf_highlight",
@@ -202,6 +189,32 @@
       "source_location": "L18"
     },
     {
+      "id": "src_lib_auth_mode_simulateduser",
+      "label": "SimulatedUser",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "dashboard/page.tsx",
+      "file_type": "code",
+      "norm_label": "simulateduser",
+      "source_file": "src/lib/auth-mode.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "src_lib_auth_mode_usermode",
+      "label": "UserMode",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "dashboard/page.tsx",
+      "file_type": "code",
+      "norm_label": "usermode",
+      "source_file": "src/lib/auth-mode.ts",
+      "source_location": "L4"
+    },
+    {
       "id": "src_lib_ingest_router_routeresult",
       "label": "RouteResult",
       "_callable": true,
@@ -241,6 +254,18 @@
       "source_location": "L3"
     },
     {
+      "id": "src_app_auth_callback_route_get",
+      "label": "GET()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "get()",
+      "source_file": "src/app/auth/callback/route.ts",
+      "source_location": "L6"
+    },
+    {
       "id": "src_app_layout_rootlayout",
       "label": "RootLayout()",
       "_callable": true,
@@ -251,66 +276,6 @@
       "norm_label": "rootlayout()",
       "source_file": "src/app/layout.tsx",
       "source_location": "L9"
-    },
-    {
-      "id": "src_app_auth_callback_route_get",
-      "label": "GET()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "Header.tsx",
-      "file_type": "code",
-      "norm_label": "get()",
-      "source_file": "src/app/auth/callback/route.ts",
-      "source_location": "L6"
-    },
-    {
-      "id": "src_components_header_header",
-      "label": "Header()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "Header.tsx",
-      "file_type": "code",
-      "norm_label": "header()",
-      "source_file": "src/components/Header.tsx",
-      "source_location": "L14"
-    },
-    {
-      "id": "src_lib_auth_mode_getsimulateduser",
-      "label": "getSimulatedUser()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "Header.tsx",
-      "file_type": "code",
-      "norm_label": "getsimulateduser()",
-      "source_file": "src/lib/auth-mode.ts",
-      "source_location": "L16"
-    },
-    {
-      "id": "src_lib_auth_mode_setsimulateduser",
-      "label": "setSimulatedUser()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "Header.tsx",
-      "file_type": "code",
-      "norm_label": "setsimulateduser()",
-      "source_file": "src/lib/auth-mode.ts",
-      "source_location": "L26"
-    },
-    {
-      "id": "src_lib_supabase_client_createclient",
-      "label": "createClient()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "Header.tsx",
-      "file_type": "code",
-      "norm_label": "createclient()",
-      "source_file": "src/lib/supabase/client.ts",
-      "source_location": "L4"
     },
     {
       "id": "src_app_api_clusters_route_get",
@@ -385,6 +350,18 @@
       "source_location": "L7"
     },
     {
+      "id": "src_app_api_search_route_post",
+      "label": "POST()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "next",
+      "file_type": "code",
+      "norm_label": "post()",
+      "source_file": "src/app/api/search/route.ts",
+      "source_location": "L69"
+    },
+    {
       "id": "src_app_api_synthesize_route_post",
       "label": "POST()",
       "_callable": true,
@@ -454,7 +431,7 @@
       "file_type": "code",
       "norm_label": "constellationcanvas()",
       "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L88"
+      "source_location": "L89"
     },
     {
       "id": "src_components_constellationcanvas_drawroundedrect",
@@ -466,7 +443,7 @@
       "file_type": "code",
       "norm_label": "drawroundedrect()",
       "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L60"
+      "source_location": "L62"
     },
     {
       "id": "src_components_constellationcanvas_truncatelabel",
@@ -478,7 +455,7 @@
       "file_type": "code",
       "norm_label": "truncatelabel()",
       "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L81"
+      "source_location": "L83"
     },
     {
       "id": "src_app_dashboard_page_dashboardpage",
@@ -505,6 +482,18 @@
       "source_location": "L28"
     },
     {
+      "id": "src_components_header_header",
+      "label": "Header()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "dashboard/page.tsx",
+      "file_type": "code",
+      "norm_label": "header()",
+      "source_file": "src/components/Header.tsx",
+      "source_location": "L14"
+    },
+    {
       "id": "src_components_omnidocviewer_omnidocviewer",
       "label": "OmniDocViewer()",
       "_callable": true,
@@ -514,7 +503,7 @@
       "file_type": "code",
       "norm_label": "omnidocviewer()",
       "source_file": "src/components/OmniDocViewer.tsx",
-      "source_location": "L36"
+      "source_location": "L30"
     },
     {
       "id": "src_components_onboardingbanner_onboardingbanner",
@@ -526,7 +515,7 @@
       "file_type": "code",
       "norm_label": "onboardingbanner()",
       "source_file": "src/components/OnboardingBanner.tsx",
-      "source_location": "L22"
+      "source_location": "L16"
     },
     {
       "id": "src_components_pinnedshelf_pinnedshelf",
@@ -551,6 +540,42 @@
       "norm_label": "synthesisdrawer()",
       "source_file": "src/components/SynthesisDrawer.tsx",
       "source_location": "L25"
+    },
+    {
+      "id": "src_lib_auth_mode_getsimulateduser",
+      "label": "getSimulatedUser()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "dashboard/page.tsx",
+      "file_type": "code",
+      "norm_label": "getsimulateduser()",
+      "source_file": "src/lib/auth-mode.ts",
+      "source_location": "L16"
+    },
+    {
+      "id": "src_lib_auth_mode_setsimulateduser",
+      "label": "setSimulatedUser()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "dashboard/page.tsx",
+      "file_type": "code",
+      "norm_label": "setsimulateduser()",
+      "source_file": "src/lib/auth-mode.ts",
+      "source_location": "L26"
+    },
+    {
+      "id": "src_lib_supabase_client_createclient",
+      "label": "createClient()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "dashboard/page.tsx",
+      "file_type": "code",
+      "norm_label": "createclient()",
+      "source_file": "src/lib/supabase/client.ts",
+      "source_location": "L4"
     },
     {
       "id": "src_components_omnibox_omnibox",
@@ -593,7 +618,7 @@
       "label": "README.md",
       "_origin": "ast",
       "community": 0,
-      "community_name": "README.md",
+      "community_name": "\ud83c\udf0c OmniBrain",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "readme.md",
@@ -601,16 +626,232 @@
       "source_location": "L1"
     },
     {
-      "id": "readme_omnibrain_workspace",
-      "label": "OmniBrain Workspace",
+      "id": "readme_1_clone_the_repository",
+      "label": "1. Clone the repository",
       "_origin": "ast",
       "community": 0,
-      "community_name": "README.md",
+      "community_name": "\ud83c\udf0c OmniBrain",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "omnibrain workspace",
+      "norm_label": "1. clone the repository",
+      "source_file": "README.md",
+      "source_location": "L116"
+    },
+    {
+      "id": "readme_1_universal_omni_ingestion_dock",
+      "label": "1. \u26a1 Universal Omni Ingestion Dock",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "\ud83c\udf0c OmniBrain",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "1. \u26a1 universal omni ingestion dock",
+      "source_file": "README.md",
+      "source_location": "L39"
+    },
+    {
+      "id": "readme_2_conversational_semantic_search_ask_omnibrain",
+      "label": "2. \ud83d\udcac Conversational Semantic Search (\"Ask OmniBrain\")",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "\ud83c\udf0c OmniBrain",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "2. \ud83d\udcac conversational semantic search (\"ask omnibrain\")",
+      "source_file": "README.md",
+      "source_location": "L50"
+    },
+    {
+      "id": "readme_2_install_dependencies",
+      "label": "2. Install dependencies",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "\ud83c\udf0c OmniBrain",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "2. install dependencies",
+      "source_file": "README.md",
+      "source_location": "L122"
+    },
+    {
+      "id": "readme_3_configure_environment_variables_optional_for_demo_mode",
+      "label": "3. Configure environment variables (Optional for Demo Mode)",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "\ud83c\udf0c OmniBrain",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "3. configure environment variables (optional for demo mode)",
+      "source_file": "README.md",
+      "source_location": "L127"
+    },
+    {
+      "id": "readme_3_light_paper_studio_mode",
+      "label": "3. \ud83d\udcdc Light Paper Studio Mode",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "\ud83c\udf0c OmniBrain",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "3. \ud83d\udcdc light paper studio mode",
+      "source_file": "README.md",
+      "source_location": "L60"
+    },
+    {
+      "id": "readme_4_multi_source_omnidoc_synthesis",
+      "label": "4. \ud83d\udcd1 Multi-Source OmniDoc Synthesis",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "\ud83c\udf0c OmniBrain",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "4. \ud83d\udcd1 multi-source omnidoc synthesis",
+      "source_file": "README.md",
+      "source_location": "L67"
+    },
+    {
+      "id": "readme_4_run_the_development_server",
+      "label": "4. Run the development server",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "\ud83c\udf0c OmniBrain",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "4. run the development server",
+      "source_file": "README.md",
+      "source_location": "L138"
+    },
+    {
+      "id": "readme_5_zero_friction_demo_guest_mode",
+      "label": "5. \ud83d\ude80 Zero-Friction Demo / Guest Mode",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "\ud83c\udf0c OmniBrain",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "5. \ud83d\ude80 zero-friction demo / guest mode",
+      "source_file": "README.md",
+      "source_location": "L75"
+    },
+    {
+      "id": "readme_architecture_data_flow",
+      "label": "\ud83c\udfd7\ufe0f Architecture & Data Flow",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "\ud83c\udf0c OmniBrain",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83c\udfd7\ufe0f architecture & data flow",
+      "source_file": "README.md",
+      "source_location": "L82"
+    },
+    {
+      "id": "readme_contributing",
+      "label": "\ud83e\udd1d Contributing",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "\ud83c\udf0c OmniBrain",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83e\udd1d contributing",
+      "source_file": "README.md",
+      "source_location": "L147"
+    },
+    {
+      "id": "readme_core_features_screenshots",
+      "label": "\u2728 Core Features & Screenshots",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "\ud83c\udf0c OmniBrain",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\u2728 core features & screenshots",
+      "source_file": "README.md",
+      "source_location": "L37"
+    },
+    {
+      "id": "readme_license",
+      "label": "\ud83d\udcc4 License",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "\ud83c\udf0c OmniBrain",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83d\udcc4 license",
+      "source_file": "README.md",
+      "source_location": "L158"
+    },
+    {
+      "id": "readme_omnibrain",
+      "label": "\ud83c\udf0c OmniBrain",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "\ud83c\udf0c OmniBrain",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83c\udf0c omnibrain",
       "source_file": "README.md",
       "source_location": "L1"
+    },
+    {
+      "id": "readme_quickstart_guide",
+      "label": "\ud83d\ude80 Quickstart Guide",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "\ud83c\udf0c OmniBrain",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83d\ude80 quickstart guide",
+      "source_file": "README.md",
+      "source_location": "L114"
+    },
+    {
+      "id": "readme_tech_stack",
+      "label": "\ud83d\udee0\ufe0f Tech Stack",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "\ud83c\udf0c OmniBrain",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83d\udee0\ufe0f tech stack",
+      "source_file": "README.md",
+      "source_location": "L103"
+    },
+    {
+      "id": "readme_the_constellation_map_cosmic_nebula_mode",
+      "label": "\ud83e\ude90 The Constellation Map (Cosmic Nebula Mode)",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "\ud83c\udf0c OmniBrain",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83e\ude90 the constellation map (cosmic nebula mode)",
+      "source_file": "README.md",
+      "source_location": "L16"
+    },
+    {
+      "id": "readme_the_problem_the_bookmark_cemetery",
+      "label": "\ud83d\udca1 The Problem: The \"Bookmark Cemetery\"",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "\ud83c\udf0c OmniBrain",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83d\udca1 the problem: the \"bookmark cemetery\"",
+      "source_file": "README.md",
+      "source_location": "L23"
+    },
+    {
+      "id": "readme_visual_showcase",
+      "label": "\ud83d\udcf8 Visual Showcase",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "\ud83c\udf0c OmniBrain",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83d\udcf8 visual showcase",
+      "source_file": "README.md",
+      "source_location": "L14"
     },
     {
       "id": "package",
@@ -712,26 +953,15 @@
       "source_location": "L3"
     },
     {
-      "id": "tailwind_config",
-      "label": "tailwind.config.ts",
+      "id": "src_app_auth_callback_route",
+      "label": "callback/route.ts",
       "_origin": "ast",
       "community": 1,
       "community_name": "package.json",
       "file_type": "code",
-      "norm_label": "tailwind.config.ts",
-      "source_file": "tailwind.config.ts",
+      "norm_label": "callback/route.ts",
+      "source_file": "src/app/auth/callback/route.ts",
       "source_location": "L1"
-    },
-    {
-      "id": "tailwind_config_config",
-      "label": "config",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "config",
-      "source_file": "tailwind.config.ts",
-      "source_location": "L3"
     },
     {
       "id": "ref_autoprefixer",
@@ -767,15 +997,15 @@
       "source_location": "L19"
     },
     {
-      "id": "ref_supabase_supabase_js",
-      "label": "@supabase/supabase-js",
+      "id": "ref_supabase_ssr",
+      "label": "@supabase/ssr",
       "_origin": "ast",
       "community": 1,
       "community_name": "package.json",
       "file_type": "concept",
-      "norm_label": "@supabase/supabase-js",
+      "norm_label": "@supabase/ssr",
       "source_file": "package.json",
-      "source_location": "L14"
+      "source_location": "L13"
     },
     {
       "id": "ref_tailwindcss",
@@ -901,59 +1131,37 @@
       "source_location": "L1"
     },
     {
-      "id": "src_app_auth_callback_route",
-      "label": "callback/route.ts",
+      "id": "vercel",
+      "label": "vercel.json",
       "_origin": "ast",
       "community": 13,
-      "community_name": "Header.tsx",
+      "community_name": "vercel.json",
       "file_type": "code",
-      "norm_label": "callback/route.ts",
-      "source_file": "src/app/auth/callback/route.ts",
+      "norm_label": "vercel.json",
+      "source_file": "vercel.json",
       "source_location": "L1"
     },
     {
-      "id": "src_components_header",
-      "label": "Header.tsx",
+      "id": "vercel_framework",
+      "label": "framework",
       "_origin": "ast",
       "community": 13,
-      "community_name": "Header.tsx",
+      "community_name": "vercel.json",
       "file_type": "code",
-      "norm_label": "header.tsx",
-      "source_file": "src/components/Header.tsx",
-      "source_location": "L1"
+      "norm_label": "framework",
+      "source_file": "vercel.json",
+      "source_location": "L2"
     },
     {
-      "id": "src_lib_auth_mode",
-      "label": "auth-mode.ts",
+      "id": "vercel_installcommand",
+      "label": "installCommand",
       "_origin": "ast",
       "community": 13,
-      "community_name": "Header.tsx",
+      "community_name": "vercel.json",
       "file_type": "code",
-      "norm_label": "auth-mode.ts",
-      "source_file": "src/lib/auth-mode.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_lib_supabase_client",
-      "label": "client.ts",
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "Header.tsx",
-      "file_type": "code",
-      "norm_label": "client.ts",
-      "source_file": "src/lib/supabase/client.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "ref_supabase_ssr",
-      "label": "@supabase/ssr",
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "Header.tsx",
-      "file_type": "concept",
-      "norm_label": "@supabase/ssr",
-      "source_file": "package.json",
-      "source_location": "L13"
+      "norm_label": "installcommand",
+      "source_file": "vercel.json",
+      "source_location": "L3"
     },
     {
       "id": "src_app_api_clusters_route",
@@ -1022,6 +1230,28 @@
       "source_location": "L1"
     },
     {
+      "id": "src_app_api_search_route",
+      "label": "search/route.ts",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "next",
+      "file_type": "code",
+      "norm_label": "search/route.ts",
+      "source_file": "src/app/api/search/route.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_app_api_search_route_seed_knowledge",
+      "label": "SEED_KNOWLEDGE",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "next",
+      "file_type": "code",
+      "norm_label": "seed_knowledge",
+      "source_file": "src/app/api/search/route.ts",
+      "source_location": "L16"
+    },
+    {
       "id": "src_app_api_synthesize_route",
       "label": "synthesize/route.ts",
       "_origin": "ast",
@@ -1086,6 +1316,17 @@
       "norm_label": "next",
       "source_file": "package.json",
       "source_location": "L17"
+    },
+    {
+      "id": "ref_supabase_supabase_js",
+      "label": "@supabase/supabase-js",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "next",
+      "file_type": "concept",
+      "norm_label": "@supabase/supabase-js",
+      "source_file": "package.json",
+      "source_location": "L14"
     },
     {
       "id": "tsconfig",
@@ -1349,7 +1590,7 @@
       "file_type": "code",
       "norm_label": "dark_source_config",
       "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L49"
+      "source_location": "L51"
     },
     {
       "id": "src_components_constellationcanvas_forcegraph2d",
@@ -1371,7 +1612,7 @@
       "file_type": "code",
       "norm_label": "light_source_config",
       "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L38"
+      "source_location": "L40"
     },
     {
       "id": "ref_react_force_graph_2d",
@@ -1404,6 +1645,17 @@
       "file_type": "code",
       "norm_label": "clustercardsgrid.tsx",
       "source_file": "src/components/ClusterCardsGrid.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_components_header",
+      "label": "Header.tsx",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "dashboard/page.tsx",
+      "file_type": "code",
+      "norm_label": "header.tsx",
+      "source_file": "src/components/Header.tsx",
       "source_location": "L1"
     },
     {
@@ -1459,6 +1711,28 @@
       "file_type": "code",
       "norm_label": "synthesisdrawer.tsx",
       "source_file": "src/components/SynthesisDrawer.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_lib_auth_mode",
+      "label": "auth-mode.ts",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "dashboard/page.tsx",
+      "file_type": "code",
+      "norm_label": "auth-mode.ts",
+      "source_file": "src/lib/auth-mode.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_lib_supabase_client",
+      "label": "client.ts",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "dashboard/page.tsx",
+      "file_type": "code",
+      "norm_label": "client.ts",
+      "source_file": "src/lib/supabase/client.ts",
       "source_location": "L1"
     },
     {
@@ -1872,6 +2146,18 @@
       "weight": 1.0
     },
     {
+      "source": "src_app_api_search_route_post",
+      "target": "src_lib_supabase_server_createserverclient",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/app/api/search/route.ts",
+      "source_location": "L82",
+      "weight": 1.0
+    },
+    {
       "source": "src_app_api_synthesize_route_post",
       "target": "src_lib_supabase_server_createserverclient",
       "relation": "calls",
@@ -1885,30 +2171,6 @@
     },
     {
       "source": "src_app_dashboard_page_dashboardpage",
-      "target": "src_components_pinnedshelf_pinnedshelf",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "src/app/dashboard/page.tsx",
-      "source_location": "L187",
-      "weight": 1.0
-    },
-    {
-      "source": "src_app_dashboard_page_dashboardpage",
-      "target": "src_components_clustercardsgrid_clustercardsgrid",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "src/app/dashboard/page.tsx",
-      "source_location": "L206",
-      "weight": 1.0
-    },
-    {
-      "source": "src_app_dashboard_page_dashboardpage",
       "target": "src_components_header_header",
       "relation": "calls",
       "_origin": "ast",
@@ -1916,7 +2178,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/app/dashboard/page.tsx",
-      "source_location": "L73",
+      "source_location": "L134",
       "weight": 1.0
     },
     {
@@ -1928,7 +2190,31 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/app/dashboard/page.tsx",
-      "source_location": "L78",
+      "source_location": "L139",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_dashboard_page_dashboardpage",
+      "target": "src_components_pinnedshelf_pinnedshelf",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/app/dashboard/page.tsx",
+      "source_location": "L330",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_dashboard_page_dashboardpage",
+      "target": "src_components_clustercardsgrid_clustercardsgrid",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/app/dashboard/page.tsx",
+      "source_location": "L349",
       "weight": 1.0
     },
     {
@@ -1940,7 +2226,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/app/graph/page.tsx",
-      "source_location": "L132",
+      "source_location": "L167",
       "weight": 1.0
     },
     {
@@ -1952,7 +2238,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/app/graph/page.tsx",
-      "source_location": "L362",
+      "source_location": "L425",
       "weight": 1.0
     },
     {
@@ -1964,7 +2250,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/app/graph/page.tsx",
-      "source_location": "L370",
+      "source_location": "L434",
       "weight": 1.0
     },
     {
@@ -1976,7 +2262,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/components/ClusterCardsGrid.tsx",
-      "source_location": "L165",
+      "source_location": "L152",
       "weight": 1.0
     },
     {
@@ -1988,7 +2274,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L235",
+      "source_location": "L296",
       "weight": 1.0
     },
     {
@@ -2000,7 +2286,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L282",
+      "source_location": "L337",
       "weight": 1.0
     },
     {
@@ -2012,7 +2298,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L328",
+      "source_location": "L358",
       "weight": 1.0
     },
     {
@@ -2024,7 +2310,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/components/Header.tsx",
-      "source_location": "L107",
+      "source_location": "L102",
       "weight": 1.0
     },
     {
@@ -2072,7 +2358,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/components/SynthesisDrawer.tsx",
-      "source_location": "L193",
+      "source_location": "L201",
       "weight": 1.0
     },
     {
@@ -2350,6 +2636,18 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/app/api/ingest/route.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_api_search_route",
+      "target": "src_lib_supabase_server_createserverclient",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/app/api/search/route.ts",
       "source_location": "L4",
       "weight": 1.0
     },
@@ -2687,6 +2985,42 @@
       "context": "import",
       "source_file": "src/app/api/ingest/route.ts",
       "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_api_search_route",
+      "target": "ref_next",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/app/api/search/route.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_api_search_route",
+      "target": "ref_google_generative_ai",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/app/api/search/route.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_api_search_route",
+      "target": "src_lib_supabase_server",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/app/api/search/route.ts",
+      "source_location": "L4",
       "weight": 1.0
     },
     {
@@ -3231,19 +3565,6 @@
       "weight": 1.0
     },
     {
-      "source": "tailwind_config",
-      "target": "ref_tailwindcss",
-      "relation": "imports_from",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "tailwind.config.ts",
-      "source_location": "L1",
-      "type_only": true,
-      "weight": 1.0
-    },
-    {
       "source": "agents",
       "target": "agents_this_is_not_the_next_js_you_know",
       "relation": "contains",
@@ -3542,13 +3863,211 @@
     },
     {
       "source": "readme",
-      "target": "readme_omnibrain_workspace",
+      "target": "readme_omnibrain",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
       "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_core_features_screenshots",
+      "target": "readme_1_universal_omni_ingestion_dock",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_core_features_screenshots",
+      "target": "readme_2_conversational_semantic_search_ask_omnibrain",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L50",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_core_features_screenshots",
+      "target": "readme_3_light_paper_studio_mode",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L60",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_core_features_screenshots",
+      "target": "readme_4_multi_source_omnidoc_synthesis",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L67",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_core_features_screenshots",
+      "target": "readme_5_zero_friction_demo_guest_mode",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L75",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_omnibrain",
+      "target": "readme_tech_stack",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L103",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_omnibrain",
+      "target": "readme_quickstart_guide",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L114",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_omnibrain",
+      "target": "readme_visual_showcase",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_omnibrain",
+      "target": "readme_contributing",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L147",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_omnibrain",
+      "target": "readme_license",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L158",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_omnibrain",
+      "target": "readme_the_problem_the_bookmark_cemetery",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_omnibrain",
+      "target": "readme_core_features_screenshots",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_omnibrain",
+      "target": "readme_architecture_data_flow",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L82",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_quickstart_guide",
+      "target": "readme_1_clone_the_repository",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L116",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_quickstart_guide",
+      "target": "readme_2_install_dependencies",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L122",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_quickstart_guide",
+      "target": "readme_3_configure_environment_variables_optional_for_demo_mode",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L127",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_quickstart_guide",
+      "target": "readme_4_run_the_development_server",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L138",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_visual_showcase",
+      "target": "readme_the_constellation_map_cosmic_nebula_mode",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L16",
       "weight": 1.0
     },
     {
@@ -3637,6 +4156,39 @@
       "confidence_score": 1.0,
       "source_file": "src/app/api/ingest/route.ts",
       "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_api_search_route",
+      "target": "src_app_api_search_route_seed_knowledge",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/api/search/route.ts",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_api_search_route",
+      "target": "src_app_api_search_route_seeditem",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/api/search/route.ts",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_api_search_route",
+      "target": "src_app_api_search_route_post",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/api/search/route.ts",
+      "source_location": "L69",
       "weight": 1.0
     },
     {
@@ -3823,7 +4375,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L38",
+      "source_location": "L40",
       "weight": 1.0
     },
     {
@@ -3834,7 +4386,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L49",
+      "source_location": "L51",
       "weight": 1.0
     },
     {
@@ -3845,7 +4397,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L60",
+      "source_location": "L62",
       "weight": 1.0
     },
     {
@@ -3867,7 +4419,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L81",
+      "source_location": "L83",
       "weight": 1.0
     },
     {
@@ -3878,7 +4430,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L88",
+      "source_location": "L89",
       "weight": 1.0
     },
     {
@@ -3922,7 +4474,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/OmniDocViewer.tsx",
-      "source_location": "L21",
+      "source_location": "L15",
       "weight": 1.0
     },
     {
@@ -3933,7 +4485,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/OmniDocViewer.tsx",
-      "source_location": "L29",
+      "source_location": "L23",
       "weight": 1.0
     },
     {
@@ -3944,7 +4496,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/OmniDocViewer.tsx",
-      "source_location": "L36",
+      "source_location": "L30",
       "weight": 1.0
     },
     {
@@ -3955,7 +4507,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/OnboardingBanner.tsx",
-      "source_location": "L18",
+      "source_location": "L12",
       "weight": 1.0
     },
     {
@@ -3966,7 +4518,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/OnboardingBanner.tsx",
-      "source_location": "L22",
+      "source_location": "L16",
       "weight": 1.0
     },
     {
@@ -4168,17 +4720,6 @@
       "weight": 1.0
     },
     {
-      "source": "tailwind_config",
-      "target": "tailwind_config_config",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "tailwind.config.ts",
-      "source_location": "L3",
-      "weight": 1.0
-    },
-    {
       "source": "tsconfig",
       "target": "tsconfig_compileroptions",
       "relation": "contains",
@@ -4377,6 +4918,28 @@
       "weight": 1.0
     },
     {
+      "source": "vercel",
+      "target": "vercel_framework",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "vercel.json",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "vercel",
+      "target": "vercel_installcommand",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "vercel.json",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
       "source": "src_components_constellationcanvas",
       "target": "react_force_graph_2d",
       "relation": "dynamic_import",
@@ -4398,5 +4961,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "3db2fbc42355356ea0721a09ea43013835263b28"
+  "built_at_commit": "661930f243b3e080259c686cfc90df1de5b166bc"
 }
