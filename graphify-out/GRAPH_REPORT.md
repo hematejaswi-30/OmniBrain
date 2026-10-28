@@ -1,17 +1,17 @@
-# Graph Report - OmniBrain  (2026-10-27)
+# Graph Report - OmniBrain  (2026-10-28)
 
 ## Corpus Check
-- 33 files · ~50,988 words
+- 33 files · ~51,461 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 3 file(s) not represented in the graph (top: .example 1, (none) 1, .css 1)
 
 ## Summary
-- 178 nodes · 252 edges · 16 communities (9 shown, 7 thin omitted)
+- 180 nodes · 272 edges · 16 communities (9 shown, 7 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `661930f2`
+- Built from commit: `0d60b5f2`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -30,28 +30,28 @@
 - vercel.json
 
 ## God Nodes (most connected - your core abstractions)
-1. `compilerOptions` - 16 edges
-2. `next` - 15 edges
-3. `createServerClient()` - 15 edges
-4. `react` - 11 edges
-5. `lucide-react` - 9 edges
-6. `🌌 OmniBrain` - 9 edges
-7. `Header()` - 8 edges
-8. `SynthesisDrawer()` - 6 edges
-9. `✨ Core Features & Screenshots` - 6 edges
-10. `scripts` - 5 edges
+1. `next` - 16 edges
+2. `createServerClient()` - 16 edges
+3. `compilerOptions` - 16 edges
+4. `getAuthUser()` - 15 edges
+5. `react` - 11 edges
+6. `lucide-react` - 9 edges
+7. `🌌 OmniBrain` - 9 edges
+8. `Header()` - 8 edges
+9. `SynthesisDrawer()` - 6 edges
+10. `✨ Core Features & Screenshots` - 6 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `GET()` --calls--> `createServerClient()`  [EXTRACTED]
-  src/app/api/clusters/route.ts → src/lib/supabase/server.ts
-- `GET()` --calls--> `createServerClient()`  [EXTRACTED]
-  src/app/api/graph/route.ts → src/lib/supabase/server.ts
-- `GET()` --calls--> `createServerClient()`  [EXTRACTED]
-  src/app/api/highlights/route.ts → src/lib/supabase/server.ts
-- `POST()` --calls--> `createServerClient()`  [EXTRACTED]
-  src/app/api/highlights/route.ts → src/lib/supabase/server.ts
 - `DELETE()` --calls--> `createServerClient()`  [EXTRACTED]
   src/app/api/highlights/route.ts → src/lib/supabase/server.ts
+- `GraphPage()` --calls--> `Header()`  [EXTRACTED]
+  src/app/graph/page.tsx → src/components/Header.tsx
+- `GraphPage()` --calls--> `SynthesisDrawer()`  [EXTRACTED]
+  src/app/graph/page.tsx → src/components/SynthesisDrawer.tsx
+- `GET()` --calls--> `createServerClient()`  [EXTRACTED]
+  src/app/api/clusters/route.ts → src/lib/supabase/server.ts
+- `GET()` --calls--> `getAuthUser()`  [EXTRACTED]
+  src/app/api/clusters/route.ts → src/lib/supabase/server.ts
 
 ## Import Cycles
 - None detected.
@@ -63,12 +63,12 @@ Cohesion: 0.10
 Nodes (19): 1. Clone the repository, 1. ⚡ Universal Omni Ingestion Dock, 2. 💬 Conversational Semantic Search ("Ask OmniBrain"), 2. Install dependencies, 3. Configure environment variables (Optional for Demo Mode), 3. 📜 Light Paper Studio Mode, 4. 📑 Multi-Source OmniDoc Synthesis, 4. Run the development server (+11 more)
 
 ### Community 1 - "package.json"
-Cohesion: 0.10
-Nodes (18): name, private, scripts, build, dev, lint, start, version (+10 more)
+Cohesion: 0.09
+Nodes (19): name, private, scripts, build, dev, lint, start, version (+11 more)
 
 ### Community 2 - "next"
-Cohesion: 0.14
-Nodes (18): @google/generative-ai, next, @supabase/supabase-js, GET(), SEED_CLUSTERS, GET(), SEED_GRAPH, DELETE() (+10 more)
+Cohesion: 0.17
+Nodes (19): @google/generative-ai, next, GET(), SEED_CLUSTERS, GET(), SEED_GRAPH, DELETE(), GET() (+11 more)
 
 ### Community 3 - "compilerOptions"
 Cohesion: 0.11
@@ -103,16 +103,16 @@ Nodes (7): devDependencies, autoprefixer, @tailwindcss/postcss, @types/node, @ty
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `next` connect `next` to `package.json`, `layout.tsx`, `ConstellationCanvas.tsx`, `dashboard/page.tsx`?**
-  _High betweenness centrality (0.208) - this node is a cross-community bridge._
+  _High betweenness centrality (0.211) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `private` to the rest of the system?**
   _91 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `🌌 OmniBrain` be split into smaller, more focused modules?**
   _Cohesion score 0.1 - nodes in this community are weakly interconnected._
 - **Why does `react` connect `dashboard/page.tsx` to `package.json`, `ConstellationCanvas.tsx`, `ingest-router.ts`?**
-  _High betweenness centrality (0.100) - this node is a cross-community bridge._
+  _High betweenness centrality (0.098) - this node is a cross-community bridge._
 - **Should `package.json` be split into smaller, more focused modules?**
-  _Cohesion score 0.09523809523809523 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09090909090909091 - nodes in this community are weakly interconnected._
 - **Why does `dependencies` connect `dependencies` to `package.json`?**
   _High betweenness centrality (0.077) - this node is a cross-community bridge._
-- **Should `next` be split into smaller, more focused modules?**
-  _Cohesion score 0.13675213675213677 - nodes in this community are weakly interconnected._
+- **Should `compilerOptions` be split into smaller, more focused modules?**
+  _Cohesion score 0.10526315789473684 - nodes in this community are weakly interconnected._

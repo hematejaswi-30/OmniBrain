@@ -1,7 +1,7 @@
 // src/app/api/search/route.ts
 import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { createServerClient } from '@/lib/supabase/server';
+import { createServerClient, getAuthUser } from '@/lib/supabase/server';
 
 interface SeedItem {
   id: string;
@@ -79,8 +79,8 @@ export async function POST(req: Request) {
     const queryWords = queryLower.split(/\W+/).filter(w => w.length > 2);
 
     // 1. Check for logged-in user and query Supabase
-    const supabase = createServerClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    const supabase = await createServerClient();
+    const user = await getAuthUser(supabase);
 
     let candidateSources: Array<{
       id: string;

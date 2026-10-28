@@ -1,6 +1,6 @@
 // src/app/api/graph/route.ts
 import { NextResponse } from 'next/server';
-import { createServerClient } from '@/lib/supabase/server';
+import { createServerClient, getAuthUser } from '@/lib/supabase/server';
 
 // Rich starter graph featuring Markdown documents, knowledge clusters, and source notes
 const SEED_GRAPH = {
@@ -121,8 +121,8 @@ export async function GET(request: Request) {
       return NextResponse.json({ nodes: [], links: [] });
     }
 
-    const supabase = createServerClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    const supabase = await createServerClient();
+    const user = await getAuthUser(supabase);
 
     // If no logged in user and not clean mode, return rich starter demo graph for guests
     if (!user) {

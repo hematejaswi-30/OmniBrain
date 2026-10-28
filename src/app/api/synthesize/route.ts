@@ -1,7 +1,7 @@
 // src/app/api/synthesize/route.ts
 import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { createServerClient } from '@/lib/supabase/server';
+import { createServerClient, getAuthUser } from '@/lib/supabase/server';
 
 // Pre-compiled starter briefs for instant preview on empty databases
 const DEMO_BRIEFS: Record<string, string> = {
@@ -57,8 +57,8 @@ export async function POST(req: Request) {
     }
 
     // 1. Try querying Supabase for user's live saved items
-    const supabase = createServerClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    const supabase = await createServerClient();
+    const user = await getAuthUser(supabase);
 
     let items: any[] = [];
     if (user) {

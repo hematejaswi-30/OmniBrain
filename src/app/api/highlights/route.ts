@@ -1,10 +1,10 @@
 // src/app/api/highlights/route.ts
 import { NextResponse } from 'next/server';
-import { createServerClient } from '@/lib/supabase/server';
+import { createServerClient, getAuthUser } from '@/lib/supabase/server';
 
 export async function GET() {
-  const supabase = createServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const supabase = await createServerClient();
+  const user = await getAuthUser(supabase);
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const { data, error } = await supabase
@@ -18,8 +18,8 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const supabase = createServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const supabase = await createServerClient();
+  const user = await getAuthUser(supabase);
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const { topic_cluster, highlight_text, source_badge, item_id } = await req.json();
@@ -35,7 +35,7 @@ export async function POST(req: Request) {
 }
 
 export async function DELETE(req: Request) {
-  const supabase = createServerClient();
+  const supabase = await createServerClient();
   const { searchParams } = new URL(req.url);
   const id = searchParams.get('id');
 

@@ -398,6 +398,18 @@
       "source_location": "L16"
     },
     {
+      "id": "src_lib_supabase_server_createadminclient",
+      "label": "createAdminClient()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "next",
+      "file_type": "code",
+      "norm_label": "createadminclient()",
+      "source_file": "src/lib/supabase/server.ts",
+      "source_location": "L39"
+    },
+    {
       "id": "src_lib_supabase_server_createserverclient",
       "label": "createServerClient()",
       "_callable": true,
@@ -407,7 +419,19 @@
       "file_type": "code",
       "norm_label": "createserverclient()",
       "source_file": "src/lib/supabase/server.ts",
-      "source_location": "L7"
+      "source_location": "L10"
+    },
+    {
+      "id": "src_lib_supabase_server_getauthuser",
+      "label": "getAuthUser()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "next",
+      "file_type": "code",
+      "norm_label": "getauthuser()",
+      "source_file": "src/lib/supabase/server.ts",
+      "source_location": "L50"
     },
     {
       "id": "src_app_graph_page_graphpage",
@@ -1008,6 +1032,17 @@
       "source_location": "L13"
     },
     {
+      "id": "ref_supabase_supabase_js",
+      "label": "@supabase/supabase-js",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "package.json",
+      "file_type": "concept",
+      "norm_label": "@supabase/supabase-js",
+      "source_file": "package.json",
+      "source_location": "L14"
+    },
+    {
       "id": "ref_tailwindcss",
       "label": "tailwindcss",
       "_origin": "ast",
@@ -1316,17 +1351,6 @@
       "norm_label": "next",
       "source_file": "package.json",
       "source_location": "L17"
-    },
-    {
-      "id": "ref_supabase_supabase_js",
-      "label": "@supabase/supabase-js",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "next",
-      "file_type": "concept",
-      "norm_label": "@supabase/supabase-js",
-      "source_file": "package.json",
-      "source_location": "L14"
     },
     {
       "id": "tsconfig",
@@ -2074,6 +2098,18 @@
       "weight": 1.0
     },
     {
+      "source": "src_app_api_clusters_route_get",
+      "target": "src_lib_supabase_server_getauthuser",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/app/api/clusters/route.ts",
+      "source_location": "L50",
+      "weight": 1.0
+    },
+    {
       "source": "src_app_api_graph_route_get",
       "target": "src_lib_supabase_server_createserverclient",
       "relation": "calls",
@@ -2083,6 +2119,18 @@
       "context": "call",
       "source_file": "src/app/api/graph/route.ts",
       "source_location": "L124",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_api_graph_route_get",
+      "target": "src_lib_supabase_server_getauthuser",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/app/api/graph/route.ts",
+      "source_location": "L125",
       "weight": 1.0
     },
     {
@@ -2110,6 +2158,18 @@
       "weight": 1.0
     },
     {
+      "source": "src_app_api_highlights_route_get",
+      "target": "src_lib_supabase_server_getauthuser",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/app/api/highlights/route.ts",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
       "source": "src_app_api_highlights_route_post",
       "target": "src_lib_supabase_server_createserverclient",
       "relation": "calls",
@@ -2119,6 +2179,18 @@
       "context": "call",
       "source_file": "src/app/api/highlights/route.ts",
       "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_api_highlights_route_post",
+      "target": "src_lib_supabase_server_getauthuser",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/app/api/highlights/route.ts",
+      "source_location": "L22",
       "weight": 1.0
     },
     {
@@ -2146,6 +2218,30 @@
       "weight": 1.0
     },
     {
+      "source": "src_app_api_ingest_route_post",
+      "target": "src_lib_supabase_server_getauthuser",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/app/api/ingest/route.ts",
+      "source_location": "L90",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_api_ingest_route_post",
+      "target": "src_lib_supabase_server_createadminclient",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/app/api/ingest/route.ts",
+      "source_location": "L93",
+      "weight": 1.0
+    },
+    {
       "source": "src_app_api_search_route_post",
       "target": "src_lib_supabase_server_createserverclient",
       "relation": "calls",
@@ -2158,6 +2254,18 @@
       "weight": 1.0
     },
     {
+      "source": "src_app_api_search_route_post",
+      "target": "src_lib_supabase_server_getauthuser",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/app/api/search/route.ts",
+      "source_location": "L83",
+      "weight": 1.0
+    },
+    {
       "source": "src_app_api_synthesize_route_post",
       "target": "src_lib_supabase_server_createserverclient",
       "relation": "calls",
@@ -2167,6 +2275,18 @@
       "context": "call",
       "source_file": "src/app/api/synthesize/route.ts",
       "source_location": "L60",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_api_synthesize_route_post",
+      "target": "src_lib_supabase_server_getauthuser",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/app/api/synthesize/route.ts",
+      "source_location": "L61",
       "weight": 1.0
     },
     {
@@ -2359,6 +2479,18 @@
       "context": "call",
       "source_file": "src/components/SynthesisDrawer.tsx",
       "source_location": "L201",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_supabase_server_getauthuser",
+      "target": "src_lib_supabase_server_createserverclient",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/lib/supabase/server.ts",
+      "source_location": "L52",
       "weight": 1.0
     },
     {
@@ -2592,6 +2724,18 @@
       "weight": 1.0
     },
     {
+      "source": "src_app_api_clusters_route",
+      "target": "src_lib_supabase_server_getauthuser",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/app/api/clusters/route.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
       "source": "src_app_api_graph_route",
       "target": "src_lib_supabase_server_createserverclient",
       "relation": "imports",
@@ -2604,8 +2748,32 @@
       "weight": 1.0
     },
     {
+      "source": "src_app_api_graph_route",
+      "target": "src_lib_supabase_server_getauthuser",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/app/api/graph/route.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
       "source": "src_app_api_highlights_route",
       "target": "src_lib_supabase_server_createserverclient",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/app/api/highlights/route.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_api_highlights_route",
+      "target": "src_lib_supabase_server_getauthuser",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -2629,7 +2797,31 @@
     },
     {
       "source": "src_app_api_ingest_route",
+      "target": "src_lib_supabase_server_createadminclient",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/app/api/ingest/route.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_api_ingest_route",
       "target": "src_lib_supabase_server_createserverclient",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/app/api/ingest/route.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_api_ingest_route",
+      "target": "src_lib_supabase_server_getauthuser",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -2652,8 +2844,32 @@
       "weight": 1.0
     },
     {
+      "source": "src_app_api_search_route",
+      "target": "src_lib_supabase_server_getauthuser",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/app/api/search/route.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
       "source": "src_app_api_synthesize_route",
       "target": "src_lib_supabase_server_createserverclient",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/app/api/synthesize/route.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_api_synthesize_route",
+      "target": "src_lib_supabase_server_getauthuser",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -3554,7 +3770,7 @@
     },
     {
       "source": "src_lib_supabase_server",
-      "target": "ref_supabase_supabase_js",
+      "target": "ref_supabase_ssr",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -3562,6 +3778,30 @@
       "context": "import",
       "source_file": "src/lib/supabase/server.ts",
       "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_supabase_server",
+      "target": "ref_supabase_supabase_js",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/lib/supabase/server.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_supabase_server",
+      "target": "ref_next",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/lib/supabase/server.ts",
+      "source_location": "L4",
       "weight": 1.0
     },
     {
@@ -4716,7 +4956,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/supabase/server.ts",
-      "source_location": "L7",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_supabase_server",
+      "target": "src_lib_supabase_server_createadminclient",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/supabase/server.ts",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_supabase_server",
+      "target": "src_lib_supabase_server_getauthuser",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/supabase/server.ts",
+      "source_location": "L50",
       "weight": 1.0
     },
     {
@@ -4961,5 +5223,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "661930f243b3e080259c686cfc90df1de5b166bc"
+  "built_at_commit": "0d60b5f23a8867becb4b79ae845d1ae4a466fcab"
 }

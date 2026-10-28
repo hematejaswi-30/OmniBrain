@@ -1,7 +1,7 @@
 // src/app/api/ingest/route.ts
 import { NextResponse } from 'next/server';
 import { routePayload } from '@/lib/ingest-router';
-import { createServerClient } from '@/lib/supabase/server';
+import { createServerClient, createAdminClient, getAuthUser } from '@/lib/supabase/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 export async function POST(req: Request) {
@@ -86,10 +86,13 @@ ${trimmedInput}`;
     };
 
     try {
-      const supabase = createServerClient();
-      const { data: { user } } = await supabase.auth.getUser();
+      const supabase = await createServerClient();
+      const user = await getAuthUser(supabase);
 
-      const { data: itemData, error: itemError } = await supabase
+      // Use user client if authenticated; otherwise admin client for guest demo writes if configured
+      const dbClient = user ? supabase : createAdminClient();
+
+      const { data: itemData, error: itemError } = await dbClient
         .from('items')
         .insert({
           user_id: user?.id || null,

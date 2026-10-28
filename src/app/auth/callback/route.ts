@@ -8,6 +8,11 @@ export async function GET(request: Request) {
   const code = searchParams.get('code');
   const next = searchParams.get('next') ?? '/dashboard';
 
+  // Support reverse proxy / Vercel forwarded host headers
+  const forwardedHost = request.headers.get('x-forwarded-host');
+  const isLocalEnv = process.env.NODE_ENV === 'development';
+  const siteUrl = isLocalEnv ? origin : forwardedHost ? `https://${forwardedHost}` : origin;
+
   if (code) {
     const cookieStore = await cookies();
     const supabase = createServerClient(
@@ -33,9 +38,9 @@ export async function GET(request: Request) {
 
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
-      return NextResponse.redirect(`${origin}${next}`);
+      return NextResponse.redirect(`${siteUrl}${next}`);
     }
   }
 
-  return NextResponse.redirect(`${origin}/dashboard?auth_error=true`);
+  return NextResponse.redirect(`${siteUrl}/dashboard?auth_error=true`);
 }
