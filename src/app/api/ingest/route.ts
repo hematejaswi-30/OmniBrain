@@ -124,6 +124,50 @@ ${trimmedInput}`;
               .insert({ item_id: itemData.id, entity_id: entityData.id });
           }
         }
+
+        // 4b. Ingestion-time semantic link synthesis (top-3, threshold >= 0.72)
+        if (embedding.length > 0) {
+          try {
+            const { data: matches } = await dbClient.rpc('match_items', {
+              query_embedding: embedding,
+              match_threshold: 0.72,
+              match_count: 4,
+              p_user_id: user?.id || null,
+            });
+
+            if (Array.isArray(matches)) {
+              const otherMatches = matches
+                .filter((m: any) => m.id !== itemData.id)
+                .slice(0, 3);
+
+              for (const match of otherMatches) {
+                const isItemSourceSmaller = itemData.id < match.id;
+                const sourceId = isItemSourceSmaller ? itemData.id : match.id;
+                const targetId = isItemSourceSmaller ? match.id : itemData.id;
+                const crossCluster = match.cluster_name !== itemData.cluster_name;
+                const reason = crossCluster
+                  ? `Cross-cluster semantic bridge between "${itemData.cluster_name}" and "${match.cluster_name}"`
+                  : `Conceptual affinity in ${itemData.cluster_name}`;
+
+                await dbClient
+                  .from('item_links')
+                  .upsert(
+                    {
+                      user_id: user?.id || null,
+                      source_item_id: sourceId,
+                      target_item_id: targetId,
+                      similarity_score: Math.round((match.similarity || 0.75) * 100) / 100,
+                      match_reason: reason,
+                      is_dismissed: false,
+                    },
+                    { onConflict: 'source_item_id,target_item_id' }
+                  );
+              }
+            }
+          } catch (linkErr) {
+            console.warn('Item link synthesis fallback:', linkErr);
+          }
+        }
       }
     } catch (dbErr) {
       console.warn('Supabase insertion fallback:', dbErr);

@@ -30,33 +30,46 @@
       "file_type": "code",
       "norm_label": "constellationcanvasprops",
       "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L31"
+      "source_location": "L55"
     },
     {
-      "id": "src_components_constellationcanvas_graphlink",
-      "label": "GraphLink",
+      "id": "src_lib_cluster_layout_point",
+      "label": "Point",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 4,
       "community_name": "ConstellationCanvas.tsx",
       "file_type": "code",
-      "norm_label": "graphlink",
-      "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L24"
+      "norm_label": "point",
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L15"
     },
     {
-      "id": "src_components_constellationcanvas_graphnode",
-      "label": "GraphNode",
+      "id": "src_lib_cluster_layout_rect",
+      "label": "Rect",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 4,
       "community_name": "ConstellationCanvas.tsx",
       "file_type": "code",
-      "norm_label": "graphnode",
-      "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L10"
+      "norm_label": "rect",
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L20"
+    },
+    {
+      "id": "src_lib_cluster_layout_satelliteposition",
+      "label": "SatellitePosition",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ConstellationCanvas.tsx",
+      "file_type": "code",
+      "norm_label": "satelliteposition",
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L27"
     },
     {
       "id": "src_components_clustercardsgrid_clustercardsgridprops",
@@ -69,7 +82,7 @@
       "file_type": "code",
       "norm_label": "clustercardsgridprops",
       "source_file": "src/components/ClusterCardsGrid.tsx",
-      "source_location": "L24"
+      "source_location": "L25"
     },
     {
       "id": "src_components_clustercardsgrid_clusterdata",
@@ -82,7 +95,7 @@
       "file_type": "code",
       "norm_label": "clusterdata",
       "source_file": "src/components/ClusterCardsGrid.tsx",
-      "source_location": "L15"
+      "source_location": "L16"
     },
     {
       "id": "src_components_clustercardsgrid_clusteritem",
@@ -95,20 +108,33 @@
       "file_type": "code",
       "norm_label": "clusteritem",
       "source_file": "src/components/ClusterCardsGrid.tsx",
-      "source_location": "L8"
+      "source_location": "L9"
     },
     {
-      "id": "src_components_header_headerprops",
-      "label": "HeaderProps",
+      "id": "src_components_constellationcanvas_graphlink",
+      "label": "GraphLink",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 5,
       "community_name": "dashboard/page.tsx",
       "file_type": "code",
-      "norm_label": "headerprops",
-      "source_file": "src/components/Header.tsx",
-      "source_location": "L10"
+      "norm_label": "graphlink",
+      "source_file": "src/components/ConstellationCanvas.tsx",
+      "source_location": "L43"
+    },
+    {
+      "id": "src_components_constellationcanvas_graphnode",
+      "label": "GraphNode",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "dashboard/page.tsx",
+      "file_type": "code",
+      "norm_label": "graphnode",
+      "source_file": "src/components/ConstellationCanvas.tsx",
+      "source_location": "L21"
     },
     {
       "id": "src_components_omnidocviewer_omnidocviewerprops",
@@ -121,7 +147,7 @@
       "file_type": "code",
       "norm_label": "omnidocviewerprops",
       "source_file": "src/components/OmniDocViewer.tsx",
-      "source_location": "L23"
+      "source_location": "L25"
     },
     {
       "id": "src_components_omnidocviewer_sourcechip",
@@ -134,7 +160,7 @@
       "file_type": "code",
       "norm_label": "sourcechip",
       "source_file": "src/components/OmniDocViewer.tsx",
-      "source_location": "L15"
+      "source_location": "L17"
     },
     {
       "id": "src_components_onboardingbanner_onboardingbannerprops",
@@ -189,32 +215,6 @@
       "source_location": "L18"
     },
     {
-      "id": "src_lib_auth_mode_simulateduser",
-      "label": "SimulatedUser",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "dashboard/page.tsx",
-      "file_type": "code",
-      "norm_label": "simulateduser",
-      "source_file": "src/lib/auth-mode.ts",
-      "source_location": "L6"
-    },
-    {
-      "id": "src_lib_auth_mode_usermode",
-      "label": "UserMode",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "dashboard/page.tsx",
-      "file_type": "code",
-      "norm_label": "usermode",
-      "source_file": "src/lib/auth-mode.ts",
-      "source_location": "L4"
-    },
-    {
       "id": "src_lib_ingest_router_routeresult",
       "label": "RouteResult",
       "_callable": true,
@@ -254,16 +254,43 @@
       "source_location": "L3"
     },
     {
-      "id": "src_app_auth_callback_route_get",
-      "label": "GET()",
+      "id": "src_components_header_headerprops",
+      "label": "HeaderProps",
       "_callable": true,
+      "_callable_class": true,
       "_origin": "ast",
-      "community": 1,
-      "community_name": "package.json",
+      "community": 8,
+      "community_name": "Header.tsx",
       "file_type": "code",
-      "norm_label": "get()",
-      "source_file": "src/app/auth/callback/route.ts",
+      "norm_label": "headerprops",
+      "source_file": "src/components/Header.tsx",
+      "source_location": "L10"
+    },
+    {
+      "id": "src_lib_auth_mode_simulateduser",
+      "label": "SimulatedUser",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "Header.tsx",
+      "file_type": "code",
+      "norm_label": "simulateduser",
+      "source_file": "src/lib/auth-mode.ts",
       "source_location": "L6"
+    },
+    {
+      "id": "src_lib_auth_mode_usermode",
+      "label": "UserMode",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "Header.tsx",
+      "file_type": "code",
+      "norm_label": "usermode",
+      "source_file": "src/lib/auth-mode.ts",
+      "source_location": "L4"
     },
     {
       "id": "src_app_layout_rootlayout",
@@ -290,6 +317,18 @@
       "source_location": "L39"
     },
     {
+      "id": "src_app_api_graph_link_route_patch",
+      "label": "PATCH()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "next",
+      "file_type": "code",
+      "norm_label": "patch()",
+      "source_file": "src/app/api/graph/link/route.ts",
+      "source_location": "L5"
+    },
+    {
       "id": "src_app_api_graph_route_get",
       "label": "GET()",
       "_callable": true,
@@ -299,7 +338,7 @@
       "file_type": "code",
       "norm_label": "get()",
       "source_file": "src/app/api/graph/route.ts",
-      "source_location": "L114"
+      "source_location": "L148"
     },
     {
       "id": "src_app_api_highlights_route_delete",
@@ -434,18 +473,6 @@
       "source_location": "L50"
     },
     {
-      "id": "src_app_graph_page_graphpage",
-      "label": "GraphPage()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "ConstellationCanvas.tsx",
-      "file_type": "code",
-      "norm_label": "graphpage()",
-      "source_file": "src/app/graph/page.tsx",
-      "source_location": "L39"
-    },
-    {
       "id": "src_components_constellationcanvas_constellationcanvas",
       "label": "ConstellationCanvas()",
       "_callable": true,
@@ -455,7 +482,7 @@
       "file_type": "code",
       "norm_label": "constellationcanvas()",
       "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L89"
+      "source_location": "L104"
     },
     {
       "id": "src_components_constellationcanvas_drawroundedrect",
@@ -467,19 +494,91 @@
       "file_type": "code",
       "norm_label": "drawroundedrect()",
       "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L62"
+      "source_location": "L77"
     },
     {
-      "id": "src_components_constellationcanvas_truncatelabel",
-      "label": "truncateLabel()",
+      "id": "src_components_constellationcanvas_truncatetext",
+      "label": "truncateText()",
       "_callable": true,
       "_origin": "ast",
       "community": 4,
       "community_name": "ConstellationCanvas.tsx",
       "file_type": "code",
-      "norm_label": "truncatelabel()",
+      "norm_label": "truncatetext()",
       "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L83"
+      "source_location": "L98"
+    },
+    {
+      "id": "src_lib_cluster_layout_dorectanglesoverlap",
+      "label": "doRectanglesOverlap()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ConstellationCanvas.tsx",
+      "file_type": "code",
+      "norm_label": "dorectanglesoverlap()",
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L95"
+    },
+    {
+      "id": "src_lib_cluster_layout_getclusteranchor",
+      "label": "getClusterAnchor()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ConstellationCanvas.tsx",
+      "file_type": "code",
+      "norm_label": "getclusteranchor()",
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L40"
+    },
+    {
+      "id": "src_lib_cluster_layout_getclusterdisplayslots",
+      "label": "getClusterDisplaySlots()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ConstellationCanvas.tsx",
+      "file_type": "code",
+      "norm_label": "getclusterdisplayslots()",
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L114"
+    },
+    {
+      "id": "src_lib_cluster_layout_getsatelliteslot",
+      "label": "getSatelliteSlot()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ConstellationCanvas.tsx",
+      "file_type": "code",
+      "norm_label": "getsatelliteslot()",
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L66"
+    },
+    {
+      "id": "tests_layout_math_test_runtestsuite",
+      "label": "runTestSuite()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ConstellationCanvas.tsx",
+      "file_type": "code",
+      "norm_label": "runtestsuite()",
+      "source_file": "tests/layout-math.test.ts",
+      "source_location": "L14"
+    },
+    {
+      "id": "tests_layout_math_test_runtestsuite_assert",
+      "label": "assert()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ConstellationCanvas.tsx",
+      "file_type": "code",
+      "norm_label": "assert()",
+      "source_file": "tests/layout-math.test.ts",
+      "source_location": "L22"
     },
     {
       "id": "src_app_dashboard_page_dashboardpage",
@@ -494,6 +593,18 @@
       "source_location": "L13"
     },
     {
+      "id": "src_app_graph_page_graphpage",
+      "label": "GraphPage()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "dashboard/page.tsx",
+      "file_type": "code",
+      "norm_label": "graphpage()",
+      "source_file": "src/app/graph/page.tsx",
+      "source_location": "L39"
+    },
+    {
       "id": "src_components_clustercardsgrid_clustercardsgrid",
       "label": "ClusterCardsGrid()",
       "_callable": true,
@@ -503,19 +614,7 @@
       "file_type": "code",
       "norm_label": "clustercardsgrid()",
       "source_file": "src/components/ClusterCardsGrid.tsx",
-      "source_location": "L28"
-    },
-    {
-      "id": "src_components_header_header",
-      "label": "Header()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "dashboard/page.tsx",
-      "file_type": "code",
-      "norm_label": "header()",
-      "source_file": "src/components/Header.tsx",
-      "source_location": "L14"
+      "source_location": "L29"
     },
     {
       "id": "src_components_omnidocviewer_omnidocviewer",
@@ -527,7 +626,7 @@
       "file_type": "code",
       "norm_label": "omnidocviewer()",
       "source_file": "src/components/OmniDocViewer.tsx",
-      "source_location": "L30"
+      "source_location": "L32"
     },
     {
       "id": "src_components_onboardingbanner_onboardingbanner",
@@ -566,42 +665,6 @@
       "source_location": "L25"
     },
     {
-      "id": "src_lib_auth_mode_getsimulateduser",
-      "label": "getSimulatedUser()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "dashboard/page.tsx",
-      "file_type": "code",
-      "norm_label": "getsimulateduser()",
-      "source_file": "src/lib/auth-mode.ts",
-      "source_location": "L16"
-    },
-    {
-      "id": "src_lib_auth_mode_setsimulateduser",
-      "label": "setSimulatedUser()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "dashboard/page.tsx",
-      "file_type": "code",
-      "norm_label": "setsimulateduser()",
-      "source_file": "src/lib/auth-mode.ts",
-      "source_location": "L26"
-    },
-    {
-      "id": "src_lib_supabase_client_createclient",
-      "label": "createClient()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "dashboard/page.tsx",
-      "file_type": "code",
-      "norm_label": "createclient()",
-      "source_file": "src/lib/supabase/client.ts",
-      "source_location": "L4"
-    },
-    {
       "id": "src_components_omnibox_omnibox",
       "label": "Omnibox()",
       "_callable": true,
@@ -636,6 +699,66 @@
       "norm_label": "ingestrouter()",
       "source_file": "src/lib/ingest-router.ts",
       "source_location": "L37"
+    },
+    {
+      "id": "src_app_auth_callback_route_get",
+      "label": "GET()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "Header.tsx",
+      "file_type": "code",
+      "norm_label": "get()",
+      "source_file": "src/app/auth/callback/route.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "src_components_header_header",
+      "label": "Header()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "Header.tsx",
+      "file_type": "code",
+      "norm_label": "header()",
+      "source_file": "src/components/Header.tsx",
+      "source_location": "L14"
+    },
+    {
+      "id": "src_lib_auth_mode_getsimulateduser",
+      "label": "getSimulatedUser()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "Header.tsx",
+      "file_type": "code",
+      "norm_label": "getsimulateduser()",
+      "source_file": "src/lib/auth-mode.ts",
+      "source_location": "L16"
+    },
+    {
+      "id": "src_lib_auth_mode_setsimulateduser",
+      "label": "setSimulatedUser()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "Header.tsx",
+      "file_type": "code",
+      "norm_label": "setsimulateduser()",
+      "source_file": "src/lib/auth-mode.ts",
+      "source_location": "L26"
+    },
+    {
+      "id": "src_lib_supabase_client_createclient",
+      "label": "createClient()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "Header.tsx",
+      "file_type": "code",
+      "norm_label": "createclient()",
+      "source_file": "src/lib/supabase/client.ts",
+      "source_location": "L4"
     },
     {
       "id": "readme",
@@ -889,6 +1012,83 @@
       "source_location": "L1"
     },
     {
+      "id": "package_devdependencies",
+      "label": "devDependencies",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "devdependencies",
+      "source_file": "package.json",
+      "source_location": "L23"
+    },
+    {
+      "id": "package_devdependencies_autoprefixer",
+      "label": "autoprefixer",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "autoprefixer",
+      "source_file": "package.json",
+      "source_location": "L28"
+    },
+    {
+      "id": "package_devdependencies_tailwindcss_postcss",
+      "label": "@tailwindcss/postcss",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "@tailwindcss/postcss",
+      "source_file": "package.json",
+      "source_location": "L24"
+    },
+    {
+      "id": "package_devdependencies_types_node",
+      "label": "@types/node",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "@types/node",
+      "source_file": "package.json",
+      "source_location": "L25"
+    },
+    {
+      "id": "package_devdependencies_types_react",
+      "label": "@types/react",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "@types/react",
+      "source_file": "package.json",
+      "source_location": "L26"
+    },
+    {
+      "id": "package_devdependencies_types_react_dom",
+      "label": "@types/react-dom",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "@types/react-dom",
+      "source_file": "package.json",
+      "source_location": "L27"
+    },
+    {
+      "id": "package_devdependencies_typescript",
+      "label": "typescript",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "typescript",
+      "source_file": "package.json",
+      "source_location": "L29"
+    },
+    {
       "id": "package_name",
       "label": "name",
       "_origin": "ast",
@@ -977,17 +1177,6 @@
       "source_location": "L3"
     },
     {
-      "id": "src_app_auth_callback_route",
-      "label": "callback/route.ts",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "callback/route.ts",
-      "source_file": "src/app/auth/callback/route.ts",
-      "source_location": "L1"
-    },
-    {
       "id": "ref_autoprefixer",
       "label": "autoprefixer",
       "_origin": "ast",
@@ -1021,15 +1210,15 @@
       "source_location": "L19"
     },
     {
-      "id": "ref_supabase_ssr",
-      "label": "@supabase/ssr",
+      "id": "ref_react_force_graph_2d",
+      "label": "react-force-graph-2d",
       "_origin": "ast",
       "community": 1,
       "community_name": "package.json",
       "file_type": "concept",
-      "norm_label": "@supabase/ssr",
+      "norm_label": "react-force-graph-2d",
       "source_file": "package.json",
-      "source_location": "L13"
+      "source_location": "L20"
     },
     {
       "id": "ref_supabase_supabase_js",
@@ -1221,6 +1410,17 @@
       "source_location": "L5"
     },
     {
+      "id": "src_app_api_graph_link_route",
+      "label": "link/route.ts",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "next",
+      "file_type": "code",
+      "norm_label": "link/route.ts",
+      "source_file": "src/app/api/graph/link/route.ts",
+      "source_location": "L1"
+    },
+    {
       "id": "src_app_api_graph_route",
       "label": "graph/route.ts",
       "_origin": "ast",
@@ -1375,6 +1575,17 @@
       "source_location": "L2"
     },
     {
+      "id": "tsconfig_compileroptions_allowimportingtsextensions",
+      "label": "allowImportingTsExtensions",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "compilerOptions",
+      "file_type": "code",
+      "norm_label": "allowimportingtsextensions",
+      "source_file": "tsconfig.json",
+      "source_location": "L13"
+    },
+    {
       "id": "tsconfig_compileroptions_allowjs",
       "label": "allowJs",
       "_origin": "ast",
@@ -1394,7 +1605,7 @@
       "file_type": "code",
       "norm_label": "esmoduleinterop",
       "source_file": "tsconfig.json",
-      "source_location": "L13"
+      "source_location": "L14"
     },
     {
       "id": "tsconfig_compileroptions_incremental",
@@ -1405,7 +1616,7 @@
       "file_type": "code",
       "norm_label": "incremental",
       "source_file": "tsconfig.json",
-      "source_location": "L19"
+      "source_location": "L20"
     },
     {
       "id": "tsconfig_compileroptions_isolatedmodules",
@@ -1416,7 +1627,7 @@
       "file_type": "code",
       "norm_label": "isolatedmodules",
       "source_file": "tsconfig.json",
-      "source_location": "L17"
+      "source_location": "L18"
     },
     {
       "id": "tsconfig_compileroptions_jsx",
@@ -1427,7 +1638,7 @@
       "file_type": "code",
       "norm_label": "jsx",
       "source_file": "tsconfig.json",
-      "source_location": "L18"
+      "source_location": "L19"
     },
     {
       "id": "tsconfig_compileroptions_lib",
@@ -1449,7 +1660,7 @@
       "file_type": "code",
       "norm_label": "module",
       "source_file": "tsconfig.json",
-      "source_location": "L14"
+      "source_location": "L15"
     },
     {
       "id": "tsconfig_compileroptions_moduleresolution",
@@ -1460,7 +1671,7 @@
       "file_type": "code",
       "norm_label": "moduleresolution",
       "source_file": "tsconfig.json",
-      "source_location": "L15"
+      "source_location": "L16"
     },
     {
       "id": "tsconfig_compileroptions_noemit",
@@ -1482,7 +1693,7 @@
       "file_type": "code",
       "norm_label": "paths",
       "source_file": "tsconfig.json",
-      "source_location": "L25"
+      "source_location": "L26"
     },
     {
       "id": "tsconfig_compileroptions_plugins",
@@ -1493,7 +1704,7 @@
       "file_type": "code",
       "norm_label": "plugins",
       "source_file": "tsconfig.json",
-      "source_location": "L20"
+      "source_location": "L21"
     },
     {
       "id": "tsconfig_compileroptions_resolvejsonmodule",
@@ -1504,7 +1715,7 @@
       "file_type": "code",
       "norm_label": "resolvejsonmodule",
       "source_file": "tsconfig.json",
-      "source_location": "L16"
+      "source_location": "L17"
     },
     {
       "id": "tsconfig_compileroptions_skiplibcheck",
@@ -1548,7 +1759,7 @@
       "file_type": "code",
       "norm_label": "exclude",
       "source_file": "tsconfig.json",
-      "source_location": "L38"
+      "source_location": "L39"
     },
     {
       "id": "tsconfig_include",
@@ -1559,7 +1770,7 @@
       "file_type": "code",
       "norm_label": "include",
       "source_file": "tsconfig.json",
-      "source_location": "L31"
+      "source_location": "L32"
     },
     {
       "id": "react_force_graph_2d",
@@ -1573,28 +1784,6 @@
       "source_file": "react-force-graph-2d"
     },
     {
-      "id": "src_app_graph_page",
-      "label": "graph/page.tsx",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "ConstellationCanvas.tsx",
-      "file_type": "code",
-      "norm_label": "graph/page.tsx",
-      "source_file": "src/app/graph/page.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_app_graph_page_constellationcanvas",
-      "label": "ConstellationCanvas",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "ConstellationCanvas.tsx",
-      "file_type": "code",
-      "norm_label": "constellationcanvas",
-      "source_file": "src/app/graph/page.tsx",
-      "source_location": "L26"
-    },
-    {
       "id": "src_components_constellationcanvas",
       "label": "ConstellationCanvas.tsx",
       "_origin": "ast",
@@ -1606,17 +1795,6 @@
       "source_location": "L1"
     },
     {
-      "id": "src_components_constellationcanvas_dark_source_config",
-      "label": "DARK_SOURCE_CONFIG",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "ConstellationCanvas.tsx",
-      "file_type": "code",
-      "norm_label": "dark_source_config",
-      "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L51"
-    },
-    {
       "id": "src_components_constellationcanvas_forcegraph2d",
       "label": "ForceGraph2D",
       "_origin": "ast",
@@ -1625,29 +1803,117 @@
       "file_type": "code",
       "norm_label": "forcegraph2d",
       "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L8"
+      "source_location": "L19"
     },
     {
-      "id": "src_components_constellationcanvas_light_source_config",
-      "label": "LIGHT_SOURCE_CONFIG",
+      "id": "src_components_constellationcanvas_source_tags",
+      "label": "SOURCE_TAGS",
       "_origin": "ast",
       "community": 4,
       "community_name": "ConstellationCanvas.tsx",
       "file_type": "code",
-      "norm_label": "light_source_config",
+      "norm_label": "source_tags",
       "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L40"
+      "source_location": "L67"
     },
     {
-      "id": "ref_react_force_graph_2d",
-      "label": "react-force-graph-2d",
+      "id": "src_lib_cluster_layout",
+      "label": "cluster-layout.ts",
       "_origin": "ast",
       "community": 4,
       "community_name": "ConstellationCanvas.tsx",
-      "file_type": "concept",
-      "norm_label": "react-force-graph-2d",
-      "source_file": "package.json",
-      "source_location": "L20"
+      "file_type": "code",
+      "norm_label": "cluster-layout.ts",
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_lib_cluster_layout_card_height",
+      "label": "CARD_HEIGHT",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ConstellationCanvas.tsx",
+      "file_type": "code",
+      "norm_label": "card_height",
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L8"
+    },
+    {
+      "id": "src_lib_cluster_layout_card_width",
+      "label": "CARD_WIDTH",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ConstellationCanvas.tsx",
+      "file_type": "code",
+      "norm_label": "card_width",
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L7"
+    },
+    {
+      "id": "src_lib_cluster_layout_cluster_distance_scale",
+      "label": "CLUSTER_DISTANCE_SCALE",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ConstellationCanvas.tsx",
+      "file_type": "code",
+      "norm_label": "cluster_distance_scale",
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L12"
+    },
+    {
+      "id": "src_lib_cluster_layout_hub_radar_radius",
+      "label": "HUB_RADAR_RADIUS",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ConstellationCanvas.tsx",
+      "file_type": "code",
+      "norm_label": "hub_radar_radius",
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L11"
+    },
+    {
+      "id": "src_lib_cluster_layout_hub_radius",
+      "label": "HUB_RADIUS",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ConstellationCanvas.tsx",
+      "file_type": "code",
+      "norm_label": "hub_radius",
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L10"
+    },
+    {
+      "id": "src_lib_cluster_layout_max_ring_capacity",
+      "label": "MAX_RING_CAPACITY",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ConstellationCanvas.tsx",
+      "file_type": "code",
+      "norm_label": "max_ring_capacity",
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L13"
+    },
+    {
+      "id": "src_lib_cluster_layout_uniform_orbit_radius",
+      "label": "UNIFORM_ORBIT_RADIUS",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ConstellationCanvas.tsx",
+      "file_type": "code",
+      "norm_label": "uniform_orbit_radius",
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L9"
+    },
+    {
+      "id": "tests_layout_math_test",
+      "label": "layout-math.test.ts",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ConstellationCanvas.tsx",
+      "file_type": "code",
+      "norm_label": "layout-math.test.ts",
+      "source_file": "tests/layout-math.test.ts",
+      "source_location": "L1"
     },
     {
       "id": "src_app_dashboard_page",
@@ -1661,6 +1927,28 @@
       "source_location": "L1"
     },
     {
+      "id": "src_app_graph_page",
+      "label": "graph/page.tsx",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "dashboard/page.tsx",
+      "file_type": "code",
+      "norm_label": "graph/page.tsx",
+      "source_file": "src/app/graph/page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_app_graph_page_constellationcanvas",
+      "label": "ConstellationCanvas",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "dashboard/page.tsx",
+      "file_type": "code",
+      "norm_label": "constellationcanvas",
+      "source_file": "src/app/graph/page.tsx",
+      "source_location": "L26"
+    },
+    {
       "id": "src_components_clustercardsgrid",
       "label": "ClusterCardsGrid.tsx",
       "_origin": "ast",
@@ -1669,17 +1957,6 @@
       "file_type": "code",
       "norm_label": "clustercardsgrid.tsx",
       "source_file": "src/components/ClusterCardsGrid.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_components_header",
-      "label": "Header.tsx",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "dashboard/page.tsx",
-      "file_type": "code",
-      "norm_label": "header.tsx",
-      "source_file": "src/components/Header.tsx",
       "source_location": "L1"
     },
     {
@@ -1735,28 +2012,6 @@
       "file_type": "code",
       "norm_label": "synthesisdrawer.tsx",
       "source_file": "src/components/SynthesisDrawer.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_lib_auth_mode",
-      "label": "auth-mode.ts",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "dashboard/page.tsx",
-      "file_type": "code",
-      "norm_label": "auth-mode.ts",
-      "source_file": "src/lib/auth-mode.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_lib_supabase_client",
-      "label": "client.ts",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "dashboard/page.tsx",
-      "file_type": "code",
-      "norm_label": "client.ts",
-      "source_file": "src/lib/supabase/client.ts",
       "source_location": "L1"
     },
     {
@@ -1925,81 +2180,59 @@
       "source_location": "L1"
     },
     {
-      "id": "package_devdependencies",
-      "label": "devDependencies",
+      "id": "src_app_auth_callback_route",
+      "label": "callback/route.ts",
       "_origin": "ast",
       "community": 8,
-      "community_name": "devDependencies",
+      "community_name": "Header.tsx",
       "file_type": "code",
-      "norm_label": "devdependencies",
-      "source_file": "package.json",
-      "source_location": "L23"
+      "norm_label": "callback/route.ts",
+      "source_file": "src/app/auth/callback/route.ts",
+      "source_location": "L1"
     },
     {
-      "id": "package_devdependencies_autoprefixer",
-      "label": "autoprefixer",
+      "id": "src_components_header",
+      "label": "Header.tsx",
       "_origin": "ast",
       "community": 8,
-      "community_name": "devDependencies",
+      "community_name": "Header.tsx",
       "file_type": "code",
-      "norm_label": "autoprefixer",
-      "source_file": "package.json",
-      "source_location": "L28"
+      "norm_label": "header.tsx",
+      "source_file": "src/components/Header.tsx",
+      "source_location": "L1"
     },
     {
-      "id": "package_devdependencies_tailwindcss_postcss",
-      "label": "@tailwindcss/postcss",
+      "id": "src_lib_auth_mode",
+      "label": "auth-mode.ts",
       "_origin": "ast",
       "community": 8,
-      "community_name": "devDependencies",
+      "community_name": "Header.tsx",
       "file_type": "code",
-      "norm_label": "@tailwindcss/postcss",
-      "source_file": "package.json",
-      "source_location": "L24"
+      "norm_label": "auth-mode.ts",
+      "source_file": "src/lib/auth-mode.ts",
+      "source_location": "L1"
     },
     {
-      "id": "package_devdependencies_types_node",
-      "label": "@types/node",
+      "id": "src_lib_supabase_client",
+      "label": "client.ts",
       "_origin": "ast",
       "community": 8,
-      "community_name": "devDependencies",
+      "community_name": "Header.tsx",
       "file_type": "code",
-      "norm_label": "@types/node",
-      "source_file": "package.json",
-      "source_location": "L25"
+      "norm_label": "client.ts",
+      "source_file": "src/lib/supabase/client.ts",
+      "source_location": "L1"
     },
     {
-      "id": "package_devdependencies_types_react",
-      "label": "@types/react",
+      "id": "ref_supabase_ssr",
+      "label": "@supabase/ssr",
       "_origin": "ast",
       "community": 8,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "@types/react",
+      "community_name": "Header.tsx",
+      "file_type": "concept",
+      "norm_label": "@supabase/ssr",
       "source_file": "package.json",
-      "source_location": "L26"
-    },
-    {
-      "id": "package_devdependencies_types_react_dom",
-      "label": "@types/react-dom",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "@types/react-dom",
-      "source_file": "package.json",
-      "source_location": "L27"
-    },
-    {
-      "id": "package_devdependencies_typescript",
-      "label": "typescript",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "typescript",
-      "source_file": "package.json",
-      "source_location": "L29"
+      "source_location": "L13"
     },
     {
       "id": "next_env_d",
@@ -2110,6 +2343,42 @@
       "weight": 1.0
     },
     {
+      "source": "src_app_api_graph_link_route_patch",
+      "target": "src_lib_supabase_server_getauthuser",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/app/api/graph/link/route.ts",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_api_graph_link_route_patch",
+      "target": "src_lib_supabase_server_createadminclient",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/app/api/graph/link/route.ts",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_api_graph_link_route_patch",
+      "target": "src_lib_supabase_server_createserverclient",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/app/api/graph/link/route.ts",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
       "source": "src_app_api_graph_route_get",
       "target": "src_lib_supabase_server_createserverclient",
       "relation": "calls",
@@ -2118,7 +2387,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/app/api/graph/route.ts",
-      "source_location": "L124",
+      "source_location": "L158",
       "weight": 1.0
     },
     {
@@ -2130,7 +2399,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/app/api/graph/route.ts",
-      "source_location": "L125",
+      "source_location": "L159",
       "weight": 1.0
     },
     {
@@ -2346,7 +2615,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/app/graph/page.tsx",
-      "source_location": "L167",
+      "source_location": "L188",
       "weight": 1.0
     },
     {
@@ -2358,7 +2627,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/app/graph/page.tsx",
-      "source_location": "L425",
+      "source_location": "L436",
       "weight": 1.0
     },
     {
@@ -2370,7 +2639,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/app/graph/page.tsx",
-      "source_location": "L434",
+      "source_location": "L727",
       "weight": 1.0
     },
     {
@@ -2382,7 +2651,43 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/components/ClusterCardsGrid.tsx",
-      "source_location": "L152",
+      "source_location": "L164",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_constellationcanvas_constellationcanvas",
+      "target": "src_lib_cluster_layout_getclusteranchor",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/components/ConstellationCanvas.tsx",
+      "source_location": "L149",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_constellationcanvas_constellationcanvas",
+      "target": "src_lib_cluster_layout_getclusterdisplayslots",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/components/ConstellationCanvas.tsx",
+      "source_location": "L167",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_constellationcanvas_constellationcanvas",
+      "target": "src_lib_cluster_layout_getsatelliteslot",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/components/ConstellationCanvas.tsx",
+      "source_location": "L170",
       "weight": 1.0
     },
     {
@@ -2394,19 +2699,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L296",
+      "source_location": "L397",
       "weight": 1.0
     },
     {
       "source": "src_components_constellationcanvas_constellationcanvas",
-      "target": "src_components_constellationcanvas_truncatelabel",
+      "target": "src_components_constellationcanvas_truncatetext",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L337",
+      "source_location": "L502",
       "weight": 1.0
     },
     {
@@ -2418,7 +2723,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L358",
+      "source_location": "L523",
       "weight": 1.0
     },
     {
@@ -2494,6 +2799,66 @@
       "weight": 1.0
     },
     {
+      "source": "tests_layout_math_test_runtestsuite",
+      "target": "src_lib_cluster_layout_getclusterdisplayslots",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tests/layout-math.test.ts",
+      "source_location": "L131",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_layout_math_test_runtestsuite",
+      "target": "src_lib_cluster_layout_getsatelliteslot",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tests/layout-math.test.ts",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_layout_math_test_runtestsuite",
+      "target": "src_lib_cluster_layout_dorectanglesoverlap",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tests/layout-math.test.ts",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_layout_math_test_runtestsuite",
+      "target": "src_lib_cluster_layout_getclusteranchor",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tests/layout-math.test.ts",
+      "source_location": "L84",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_layout_math_test_runtestsuite",
+      "target": "tests_layout_math_test_runtestsuite_assert",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tests/layout-math.test.ts",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
       "source": "src_app_graph_page_constellationcanvas",
       "target": "src_components_constellationcanvas",
       "relation": "imports_from",
@@ -2516,7 +2881,7 @@
       "context": "import",
       "deferred": true,
       "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L8",
+      "source_location": "L19",
       "weight": 1.0
     },
     {
@@ -2736,6 +3101,42 @@
       "weight": 1.0
     },
     {
+      "source": "src_app_api_graph_link_route",
+      "target": "src_lib_supabase_server_createadminclient",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/app/api/graph/link/route.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_api_graph_link_route",
+      "target": "src_lib_supabase_server_createserverclient",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/app/api/graph/link/route.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_api_graph_link_route",
+      "target": "src_lib_supabase_server_getauthuser",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/app/api/graph/link/route.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
       "source": "src_app_api_graph_route",
       "target": "src_lib_supabase_server_createserverclient",
       "relation": "imports",
@@ -2936,7 +3337,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/app/graph/page.tsx",
-      "source_location": "L6",
+      "source_location": "L7",
       "weight": 1.0
     },
     {
@@ -2948,7 +3349,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/app/graph/page.tsx",
-      "source_location": "L7",
+      "source_location": "L8",
       "weight": 1.0
     },
     {
@@ -2960,7 +3361,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/app/graph/page.tsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0
     },
     {
@@ -2972,7 +3373,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/app/graph/page.tsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0
     },
     {
@@ -2984,7 +3385,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/components/ClusterCardsGrid.tsx",
-      "source_location": "L5",
+      "source_location": "L6",
       "weight": 1.0
     },
     {
@@ -2996,7 +3397,115 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/components/ClusterCardsGrid.tsx",
-      "source_location": "L5",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_constellationcanvas",
+      "target": "src_lib_cluster_layout_card_height",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/ConstellationCanvas.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_constellationcanvas",
+      "target": "src_lib_cluster_layout_card_width",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/ConstellationCanvas.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_constellationcanvas",
+      "target": "src_lib_cluster_layout_getclusteranchor",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/ConstellationCanvas.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_constellationcanvas",
+      "target": "src_lib_cluster_layout_getclusterdisplayslots",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/ConstellationCanvas.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_constellationcanvas",
+      "target": "src_lib_cluster_layout_getsatelliteslot",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/ConstellationCanvas.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_constellationcanvas",
+      "target": "src_lib_cluster_layout_hub_radar_radius",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/ConstellationCanvas.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_constellationcanvas",
+      "target": "src_lib_cluster_layout_hub_radius",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/ConstellationCanvas.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_constellationcanvas",
+      "target": "src_lib_cluster_layout_point",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/ConstellationCanvas.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_constellationcanvas",
+      "target": "src_lib_cluster_layout_uniform_orbit_radius",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/ConstellationCanvas.tsx",
+      "source_location": "L6",
       "weight": 1.0
     },
     {
@@ -3060,6 +3569,114 @@
       "weight": 1.0
     },
     {
+      "source": "tests_layout_math_test",
+      "target": "src_lib_cluster_layout_card_height",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/layout-math.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_layout_math_test",
+      "target": "src_lib_cluster_layout_card_width",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/layout-math.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_layout_math_test",
+      "target": "src_lib_cluster_layout_dorectanglesoverlap",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/layout-math.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_layout_math_test",
+      "target": "src_lib_cluster_layout_getclusteranchor",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/layout-math.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_layout_math_test",
+      "target": "src_lib_cluster_layout_getclusterdisplayslots",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/layout-math.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_layout_math_test",
+      "target": "src_lib_cluster_layout_getsatelliteslot",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/layout-math.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_layout_math_test",
+      "target": "src_lib_cluster_layout_hub_radar_radius",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/layout-math.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_layout_math_test",
+      "target": "src_lib_cluster_layout_rect",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/layout-math.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_layout_math_test",
+      "target": "src_lib_cluster_layout_uniform_orbit_radius",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/layout-math.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
       "source": "next_env_d",
       "target": "next_dev_types_routes_d",
       "relation": "imports_from",
@@ -3104,6 +3721,30 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/app/api/clusters/route.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_api_graph_link_route",
+      "target": "ref_next",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/app/api/graph/link/route.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_api_graph_link_route",
+      "target": "src_lib_supabase_server",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/app/api/graph/link/route.ts",
       "source_location": "L3",
       "weight": 1.0
     },
@@ -3385,19 +4026,19 @@
     },
     {
       "source": "src_app_graph_page",
-      "target": "ref_react",
+      "target": "ref_lucide_react",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/app/graph/page.tsx",
-      "source_location": "L4",
+      "source_location": "L10",
       "weight": 1.0
     },
     {
       "source": "src_app_graph_page",
-      "target": "ref_next",
+      "target": "ref_react",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -3409,7 +4050,7 @@
     },
     {
       "source": "src_app_graph_page",
-      "target": "src_components_header",
+      "target": "ref_next",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -3421,7 +4062,7 @@
     },
     {
       "source": "src_app_graph_page",
-      "target": "src_components_synthesisdrawer",
+      "target": "src_components_header",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -3433,7 +4074,7 @@
     },
     {
       "source": "src_app_graph_page",
-      "target": "src_components_constellationcanvas",
+      "target": "src_components_synthesisdrawer",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -3445,7 +4086,7 @@
     },
     {
       "source": "src_app_graph_page",
-      "target": "ref_lucide_react",
+      "target": "src_components_constellationcanvas",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -3506,7 +4147,7 @@
     },
     {
       "source": "src_components_clustercardsgrid",
-      "target": "src_components_synthesisdrawer",
+      "target": "ref_next",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -3518,7 +4159,7 @@
     },
     {
       "source": "src_components_clustercardsgrid",
-      "target": "ref_lucide_react",
+      "target": "src_components_synthesisdrawer",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -3526,6 +4167,18 @@
       "context": "import",
       "source_file": "src/components/ClusterCardsGrid.tsx",
       "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_clustercardsgrid",
+      "target": "ref_lucide_react",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/ClusterCardsGrid.tsx",
+      "source_location": "L7",
       "weight": 1.0
     },
     {
@@ -3550,6 +4203,18 @@
       "context": "import",
       "source_file": "src/components/ConstellationCanvas.tsx",
       "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_constellationcanvas",
+      "target": "src_lib_cluster_layout",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/ConstellationCanvas.tsx",
+      "source_location": "L6",
       "weight": 1.0
     },
     {
@@ -3650,7 +4315,7 @@
     },
     {
       "source": "src_components_omnidocviewer",
-      "target": "ref_lucide_react",
+      "target": "ref_next",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -3658,6 +4323,18 @@
       "context": "import",
       "source_file": "src/components/OmniDocViewer.tsx",
       "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_omnidocviewer",
+      "target": "ref_lucide_react",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/OmniDocViewer.tsx",
+      "source_location": "L6",
       "weight": 1.0
     },
     {
@@ -3802,6 +4479,18 @@
       "context": "import",
       "source_file": "src/lib/supabase/server.ts",
       "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_layout_math_test",
+      "target": "src_lib_cluster_layout",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/layout-math.test.ts",
+      "source_location": "L2",
       "weight": 1.0
     },
     {
@@ -4333,6 +5022,17 @@
       "weight": 1.0
     },
     {
+      "source": "src_app_api_graph_link_route",
+      "target": "src_app_api_graph_link_route_patch",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/api/graph/link/route.ts",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
       "source": "src_app_api_graph_route",
       "target": "src_app_api_graph_route_get",
       "relation": "contains",
@@ -4340,7 +5040,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/api/graph/route.ts",
-      "source_location": "L114",
+      "source_location": "L148",
       "weight": 1.0
     },
     {
@@ -4538,7 +5238,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/ClusterCardsGrid.tsx",
-      "source_location": "L15",
+      "source_location": "L16",
       "weight": 1.0
     },
     {
@@ -4549,7 +5249,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/ClusterCardsGrid.tsx",
-      "source_location": "L24",
+      "source_location": "L25",
       "weight": 1.0
     },
     {
@@ -4560,7 +5260,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/ClusterCardsGrid.tsx",
-      "source_location": "L28",
+      "source_location": "L29",
       "weight": 1.0
     },
     {
@@ -4571,95 +5271,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/ClusterCardsGrid.tsx",
-      "source_location": "L8",
-      "weight": 1.0
-    },
-    {
-      "source": "src_components_constellationcanvas",
-      "target": "src_components_constellationcanvas_graphnode",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L10",
-      "weight": 1.0
-    },
-    {
-      "source": "src_components_constellationcanvas",
-      "target": "src_components_constellationcanvas_graphlink",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L24",
-      "weight": 1.0
-    },
-    {
-      "source": "src_components_constellationcanvas",
-      "target": "src_components_constellationcanvas_constellationcanvasprops",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L31",
-      "weight": 1.0
-    },
-    {
-      "source": "src_components_constellationcanvas",
-      "target": "src_components_constellationcanvas_light_source_config",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L40",
-      "weight": 1.0
-    },
-    {
-      "source": "src_components_constellationcanvas",
-      "target": "src_components_constellationcanvas_dark_source_config",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L51",
-      "weight": 1.0
-    },
-    {
-      "source": "src_components_constellationcanvas",
-      "target": "src_components_constellationcanvas_drawroundedrect",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L62",
-      "weight": 1.0
-    },
-    {
-      "source": "src_components_constellationcanvas",
-      "target": "src_components_constellationcanvas_forcegraph2d",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L8",
-      "weight": 1.0
-    },
-    {
-      "source": "src_components_constellationcanvas",
-      "target": "src_components_constellationcanvas_truncatelabel",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L83",
+      "source_location": "L9",
       "weight": 1.0
     },
     {
@@ -4670,7 +5282,84 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/ConstellationCanvas.tsx",
-      "source_location": "L89",
+      "source_location": "L104",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_constellationcanvas",
+      "target": "src_components_constellationcanvas_forcegraph2d",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/ConstellationCanvas.tsx",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_constellationcanvas",
+      "target": "src_components_constellationcanvas_graphnode",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/ConstellationCanvas.tsx",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_constellationcanvas",
+      "target": "src_components_constellationcanvas_graphlink",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/ConstellationCanvas.tsx",
+      "source_location": "L43",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_constellationcanvas",
+      "target": "src_components_constellationcanvas_constellationcanvasprops",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/ConstellationCanvas.tsx",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_constellationcanvas",
+      "target": "src_components_constellationcanvas_source_tags",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/ConstellationCanvas.tsx",
+      "source_location": "L67",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_constellationcanvas",
+      "target": "src_components_constellationcanvas_drawroundedrect",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/ConstellationCanvas.tsx",
+      "source_location": "L77",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_constellationcanvas",
+      "target": "src_components_constellationcanvas_truncatetext",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/ConstellationCanvas.tsx",
+      "source_location": "L98",
       "weight": 1.0
     },
     {
@@ -4714,7 +5403,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/OmniDocViewer.tsx",
-      "source_location": "L15",
+      "source_location": "L17",
       "weight": 1.0
     },
     {
@@ -4725,7 +5414,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/OmniDocViewer.tsx",
-      "source_location": "L23",
+      "source_location": "L25",
       "weight": 1.0
     },
     {
@@ -4736,7 +5425,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/OmniDocViewer.tsx",
-      "source_location": "L30",
+      "source_location": "L32",
       "weight": 1.0
     },
     {
@@ -4872,6 +5561,160 @@
       "weight": 1.0
     },
     {
+      "source": "src_lib_cluster_layout",
+      "target": "src_lib_cluster_layout_hub_radius",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_cluster_layout",
+      "target": "src_lib_cluster_layout_hub_radar_radius",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_cluster_layout",
+      "target": "src_lib_cluster_layout_getclusterdisplayslots",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L114",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_cluster_layout",
+      "target": "src_lib_cluster_layout_cluster_distance_scale",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_cluster_layout",
+      "target": "src_lib_cluster_layout_max_ring_capacity",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_cluster_layout",
+      "target": "src_lib_cluster_layout_point",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_cluster_layout",
+      "target": "src_lib_cluster_layout_rect",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_cluster_layout",
+      "target": "src_lib_cluster_layout_satelliteposition",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_cluster_layout",
+      "target": "src_lib_cluster_layout_getclusteranchor",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_cluster_layout",
+      "target": "src_lib_cluster_layout_getsatelliteslot",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L66",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_cluster_layout",
+      "target": "src_lib_cluster_layout_card_width",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_cluster_layout",
+      "target": "src_lib_cluster_layout_card_height",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_cluster_layout",
+      "target": "src_lib_cluster_layout_uniform_orbit_radius",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_cluster_layout",
+      "target": "src_lib_cluster_layout_dorectanglesoverlap",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/cluster-layout.ts",
+      "source_location": "L95",
+      "weight": 1.0
+    },
+    {
       "source": "src_lib_ingest_router",
       "target": "src_lib_ingest_router_routepayload",
       "relation": "contains",
@@ -4982,6 +5825,17 @@
       "weight": 1.0
     },
     {
+      "source": "tests_layout_math_test",
+      "target": "tests_layout_math_test_runtestsuite",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/layout-math.test.ts",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
       "source": "tsconfig",
       "target": "tsconfig_compileroptions",
       "relation": "contains",
@@ -5000,7 +5854,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tsconfig.json",
-      "source_location": "L31",
+      "source_location": "L32",
       "weight": 1.0
     },
     {
@@ -5011,7 +5865,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tsconfig.json",
-      "source_location": "L38",
+      "source_location": "L39",
       "weight": 1.0
     },
     {
@@ -5049,7 +5903,7 @@
     },
     {
       "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_esmoduleinterop",
+      "target": "tsconfig_compileroptions_allowimportingtsextensions",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -5060,7 +5914,7 @@
     },
     {
       "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_module",
+      "target": "tsconfig_compileroptions_esmoduleinterop",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -5071,7 +5925,7 @@
     },
     {
       "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_moduleresolution",
+      "target": "tsconfig_compileroptions_module",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -5082,7 +5936,7 @@
     },
     {
       "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_resolvejsonmodule",
+      "target": "tsconfig_compileroptions_moduleresolution",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -5093,7 +5947,7 @@
     },
     {
       "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_isolatedmodules",
+      "target": "tsconfig_compileroptions_resolvejsonmodule",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -5104,7 +5958,7 @@
     },
     {
       "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_jsx",
+      "target": "tsconfig_compileroptions_isolatedmodules",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -5115,7 +5969,7 @@
     },
     {
       "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_incremental",
+      "target": "tsconfig_compileroptions_jsx",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -5126,7 +5980,7 @@
     },
     {
       "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_plugins",
+      "target": "tsconfig_compileroptions_incremental",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -5137,13 +5991,24 @@
     },
     {
       "source": "tsconfig_compileroptions",
+      "target": "tsconfig_compileroptions_plugins",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tsconfig.json",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "tsconfig_compileroptions",
       "target": "tsconfig_compileroptions_paths",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tsconfig.json",
-      "source_location": "L25",
+      "source_location": "L26",
       "weight": 1.0
     },
     {
@@ -5223,5 +6088,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "0d60b5f23a8867becb4b79ae845d1ae4a466fcab"
+  "built_at_commit": "1c31edfbd3c0c2ac6e0220e6dbf360c96ef5fc94"
 }

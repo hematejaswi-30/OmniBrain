@@ -3,6 +3,17 @@
 
 import dynamic from 'next/dynamic';
 import { useRef, useCallback, useEffect, useState, useMemo } from 'react';
+import {
+  CARD_WIDTH,
+  CARD_HEIGHT,
+  HUB_RADIUS,
+  HUB_RADAR_RADIUS,
+  UNIFORM_ORBIT_RADIUS,
+  getClusterAnchor,
+  getSatelliteSlot,
+  getClusterDisplaySlots,
+  Point,
+} from '@/lib/cluster-layout';
 
 // Dynamically import react-force-graph-2d with ssr: false
 const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), { ssr: false });
@@ -10,22 +21,35 @@ const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), { ssr: false 
 export interface GraphNode {
   id: string;
   label: string;
-  type: 'hub' | 'item' | 'entity' | 'document';
+  type: 'hub' | 'item' | 'entity' | 'document' | 'overflow';
   source?: 'instagram' | 'whatsapp' | 'gdrive' | 'web' | 'text' | 'document' | 'code';
+  cluster_name?: string;
   bookmarked?: boolean;
   val?: number;
   x?: number;
   y?: number;
+  fx?: number;
+  fy?: number;
   summary?: string;
   raw_content?: string;
   source_url?: string;
+  isOverflow?: boolean;
+  overflowCount?: number;
+  overflowItems?: any[];
+  slotIndex?: number;
+  similarity_score?: number;
 }
 
 export interface GraphLink {
+  id?: string;
   source: string | GraphNode;
   target: string | GraphNode;
   color?: string;
   value?: number;
+  type?: 'hub_spoke' | 'cross_cluster' | 'item_link' | 'macro_bridge';
+  similarity_score?: number;
+  match_reason?: string;
+  macroCount?: number;
 }
 
 interface ConstellationCanvasProps {
@@ -34,29 +58,20 @@ interface ConstellationCanvasProps {
   filterSource?: string | null;
   theme?: 'light' | 'dark';
   focusedNodeId?: string | null;
+  expandedClusterId?: string | null;
+  onToggleExpandCluster?: (hubId: string | null) => void;
+  onOpenOverflow?: (hubId: string, items: GraphNode[]) => void;
 }
 
-// 60-30-10 Classy Principle: Cohesive editorial low-saturation neutrals with single accent
-const LIGHT_SOURCE_CONFIG: Record<string, { color: string; border: string; bg: string; badge: string }> = {
-  hub: { color: '#FAF7F2', border: '#243B2E', bg: '#2F4A3A', badge: 'HUB' },
-  document: { color: '#2B2B2B', border: '#D5CEC2', bg: '#FFFFFF', badge: '.MD' },
-  whatsapp: { color: '#2B2B2B', border: '#D5CEC2', bg: '#FFFFFF', badge: 'WA' },
-  gdrive: { color: '#2B2B2B', border: '#D5CEC2', bg: '#FFFFFF', badge: 'DOC' },
-  instagram: { color: '#2B2B2B', border: '#D5CEC2', bg: '#FFFFFF', badge: 'REEL' },
-  web: { color: '#2B2B2B', border: '#D5CEC2', bg: '#FFFFFF', badge: 'WEB' },
-  text: { color: '#2B2B2B', border: '#D5CEC2', bg: '#FFFFFF', badge: 'NOTE' },
-  code: { color: '#2B2B2B', border: '#D5CEC2', bg: '#FFFFFF', badge: 'CODE' },
-};
-
-const DARK_SOURCE_CONFIG: Record<string, { color: string; border: string; bg: string; badge: string }> = {
-  hub: { color: '#1C1C1C', border: '#9E7C48', bg: '#B08D57', badge: 'HUB' },
-  document: { color: '#EDE8DF', border: '#3A3834', bg: '#242321', badge: '.MD' },
-  whatsapp: { color: '#EDE8DF', border: '#3A3834', bg: '#242321', badge: 'WA' },
-  gdrive: { color: '#EDE8DF', border: '#3A3834', bg: '#242321', badge: 'DOC' },
-  instagram: { color: '#EDE8DF', border: '#3A3834', bg: '#242321', badge: 'REEL' },
-  web: { color: '#EDE8DF', border: '#3A3834', bg: '#242321', badge: 'WEB' },
-  text: { color: '#EDE8DF', border: '#3A3834', bg: '#242321', badge: 'NOTE' },
-  code: { color: '#EDE8DF', border: '#3A3834', bg: '#242321', badge: 'CODE' },
+// Low-saturation editorial neutral styling tokens
+const SOURCE_TAGS: Record<string, { badge: string; bg: string; text: string }> = {
+  document: { badge: '.MD', bg: '#EAE5DC', text: '#2B2B2B' },
+  whatsapp: { badge: 'WA', bg: '#E1EBE2', text: '#1E4028' },
+  gdrive: { badge: 'DOC', bg: '#E2E8F0', text: '#1E293B' },
+  instagram: { badge: 'REEL', bg: '#F5E6E8', text: '#4C1D24' },
+  web: { badge: 'WEB', bg: '#E0E7FF', text: '#312E81' },
+  text: { badge: 'NOTE', bg: '#EAE5DC', text: '#2B2B2B' },
+  code: { badge: 'CODE', bg: '#E4DDD2', text: '#2B2B2B' },
 };
 
 function drawRoundedRect(
@@ -80,375 +95,514 @@ function drawRoundedRect(
   ctx.closePath();
 }
 
-function truncateLabel(text: string, maxLen: number = 22): string {
+function truncateText(text: string, maxLen: number = 24): string {
   if (!text) return '';
   const cleaned = text.replace(/^(WhatsApp:\s*|Doc:\s*|Web:\s*|Instagram:\s*)/i, '').trim();
   return cleaned.length > maxLen ? `${cleaned.slice(0, maxLen - 1)}…` : cleaned;
 }
 
-export default function ConstellationCanvas({ 
-  data, 
-  onNodeClick, 
+export default function ConstellationCanvas({
+  data,
+  onNodeClick,
   filterSource,
   theme = 'light',
-  focusedNodeId
+  focusedNodeId,
+  expandedClusterId,
+  onToggleExpandCluster,
+  onOpenOverflow,
 }: ConstellationCanvasProps) {
   const fgRef = useRef<any>(undefined);
   const [hoverNode, setHoverNode] = useState<GraphNode | null>(null);
+  const [hoverLink, setHoverLink] = useState<GraphLink | null>(null);
 
   const isLight = theme === 'light';
-  const sourceConfig = isLight ? LIGHT_SOURCE_CONFIG : DARK_SOURCE_CONFIG;
 
-  // Filter nodes if requested
-  const filteredData = useMemo(() => {
-    if (!filterSource) return data;
-    const nodes = data.nodes.filter(n => n.type === 'hub' || n.source === filterSource);
-    const nodeIds = new Set(nodes.map(n => n.id));
-    const links = data.links.filter(l => {
-      const sId = typeof l.source === 'object' ? (l.source as any).id : l.source;
-      const tId = typeof l.target === 'object' ? (l.target as any).id : l.target;
-      return nodeIds.has(sId) && nodeIds.has(tId);
+  // 1. Group nodes by cluster and deterministic golden spiral anchors
+  const layoutGraph = useMemo(() => {
+    const rawNodes = data.nodes || [];
+    const rawLinks = data.links || [];
+
+    // Filter by provenance if active (Hubs always remain visible)
+    const filteredNodes = rawNodes.filter(n => {
+      if (n.type === 'hub') return true;
+      if (!filterSource) return true;
+      return n.source === filterSource;
     });
-    return { nodes, links };
-  }, [data, filterSource]);
 
-  // Compute connected neighbor set for hover focus
-  const { highlightNodes, highlightLinks } = useMemo(() => {
-    const hNodes = new Set<string>();
-    const hLinks = new Set<string>();
+    const hubs = filteredNodes.filter(n => n.type === 'hub');
+    const items = filteredNodes.filter(n => n.type !== 'hub');
 
-    if (hoverNode) {
-      hNodes.add(hoverNode.id);
-      filteredData.links.forEach((l: any) => {
-        const sId = typeof l.source === 'object' ? l.source.id : l.source;
-        const tId = typeof l.target === 'object' ? l.target.id : l.target;
-        if (sId === hoverNode.id || tId === hoverNode.id) {
-          hNodes.add(sId);
-          hNodes.add(tId);
-          hLinks.add(`${sId}->${tId}`);
-          hLinks.add(`${tId}->${sId}`);
-        }
+    // Group items by cluster name
+    const clusterMap = new Map<string, GraphNode[]>();
+    items.forEach(it => {
+      const cName = it.cluster_name || 'General';
+      if (!clusterMap.has(cName)) clusterMap.set(cName, []);
+      clusterMap.get(cName)!.push(it);
+    });
+
+    const computedNodes: GraphNode[] = [];
+    const computedLinks: GraphLink[] = [];
+    const hubAnchorMap = new Map<string, Point>();
+
+    // Position each Hub deterministically with Fermat phyllotaxis spiral
+    hubs.forEach((hub, slotIdx) => {
+      const anchor = getClusterAnchor(slotIdx);
+      hubAnchorMap.set(hub.id, anchor);
+      if (hub.cluster_name) hubAnchorMap.set(hub.cluster_name, anchor);
+
+      const clusterItems = clusterMap.get(hub.label) || clusterMap.get(hub.cluster_name || '') || [];
+      const isExpanded = expandedClusterId === hub.id || hubs.length === 1;
+
+      computedNodes.push({
+        ...hub,
+        x: anchor.x,
+        y: anchor.y,
+        fx: anchor.x,
+        fy: anchor.y,
+        val: clusterItems.length,
       });
-    }
 
-    return { highlightNodes: hNodes, highlightLinks: hLinks };
-  }, [hoverNode, filteredData.links]);
+      // If cluster is expanded: display satellite items on the uniform R=200 ring
+      if (isExpanded) {
+        const { visibleItems, overflowCount, overflowItems, hasOverflow } = getClusterDisplaySlots(clusterItems);
 
-  // Constrained Physics settings with centering force
+        visibleItems.forEach(({ item, slotIndex }) => {
+          const slotPos = getSatelliteSlot(slotIndex, anchor);
+          computedNodes.push({
+            ...item,
+            x: slotPos.x,
+            y: slotPos.y,
+            fx: slotPos.x,
+            fy: slotPos.y,
+            slotIndex,
+          });
+
+          // Spoke link from hub to satellite card
+          computedLinks.push({
+            id: `spoke_${hub.id}_${item.id}`,
+            source: hub.id,
+            target: item.id,
+            type: 'hub_spoke',
+          });
+        });
+
+        // Overflow card in Slot 7 if N > 8
+        if (hasOverflow) {
+          const slot7Pos = getSatelliteSlot(7, anchor);
+          const overflowId = `overflow_${hub.id}`;
+          computedNodes.push({
+            id: overflowId,
+            label: `+${overflowCount} more notes`,
+            type: 'overflow',
+            cluster_name: hub.cluster_name,
+            x: slot7Pos.x,
+            y: slot7Pos.y,
+            fx: slot7Pos.x,
+            fy: slot7Pos.y,
+            slotIndex: 7,
+            overflowCount,
+            overflowItems,
+          });
+
+          computedLinks.push({
+            id: `spoke_${hub.id}_${overflowId}`,
+            source: hub.id,
+            target: overflowId,
+            type: 'hub_spoke',
+          });
+        }
+      }
+    });
+
+    // Handle cross-item links
+    const visibleNodeIds = new Set(computedNodes.map(n => n.id));
+    rawLinks.forEach(link => {
+      const sId = typeof link.source === 'object' ? (link.source as any).id : link.source;
+      const tId = typeof link.target === 'object' ? (link.target as any).id : link.target;
+
+      if (link.type === 'item_link') {
+        if (visibleNodeIds.has(sId) && visibleNodeIds.has(tId)) {
+          computedLinks.push(link);
+        } else {
+          // If nodes are collapsed in macro mode, aggregate into inter-hub bridge
+          const sNode = rawNodes.find(n => n.id === sId);
+          const tNode = rawNodes.find(n => n.id === tId);
+          if (sNode && tNode && sNode.cluster_name && tNode.cluster_name && sNode.cluster_name !== tNode.cluster_name) {
+            const sHub = hubs.find(h => h.cluster_name === sNode.cluster_name || h.label === sNode.cluster_name);
+            const tHub = hubs.find(h => h.cluster_name === tNode.cluster_name || h.label === tNode.cluster_name);
+            if (sHub && tHub && sHub.id !== tHub.id) {
+              const bridgeKey = sHub.id < tHub.id ? `${sHub.id}->${tHub.id}` : `${tHub.id}->${sHub.id}`;
+              const existing = computedLinks.find(l => (l as any)._bridgeKey === bridgeKey);
+              if (existing) {
+                existing.macroCount = (existing.macroCount || 1) + 1;
+              } else {
+                computedLinks.push({
+                  id: `bridge_${bridgeKey}`,
+                  source: sHub.id < tHub.id ? sHub.id : tHub.id,
+                  target: sHub.id < tHub.id ? tHub.id : sHub.id,
+                  type: 'macro_bridge',
+                  macroCount: 1,
+                  match_reason: `Cross-cluster semantic bridges between ${sHub.label} and ${tHub.label}`,
+                  ...({ _bridgeKey: bridgeKey } as any),
+                });
+              }
+            }
+          }
+        }
+      }
+    });
+
+    return { nodes: computedNodes, links: computedLinks };
+  }, [data, filterSource, expandedClusterId]);
+
+  // Initial auto-centering and bounds lock
   useEffect(() => {
     if (fgRef.current) {
-      fgRef.current.d3Force('charge')?.strength(-350);
-      fgRef.current.d3Force('link')?.distance(120);
-
-      // Add gentle centering force to pull nodes towards center origin
-      const centerForce = fgRef.current.d3Force('center');
-      if (centerForce) {
-        centerForce.strength(0.65);
-      }
-
       const timer = setTimeout(() => {
         if (fgRef.current) {
-          fgRef.current.zoomToFit(500, 75);
+          fgRef.current.centerAt(0, 0, 400);
+          fgRef.current.zoom(1.15, 400);
         }
-      }, 350);
+      }, 250);
       return () => clearTimeout(timer);
-    }
-  }, [filteredData]);
-
-  // Programmatic smooth auto-centering on focusedNodeId
-  useEffect(() => {
-    if (focusedNodeId && fgRef.current) {
-      const target = data.nodes.find(n => n.id === focusedNodeId);
-      if (target && typeof target.x === 'number' && typeof target.y === 'number') {
-        fgRef.current.centerAt(target.x, target.y, 650);
-        fgRef.current.zoom(1.4, 650);
-      }
-    }
-  }, [focusedNodeId, data.nodes]);
-
-  // Auto-centering when clicking any node
-  const handleInternalNodeClick = useCallback((node: any) => {
-    if (fgRef.current && typeof node.x === 'number' && typeof node.y === 'number') {
-      fgRef.current.centerAt(node.x, node.y, 600);
-      fgRef.current.zoom(1.35, 600);
-    }
-    onNodeClick(node as GraphNode);
-  }, [onNodeClick]);
-
-  // Constrain dragged nodes within visible boundary
-  const handleNodeDragEnd = useCallback((node: any) => {
-    if (typeof node.x === 'number' && typeof node.y === 'number') {
-      const dist = Math.sqrt(node.x * node.x + node.y * node.y);
-      const maxDist = 380;
-      if (dist > maxDist) {
-        node.x = (node.x / dist) * maxDist;
-        node.y = (node.y / dist) * maxDist;
-      }
     }
   }, []);
 
-  // Visual Bounded Graph Area Rendering: Frame, concentric rings, and coordinate crosshairs
+  // Programmatic camera focus when focusedNodeId or expandedClusterId changes
+  useEffect(() => {
+    if (fgRef.current) {
+      const targetId = focusedNodeId || expandedClusterId;
+      if (targetId) {
+        const target = layoutGraph.nodes.find(n => n.id === targetId);
+        if (target && typeof target.x === 'number' && typeof target.y === 'number') {
+          fgRef.current.centerAt(target.x, target.y, 600);
+          fgRef.current.zoom(1.3, 600);
+          return;
+        }
+      }
+      // If no target focused, center at origin
+      fgRef.current.centerAt(0, 0, 500);
+      fgRef.current.zoom(1.1, 500);
+    }
+  }, [focusedNodeId, expandedClusterId, layoutGraph.nodes]);
+
+  // Handle clicking on nodes (Hub toggle, Satellite card inspect, Overflow open)
+  const handleInternalNodeClick = useCallback((node: any) => {
+    if (node.type === 'hub') {
+      if (onToggleExpandCluster) {
+        const next = expandedClusterId === node.id ? null : node.id;
+        onToggleExpandCluster(next);
+      }
+      onNodeClick(node as GraphNode);
+      if (fgRef.current && typeof node.x === 'number' && typeof node.y === 'number') {
+        fgRef.current.centerAt(node.x, node.y, 500);
+        fgRef.current.zoom(1.35, 500);
+      }
+      return;
+    }
+
+    if (node.type === 'overflow') {
+      if (onOpenOverflow && node.cluster_name) {
+        onOpenOverflow(node.cluster_name, node.overflowItems || []);
+      }
+      return;
+    }
+
+    // Standard Satellite item card click
+    onNodeClick(node as GraphNode);
+  }, [onNodeClick, onToggleExpandCluster, expandedClusterId, onOpenOverflow]);
+
+  // Background visual boundary: Origin crosshairs and orbital radar rings
   const renderBackgroundArea = useCallback((ctx: CanvasRenderingContext2D, globalScale: number) => {
     ctx.save();
 
-    // Subtle origin crosshair (0, 0)
-    ctx.strokeStyle = isLight ? 'rgba(216, 209, 197, 0.45)' : 'rgba(60, 58, 54, 0.5)';
+    // Origin crosshair
+    ctx.strokeStyle = isLight ? 'rgba(216, 209, 197, 0.45)' : 'rgba(70, 68, 64, 0.5)';
     ctx.lineWidth = 1 / globalScale;
     ctx.beginPath();
-    ctx.moveTo(-25, 0);
-    ctx.lineTo(25, 0);
-    ctx.moveTo(0, -25);
-    ctx.lineTo(0, 25);
+    ctx.moveTo(-20, 0);
+    ctx.lineTo(20, 0);
+    ctx.moveTo(0, -20);
+    ctx.lineTo(0, 20);
     ctx.stroke();
 
-    // Inner focal area ring (radius 190)
+    // 40% Bounded Vitrine focal circle (Radius 280)
     ctx.beginPath();
-    ctx.arc(0, 0, 190, 0, 2 * Math.PI);
-    ctx.setLineDash([3 / globalScale, 5 / globalScale]);
-    ctx.strokeStyle = isLight ? 'rgba(216, 209, 197, 0.5)' : 'rgba(60, 58, 54, 0.5)';
+    ctx.arc(0, 0, 280, 0, 2 * Math.PI);
+    ctx.setLineDash([4 / globalScale, 6 / globalScale]);
+    ctx.strokeStyle = isLight ? 'rgba(216, 209, 197, 0.55)' : 'rgba(65, 63, 59, 0.55)';
     ctx.stroke();
 
-    // Outer constellation field boundary (radius 360)
+    // Outer perimeter circle (Radius 450)
     ctx.beginPath();
-    ctx.arc(0, 0, 360, 0, 2 * Math.PI);
-    ctx.setLineDash([6 / globalScale, 6 / globalScale]);
-    ctx.strokeStyle = isLight ? 'rgba(47, 74, 58, 0.22)' : 'rgba(176, 141, 87, 0.25)';
+    ctx.arc(0, 0, 450, 0, 2 * Math.PI);
+    ctx.setLineDash([6 / globalScale, 8 / globalScale]);
+    ctx.strokeStyle = isLight ? 'rgba(47, 74, 58, 0.2)' : 'rgba(176, 141, 87, 0.22)';
     ctx.lineWidth = 1.2 / globalScale;
     ctx.stroke();
-
-    // Subtle area label
-    const fontSize = 8 / Math.sqrt(globalScale);
-    ctx.font = `500 ${fontSize}px JetBrains Mono, monospace`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'bottom';
-    ctx.fillStyle = isLight ? 'rgba(107, 101, 92, 0.5)' : 'rgba(158, 153, 144, 0.5)';
-    ctx.fillText('CONSTELLATION BOUNDARY (360px)', 0, -366);
 
     ctx.restore();
   }, [isLight]);
 
-  // Custom node drawing: Restrained editorial geometry
+  // Custom node rendering: Hubs, 44px Card Rectangles, and Overflow Card
   const drawNode = useCallback((node: any, ctx: CanvasRenderingContext2D, globalScale: number) => {
-    const isHub = node.type === 'hub';
-    const isMdDoc = node.type === 'document' || node.source === 'document' || (node.label && node.label.toLowerCase().includes('.md'));
-    const sourceKey = isHub ? 'hub' : isMdDoc ? 'document' : (node.source || 'text');
-    const cfg = sourceConfig[sourceKey] || sourceConfig.text;
-
-    // Check hover focus state
     const isHovered = hoverNode && hoverNode.id === node.id;
-    const isConnected = hoverNode && highlightNodes.has(node.id);
-    const isDimmed = hoverNode && !isConnected;
-
     ctx.save();
-    if (isDimmed) {
-      ctx.globalAlpha = 0.25;
-    }
 
     // =========================================================================
-    // CASE A: CLUSTER HUB MASTER
+    // CASE A: CLUSTER HUB MASTER ORB
     // =========================================================================
-    if (isHub) {
-      const radius = 16 / Math.sqrt(globalScale);
+    if (node.type === 'hub') {
+      const isExpanded = expandedClusterId === node.id;
+      const radius = HUB_RADIUS / Math.sqrt(globalScale);
 
-      // 1. Subtle, hair-thin radar rings (no glow)
+      // 1. Radar Perimeter Circle (clears satellite cards at R=200px)
       ctx.save();
-      ctx.strokeStyle = isLight ? 'rgba(47, 74, 58, 0.15)' : 'rgba(176, 141, 87, 0.2)';
-      ctx.lineWidth = 0.8 / globalScale;
+      ctx.beginPath();
+      ctx.arc(node.x, node.y, (HUB_RADAR_RADIUS) / Math.sqrt(globalScale), 0, 2 * Math.PI);
       ctx.setLineDash([3 / globalScale, 5 / globalScale]);
-
-      ctx.beginPath();
-      ctx.arc(node.x, node.y, radius + 28 / globalScale, 0, 2 * Math.PI);
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.arc(node.x, node.y, radius + 56 / globalScale, 0, 2 * Math.PI);
+      ctx.strokeStyle = isLight ? 'rgba(47, 74, 58, 0.2)' : 'rgba(176, 141, 87, 0.25)';
+      ctx.lineWidth = 0.9 / globalScale;
       ctx.stroke();
       ctx.restore();
 
-      // 2. Central Hub Sphere (Solid, no gradient)
+      // 2. Hub Sphere
       ctx.beginPath();
       ctx.arc(node.x, node.y, radius, 0, 2 * Math.PI);
-      ctx.fillStyle = isLight ? '#2F4A3A' : '#2A2927';
+      ctx.fillStyle = isLight ? (isExpanded ? '#243B2E' : '#2F4A3A') : (isExpanded ? '#C49E63' : '#B08D57');
       ctx.fill();
-      ctx.strokeStyle = isLight ? '#243B2E' : '#B08D57';
-      ctx.lineWidth = 1.8 / globalScale;
+      ctx.strokeStyle = isLight ? '#FFFFFF' : '#1C1C1C';
+      ctx.lineWidth = 2.2 / globalScale;
       ctx.stroke();
 
-      // 3. Center dot
+      // 3. Central Inner Dot
       ctx.beginPath();
-      ctx.arc(node.x, node.y, radius * 0.38, 0, 2 * Math.PI);
-      ctx.fillStyle = isLight ? '#FAF7F2' : '#EDE8DF';
+      ctx.arc(node.x, node.y, radius * 0.35, 0, 2 * Math.PI);
+      ctx.fillStyle = isLight ? '#FAF7F2' : '#1C1C1C';
       ctx.fill();
 
-      // 4. Hub Typography Label Below
-      const hubFontSize = Math.max(10, 11 / Math.sqrt(globalScale));
-      ctx.font = `600 ${hubFontSize}px Georgia, Newsreader, serif`;
+      // 4. Cluster Label Card Below Hub
+      const fontSize = Math.max(10, 11 / Math.sqrt(globalScale));
+      ctx.font = `600 ${fontSize}px Georgia, Newsreader, serif`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'top';
 
-      const hubTitle = `${node.label}`;
-      const textWidth = ctx.measureText(hubTitle).width;
-      const pillY = node.y + radius + 5 / globalScale;
-      const pillHeight = hubFontSize * 1.5;
-      const pillWidth = textWidth + 14 / globalScale;
+      const labelText = node.label || 'Cluster';
+      const textWidth = ctx.measureText(labelText).width;
+      const pillY = node.y + radius + 6 / globalScale;
+      const pillHeight = fontSize * 1.6;
+      const pillWidth = Math.max(textWidth + 20 / globalScale, 70 / globalScale);
 
-      ctx.fillStyle = isLight ? '#FAF7F2' : '#20201F';
-      drawRoundedRect(ctx, node.x - pillWidth / 2, pillY, pillWidth, pillHeight, 3 / globalScale);
+      ctx.fillStyle = isLight ? '#FAF7F2' : '#242321';
+      drawRoundedRect(ctx, node.x - pillWidth / 2, pillY, pillWidth, pillHeight, 4 / globalScale);
       ctx.fill();
-      ctx.strokeStyle = isLight ? '#DDD5C8' : '#383632';
-      ctx.lineWidth = 0.8 / globalScale;
+      ctx.strokeStyle = isExpanded ? (isLight ? '#2F4A3A' : '#B08D57') : (isLight ? '#DDD5C8' : '#3A3834');
+      ctx.lineWidth = (isExpanded ? 1.6 : 0.9) / globalScale;
       ctx.stroke();
 
       ctx.fillStyle = isLight ? '#2B2B2B' : '#EDE8DF';
-      ctx.fillText(hubTitle, node.x, pillY + 2.5 / globalScale);
+      ctx.fillText(labelText, node.x, pillY + 3 / globalScale);
+
+      // Micro badge indicating state
+      const subFontSize = Math.max(7.5, 8 / Math.sqrt(globalScale));
+      ctx.font = `500 ${subFontSize}px JetBrains Mono, monospace`;
+      ctx.fillStyle = isLight ? '#6B655C' : '#9E9990';
+      const statusText = isExpanded ? 'EXPANDED · ESC TO CLOSE' : `${node.val || 0} NOTES · CLICK`;
+      ctx.fillText(statusText, node.x, pillY + pillHeight + 2 / globalScale);
 
       ctx.restore();
       return;
     }
 
     // =========================================================================
-    // CASE B: SOURCE ITEM ORB & COMPACT LABEL
+    // CASE B: OVERFLOW CARD (+N MORE NOTES)
     // =========================================================================
-    const orbRadius = (isMdDoc ? 10.5 : 8.5) / Math.sqrt(globalScale);
+    if (node.type === 'overflow') {
+      const halfW = CARD_WIDTH / 2;
+      const halfH = CARD_HEIGHT / 2;
+      const x = node.x - halfW;
+      const y = node.y - halfH;
 
-    // Orb Body
-    ctx.beginPath();
-    ctx.arc(node.x, node.y, orbRadius, 0, 2 * Math.PI);
-    ctx.fillStyle = cfg.bg;
+      ctx.save();
+      // Dashed border for overflow pill
+      ctx.setLineDash([4 / globalScale, 4 / globalScale]);
+      ctx.fillStyle = isLight ? '#F4EFE7' : '#232220';
+      drawRoundedRect(ctx, x, y, CARD_WIDTH, CARD_HEIGHT, 8);
+      ctx.fill();
+
+      ctx.strokeStyle = isHovered ? (isLight ? '#2F4A3A' : '#B08D57') : (isLight ? '#B8AEA0' : '#4C4842');
+      ctx.lineWidth = (isHovered ? 1.8 : 1.2) / globalScale;
+      ctx.stroke();
+
+      ctx.font = `600 11px Plus Jakarta Sans, system-ui, sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = isLight ? '#2F4A3A' : '#D6B27C';
+      ctx.fillText(`📂 ${node.label}`, node.x, node.y - 4);
+
+      ctx.font = `500 8.5px JetBrains Mono, monospace`;
+      ctx.fillStyle = isLight ? '#6B655C' : '#9E9990';
+      ctx.fillText(`Click to view all`, node.x, node.y + 11);
+
+      ctx.restore();
+      return;
+    }
+
+    // =========================================================================
+    // CASE C: SATELLITE CARD RECTANGLE (140px x 44px, WCAG Compliant)
+    // =========================================================================
+    const halfW = CARD_WIDTH / 2;
+    const halfH = CARD_HEIGHT / 2;
+    const x = node.x - halfW;
+    const y = node.y - halfH;
+
+    // Card background & shadow
+    ctx.fillStyle = isLight ? '#FFFFFF' : '#242321';
+    drawRoundedRect(ctx, x, y, CARD_WIDTH, CARD_HEIGHT, 8);
     ctx.fill();
-    ctx.strokeStyle = isHovered ? (isLight ? '#2F4A3A' : '#B08D57') : cfg.border;
-    ctx.lineWidth = (isHovered ? 1.8 : 1) / globalScale;
+
+    // Border
+    ctx.strokeStyle = isHovered
+      ? (isLight ? '#2F4A3A' : '#B08D57')
+      : (isLight ? '#E4DDD2' : '#383632');
+    ctx.lineWidth = (isHovered ? 2.0 : 1.0) / globalScale;
     ctx.stroke();
 
-    // Source Badge text inside orb
-    const badgeFontSize = Math.max(7, 7.5 / Math.sqrt(globalScale));
-    ctx.font = `500 ${badgeFontSize}px ui-monospace, monospace`;
+    // Top Row: Source provenance badge + bookmark
+    const tagInfo = SOURCE_TAGS[node.source || 'document'] || SOURCE_TAGS.document;
+    const badgeW = 28;
+    const badgeH = 13;
+    const badgeX = x + 8;
+    const badgeY = y + 6;
+
+    ctx.fillStyle = isLight ? tagInfo.bg : '#2F2D2A';
+    drawRoundedRect(ctx, badgeX, badgeY, badgeW, badgeH, 3);
+    ctx.fill();
+
+    ctx.font = `600 8px JetBrains Mono, monospace`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillStyle = isHovered ? (isLight ? '#2F4A3A' : '#B08D57') : (isLight ? '#6B655C' : '#9E9990');
-    ctx.fillText(cfg.badge, node.x, node.y);
+    ctx.fillStyle = isLight ? tagInfo.text : '#C4BEB3';
+    ctx.fillText(tagInfo.badge, badgeX + badgeW / 2, badgeY + badgeH / 2);
 
-    // Label Pill Below
-    const fontSize = Math.max(8.5, 9 / Math.sqrt(globalScale));
-    ctx.font = `400 ${fontSize}px Plus Jakarta Sans, system-ui, sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'top';
+    // Optional bookmark icon
+    if (node.bookmarked) {
+      ctx.font = `10px sans-serif`;
+      ctx.fillStyle = isLight ? '#B08D57' : '#D6B27C';
+      ctx.textAlign = 'right';
+      ctx.fillText('★', x + CARD_WIDTH - 8, badgeY + badgeH / 2);
+    }
 
-    const cleanLabel = truncateLabel(node.label, 20);
-    const textWidth = ctx.measureText(cleanLabel).width;
-    const pillY = node.y + orbRadius + 4 / globalScale;
-    const pillHeight = fontSize * 1.5;
-    const pillWidth = textWidth + 10 / globalScale;
+    // Bottom Row: Clean 2-line truncated title
+    ctx.font = `500 10px Plus Jakarta Sans, system-ui, sans-serif`;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = isLight ? '#2B2B2B' : '#EDE8DF';
 
-    ctx.fillStyle = isLight ? '#FFFFFF' : '#242321';
-    drawRoundedRect(ctx, node.x - pillWidth / 2, pillY, pillWidth, pillHeight, 3 / globalScale);
-    ctx.fill();
-    ctx.strokeStyle = isHovered ? (isLight ? '#2F4A3A' : '#B08D57') : (isLight ? '#E4DDD2' : '#353330');
-    ctx.lineWidth = 0.8 / globalScale;
-    ctx.stroke();
-
-    ctx.fillStyle = isHovered ? (isLight ? '#2F4A3A' : '#B08D57') : cfg.color;
-    ctx.fillText(cleanLabel, node.x, pillY + 2 / globalScale);
+    const cleanTitle = truncateText(node.label || 'Note', 19);
+    ctx.fillText(cleanTitle, x + 8, y + 29);
 
     ctx.restore();
-  }, [hoverNode, highlightNodes, isLight, sourceConfig]);
+  }, [hoverNode, isLight, expandedClusterId]);
+
+  // Clickable interactive hit box (WCAG 44px minimum touch target)
+  const drawPointerArea = useCallback((node: any, color: string, ctx: CanvasRenderingContext2D) => {
+    ctx.fillStyle = color;
+    if (node.type === 'hub') {
+      ctx.beginPath();
+      ctx.arc(node.x, node.y, 44, 0, 2 * Math.PI);
+      ctx.fill();
+    } else {
+      // Full 140x44 rectangle
+      ctx.fillRect(node.x - CARD_WIDTH / 2, node.y - CARD_HEIGHT / 2, CARD_WIDTH, CARD_HEIGHT);
+    }
+  }, []);
 
   return (
-    <div className={`w-full h-full relative ${isLight ? 'bg-[#FAF7F2]' : 'bg-[#1C1C1C]'}`}>
+    <div className={`w-full h-full relative overflow-hidden select-none ${isLight ? 'bg-[#FAF7F2]' : 'bg-[#181817]'}`}>
       <ForceGraph2D
         ref={fgRef}
-        graphData={filteredData}
-        backgroundColor={isLight ? '#FAF7F2' : '#1C1C1C'}
+        graphData={layoutGraph}
+        backgroundColor={isLight ? '#FAF7F2' : '#181817'}
         onRenderFramePre={renderBackgroundArea}
         nodeCanvasObject={drawNode}
-        nodePointerAreaPaint={(node: any, color: string, ctx: CanvasRenderingContext2D, globalScale: number) => {
-          const radius = (node.type === 'hub' ? 24 : 16) / Math.sqrt(globalScale);
-          ctx.fillStyle = color;
-          ctx.beginPath();
-          ctx.arc(node.x, node.y, radius, 0, 2 * Math.PI);
-          ctx.fill();
-        }}
-        // Clean, quiet links
+        nodePointerAreaPaint={drawPointerArea}
+        // Deterministic static positions: ZERO force physics drift!
+        cooldownTicks={0}
+        enableNodeDrag={false}
+        enableZoomInteraction={true}
+        minZoom={0.5}
+        maxZoom={2.4}
+        // Clean links styling
         linkColor={(link: any) => {
-          const sId = typeof link.source === 'object' ? link.source.id : link.source;
-          const tId = typeof link.target === 'object' ? link.target.id : link.target;
-          const isHighlighted = hoverNode && (highlightLinks.has(`${sId}->${tId}`) || highlightLinks.has(`${tId}->${sId}`));
-          const isDimmed = hoverNode && !isHighlighted;
-
-          if (isDimmed) return isLight ? 'rgba(216, 209, 197, 0.2)' : 'rgba(56, 54, 50, 0.2)';
-          if (isHighlighted) return isLight ? '#2F4A3A' : '#B08D57';
-          return isLight ? '#DCD4C7' : '#383632';
+          if (link.type === 'macro_bridge') {
+            return isLight ? 'rgba(47, 74, 58, 0.45)' : 'rgba(176, 141, 87, 0.5)';
+          }
+          if (link.type === 'item_link') {
+            return isLight ? '#2F4A3A' : '#D6B27C';
+          }
+          return isLight ? 'rgba(216, 209, 197, 0.65)' : 'rgba(60, 58, 54, 0.65)';
         }}
         linkWidth={(link: any) => {
-          const sId = typeof link.source === 'object' ? link.source.id : link.source;
-          const tId = typeof link.target === 'object' ? link.target.id : link.target;
-          const isHighlighted = hoverNode && (highlightLinks.has(`${sId}->${tId}`) || highlightLinks.has(`${tId}->${sId}`));
-          return isHighlighted ? 1.6 : 0.9;
+          if (link.type === 'macro_bridge') return 2.2;
+          if (link.type === 'item_link') return 1.8;
+          return 0.8;
         }}
-        // Directional Particles: Single Accent
+        // Particle streams only on active hover or cross-cluster links
         linkDirectionalParticles={(link: any) => {
-          const sId = typeof link.source === 'object' ? link.source.id : link.source;
-          const tId = typeof link.target === 'object' ? link.target.id : link.target;
-          const isHighlighted = hoverNode && (highlightLinks.has(`${sId}->${tId}`) || highlightLinks.has(`${tId}->${sId}`));
-          return isHighlighted ? 3 : 1;
+          if (link.type === 'item_link') return 2;
+          if (link.type === 'macro_bridge') return 1;
+          return 0;
         }}
-        linkDirectionalParticleWidth={1.8}
-        linkDirectionalParticleSpeed={0.004}
+        linkDirectionalParticleWidth={2}
+        linkDirectionalParticleSpeed={0.005}
         linkDirectionalParticleColor={(link: any) => {
-          const sId = typeof link.source === 'object' ? link.source.id : link.source;
-          const tId = typeof link.target === 'object' ? link.target.id : link.target;
-          const isHighlighted = hoverNode && (highlightLinks.has(`${sId}->${tId}`) || highlightLinks.has(`${tId}->${sId}`));
-          if (isHighlighted) return isLight ? '#243B2E' : '#D6B27C';
-          return isLight ? '#2F4A3A' : '#B08D57';
+          return isLight ? '#2F4A3A' : '#D6B27C';
         }}
         onNodeHover={(node: any) => setHoverNode(node ? (node as GraphNode) : null)}
+        onLinkHover={(link: any) => setHoverLink(link ? (link as GraphLink) : null)}
         onNodeClick={handleInternalNodeClick}
-        onNodeDragEnd={handleNodeDragEnd}
-        cooldownTicks={140}
-        enableNodeDrag={true}
-        enableZoomInteraction={true}
-        minZoom={0.4}
-        maxZoom={3.5}
-        d3VelocityDecay={0.35}
       />
 
+      {/* Floating Link Tooltip Badge (Explains match_reason) */}
+      {hoverLink && hoverLink.match_reason && (
+        <div className={`absolute top-3 left-1/2 -translate-x-1/2 z-30 px-3 py-1.5 rounded-full border text-[11px] font-mono shadow-md backdrop-blur-md flex items-center gap-2 pointer-events-none transition-all ${
+          isLight ? 'bg-[#FAF7F2]/95 border-[#2F4A3A]/30 text-[#2B2B2B]' : 'bg-[#242422]/95 border-[#B08D57]/40 text-[#EDE8DF]'
+        }`}>
+          <span className="text-[#2F4A3A] dark:text-[#B08D57]">⚡</span>
+          <span>{hoverLink.match_reason}</span>
+          {hoverLink.similarity_score && (
+            <span className="px-1.5 py-0.2 bg-[#EAE5DC] dark:bg-[#33312E] rounded text-[10px] font-semibold">
+              {Math.round(hoverLink.similarity_score * 100)}% Match
+            </span>
+          )}
+        </div>
+      )}
+
       {/* Floating Canvas Navigation Dock */}
-      <div className="absolute bottom-5 right-5 z-20 flex items-center gap-1.5 p-1 rounded-lg border border-[#DDD5C7] dark:border-[#383632] bg-[#FAF7F2]/95 dark:bg-[#20201F]/95 backdrop-blur-md shadow-md text-xs font-mono">
+      <div className="absolute bottom-3 right-3 z-20 flex items-center gap-1 p-1 rounded-lg border border-[#DDD5C7] dark:border-[#383632] bg-[#FAF7F2]/95 dark:bg-[#20201F]/95 backdrop-blur-md shadow-sm text-xs font-mono">
         <button
           onClick={() => {
             if (fgRef.current) {
-              fgRef.current.centerAt(0, 0, 500);
-              fgRef.current.zoom(1.0, 500);
+              fgRef.current.centerAt(0, 0, 450);
+              fgRef.current.zoom(1.15, 450);
             }
           }}
           className="px-2 py-1 rounded hover:bg-[#EDE7DE] dark:hover:bg-[#282725] text-[#2B2B2B] dark:text-[#EDE8DF] transition-colors flex items-center gap-1 cursor-pointer"
           title="Recenter Camera to Origin"
         >
           <span>🎯</span>
-          <span className="hidden sm:inline text-[11px]">Recenter</span>
-        </button>
-        <div className="w-[1px] h-3.5 bg-[#DDD5C7] dark:bg-[#383632]" />
-        <button
-          onClick={() => {
-            if (fgRef.current) {
-              fgRef.current.zoomToFit(450, 75);
-            }
-          }}
-          className="px-2 py-1 rounded hover:bg-[#EDE7DE] dark:hover:bg-[#282725] text-[#2B2B2B] dark:text-[#EDE8DF] transition-colors flex items-center gap-1 cursor-pointer"
-          title="Fit All Clusters on Screen"
-        >
-          <span>⛶</span>
-          <span className="hidden sm:inline text-[11px]">Fit View</span>
+          <span className="text-[10px]">Center</span>
         </button>
         <div className="w-[1px] h-3.5 bg-[#DDD5C7] dark:bg-[#383632]" />
         <button
           onClick={() => {
             if (fgRef.current) {
               const currentZoom = fgRef.current.zoom();
-              fgRef.current.zoom(Math.min(currentZoom * 1.3, 3.5), 300);
+              fgRef.current.zoom(Math.min(currentZoom * 1.25, 2.4), 250);
             }
           }}
-          className="p-1 rounded hover:bg-[#EDE7DE] dark:hover:bg-[#282725] text-[#2B2B2B] dark:text-[#EDE8DF] transition-colors cursor-pointer w-6 h-6 flex items-center justify-center font-bold"
+          className="p-1 rounded hover:bg-[#EDE7DE] dark:hover:bg-[#282725] text-[#2B2B2B] dark:text-[#EDE8DF] transition-colors cursor-pointer w-5 h-5 flex items-center justify-center font-bold text-xs"
           title="Zoom In"
         >
           +
@@ -457,10 +611,10 @@ export default function ConstellationCanvas({
           onClick={() => {
             if (fgRef.current) {
               const currentZoom = fgRef.current.zoom();
-              fgRef.current.zoom(Math.max(currentZoom * 0.75, 0.4), 300);
+              fgRef.current.zoom(Math.max(currentZoom * 0.8, 0.5), 250);
             }
           }}
-          className="p-1 rounded hover:bg-[#EDE7DE] dark:hover:bg-[#282725] text-[#2B2B2B] dark:text-[#EDE8DF] transition-colors cursor-pointer w-6 h-6 flex items-center justify-center font-bold"
+          className="p-1 rounded hover:bg-[#EDE7DE] dark:hover:bg-[#282725] text-[#2B2B2B] dark:text-[#EDE8DF] transition-colors cursor-pointer w-5 h-5 flex items-center justify-center font-bold text-xs"
           title="Zoom Out"
         >
           −
@@ -468,5 +622,4 @@ export default function ConstellationCanvas({
       </div>
     </div>
   );
-
 }

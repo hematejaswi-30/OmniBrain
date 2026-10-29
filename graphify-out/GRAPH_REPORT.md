@@ -1,17 +1,17 @@
-# Graph Report - OmniBrain  (2026-10-28)
+# Graph Report - OmniBrain  (2026-10-29)
 
 ## Corpus Check
-- 33 files · ~51,461 words
+- 37 files · ~55,223 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 3 file(s) not represented in the graph (top: .example 1, (none) 1, .css 1)
 
 ## Summary
-- 180 nodes · 272 edges · 16 communities (9 shown, 7 thin omitted)
+- 200 nodes · 326 edges · 16 communities (9 shown, 7 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `0d60b5f2`
+- Built from commit: `1c31edfb`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -24,34 +24,34 @@
 - dashboard/page.tsx
 - dependencies
 - ingest-router.ts
-- devDependencies
+- Header.tsx
 - layout.tsx
 - AGENTS.md
 - vercel.json
 
 ## God Nodes (most connected - your core abstractions)
-1. `next` - 16 edges
-2. `createServerClient()` - 16 edges
-3. `compilerOptions` - 16 edges
-4. `getAuthUser()` - 15 edges
+1. `next` - 19 edges
+2. `createServerClient()` - 18 edges
+3. `getAuthUser()` - 17 edges
+4. `compilerOptions` - 17 edges
 5. `react` - 11 edges
 6. `lucide-react` - 9 edges
 7. `🌌 OmniBrain` - 9 edges
 8. `Header()` - 8 edges
-9. `SynthesisDrawer()` - 6 edges
-10. `✨ Core Features & Screenshots` - 6 edges
+9. `ConstellationCanvas()` - 7 edges
+10. `SynthesisDrawer()` - 6 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `runTestSuite()` --calls--> `getClusterAnchor()`  [EXTRACTED]
+  tests/layout-math.test.ts → src/lib/cluster-layout.ts
+- `runTestSuite()` --calls--> `getSatelliteSlot()`  [EXTRACTED]
+  tests/layout-math.test.ts → src/lib/cluster-layout.ts
+- `runTestSuite()` --calls--> `doRectanglesOverlap()`  [EXTRACTED]
+  tests/layout-math.test.ts → src/lib/cluster-layout.ts
+- `runTestSuite()` --calls--> `getClusterDisplaySlots()`  [EXTRACTED]
+  tests/layout-math.test.ts → src/lib/cluster-layout.ts
 - `DELETE()` --calls--> `createServerClient()`  [EXTRACTED]
   src/app/api/highlights/route.ts → src/lib/supabase/server.ts
-- `GraphPage()` --calls--> `Header()`  [EXTRACTED]
-  src/app/graph/page.tsx → src/components/Header.tsx
-- `GraphPage()` --calls--> `SynthesisDrawer()`  [EXTRACTED]
-  src/app/graph/page.tsx → src/components/SynthesisDrawer.tsx
-- `GET()` --calls--> `createServerClient()`  [EXTRACTED]
-  src/app/api/clusters/route.ts → src/lib/supabase/server.ts
-- `GET()` --calls--> `getAuthUser()`  [EXTRACTED]
-  src/app/api/clusters/route.ts → src/lib/supabase/server.ts
 
 ## Import Cycles
 - None detected.
@@ -63,24 +63,24 @@ Cohesion: 0.10
 Nodes (19): 1. Clone the repository, 1. ⚡ Universal Omni Ingestion Dock, 2. 💬 Conversational Semantic Search ("Ask OmniBrain"), 2. Install dependencies, 3. Configure environment variables (Optional for Demo Mode), 3. 📜 Light Paper Studio Mode, 4. 📑 Multi-Source OmniDoc Synthesis, 4. Run the development server (+11 more)
 
 ### Community 1 - "package.json"
-Cohesion: 0.09
-Nodes (19): name, private, scripts, build, dev, lint, start, version (+11 more)
+Cohesion: 0.07
+Nodes (26): devDependencies, autoprefixer, @tailwindcss/postcss, @types/node, @types/react, @types/react-dom, typescript, name (+18 more)
 
 ### Community 2 - "next"
 Cohesion: 0.17
-Nodes (19): @google/generative-ai, next, GET(), SEED_CLUSTERS, GET(), SEED_GRAPH, DELETE(), GET() (+11 more)
+Nodes (20): @google/generative-ai, next, GET(), SEED_CLUSTERS, PATCH(), GET(), SEED_GRAPH, DELETE() (+12 more)
 
 ### Community 3 - "compilerOptions"
-Cohesion: 0.11
-Nodes (18): compilerOptions, allowJs, esModuleInterop, incremental, isolatedModules, jsx, lib, module (+10 more)
+Cohesion: 0.10
+Nodes (19): compilerOptions, allowImportingTsExtensions, allowJs, esModuleInterop, incremental, isolatedModules, jsx, lib (+11 more)
 
 ### Community 4 - "ConstellationCanvas.tsx"
-Cohesion: 0.20
-Nodes (12): react-force-graph-2d, ConstellationCanvas, GraphPage(), ConstellationCanvas(), ConstellationCanvasProps, DARK_SOURCE_CONFIG, drawRoundedRect(), ForceGraph2D (+4 more)
+Cohesion: 0.16
+Nodes (21): ConstellationCanvas(), ConstellationCanvasProps, drawRoundedRect(), ForceGraph2D, SOURCE_TAGS, truncateText(), CARD_HEIGHT, CARD_WIDTH (+13 more)
 
 ### Community 5 - "dashboard/page.tsx"
-Cohesion: 0.11
-Nodes (25): lucide-react, react, DashboardPage(), ClusterCardsGrid(), ClusterCardsGridProps, ClusterData, ClusterItem, Header() (+17 more)
+Cohesion: 0.13
+Nodes (22): lucide-react, react, DashboardPage(), ConstellationCanvas, GraphPage(), ClusterCardsGrid(), ClusterCardsGridProps, ClusterData (+14 more)
 
 ### Community 6 - "dependencies"
 Cohesion: 0.18
@@ -90,29 +90,29 @@ Nodes (11): dependencies, @google/generative-ai, groq-sdk, lucide-react, next, r
 Cohesion: 0.32
 Nodes (5): Omnibox(), ingestRouter(), RouteResult, RouteType, SourceType
 
-### Community 8 - "devDependencies"
-Cohesion: 0.29
-Nodes (7): devDependencies, autoprefixer, @tailwindcss/postcss, @types/node, @types/react, @types/react-dom, typescript
+### Community 8 - "Header.tsx"
+Cohesion: 0.23
+Nodes (8): @supabase/ssr, Header(), HeaderProps, getSimulatedUser(), setSimulatedUser(), SimulatedUser, UserMode, createClient()
 
 ## Knowledge Gaps
-- **91 isolated node(s):** `name`, `version`, `private`, `dev`, `build` (+86 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 105 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **94 isolated node(s):** `name`, `version`, `private`, `dev`, `build` (+89 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 109 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **7 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `next` connect `next` to `package.json`, `layout.tsx`, `ConstellationCanvas.tsx`, `dashboard/page.tsx`?**
-  _High betweenness centrality (0.211) - this node is a cross-community bridge._
+- **Why does `next` connect `next` to `package.json`, `ConstellationCanvas.tsx`, `dashboard/page.tsx`, `Header.tsx`, `layout.tsx`?**
+  _High betweenness centrality (0.250) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `private` to the rest of the system?**
-  _91 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _94 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `🌌 OmniBrain` be split into smaller, more focused modules?**
   _Cohesion score 0.1 - nodes in this community are weakly interconnected._
-- **Why does `react` connect `dashboard/page.tsx` to `package.json`, `ConstellationCanvas.tsx`, `ingest-router.ts`?**
-  _High betweenness centrality (0.098) - this node is a cross-community bridge._
+- **Why does `react` connect `dashboard/page.tsx` to `Header.tsx`, `package.json`, `ConstellationCanvas.tsx`, `ingest-router.ts`?**
+  _High betweenness centrality (0.103) - this node is a cross-community bridge._
 - **Should `package.json` be split into smaller, more focused modules?**
-  _Cohesion score 0.09090909090909091 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07407407407407407 - nodes in this community are weakly interconnected._
 - **Why does `dependencies` connect `dependencies` to `package.json`?**
-  _High betweenness centrality (0.077) - this node is a cross-community bridge._
+  _High betweenness centrality (0.072) - this node is a cross-community bridge._
 - **Should `compilerOptions` be split into smaller, more focused modules?**
-  _Cohesion score 0.10526315789473684 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.1 - nodes in this community are weakly interconnected._
