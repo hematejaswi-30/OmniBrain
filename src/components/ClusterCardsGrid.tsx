@@ -2,8 +2,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import SynthesisDrawer, { SelectedNodeData } from './SynthesisDrawer';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Compass } from 'lucide-react';
 
 export interface ClusterItem {
   id: string;
@@ -135,13 +136,24 @@ export default function ClusterCardsGrid({ refreshTrigger }: ClusterCardsGridPro
                     )}
                   </div>
 
-                  <button 
-                    onClick={() => openSynthesis(c.cluster_name)}
-                    className="text-xs font-medium text-[#FAF7F2] dark:text-[#1C1C1C] bg-[#2F4A3A] hover:bg-[#243B2E] dark:bg-[#B08D57] dark:hover:bg-[#9E7C48] px-3.5 py-1.5 rounded transition-colors flex items-center gap-1.5 cursor-pointer shadow-none font-sans"
-                  >
-                    <span>Synthesize</span>
-                    <ArrowRight className="w-3 h-3" />
-                  </button>
+                  <div className="flex items-center gap-1.5">
+                    <Link
+                      href={`/graph?focus=hub_${c.cluster_name.toLowerCase().replace(/\s+/g, '_')}&expand=true`}
+                      className="text-xs font-medium text-[#2F4A3A] dark:text-[#B08D57] hover:bg-[#EAE5DC] dark:hover:bg-[#2B2A27] border border-[#D6CEC1] dark:border-[#3B3935] px-2.5 py-1.5 rounded transition-colors flex items-center gap-1 cursor-pointer font-sans"
+                      title="Explore in Constellation 40% Vitrine"
+                    >
+                      <Compass className="w-3 h-3" />
+                      <span className="hidden sm:inline">Orbit</span>
+                    </Link>
+
+                    <button 
+                      onClick={() => openSynthesis(c.cluster_name)}
+                      className="text-xs font-medium text-[#FAF7F2] dark:text-[#1C1C1C] bg-[#2F4A3A] hover:bg-[#243B2E] dark:bg-[#B08D57] dark:hover:bg-[#9E7C48] px-3 py-1.5 rounded transition-colors flex items-center gap-1.5 cursor-pointer shadow-none font-sans"
+                    >
+                      <span>Synthesize</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </button>
+                  </div>
                 </div>
               </article>
             );
