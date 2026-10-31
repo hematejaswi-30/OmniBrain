@@ -67,7 +67,7 @@ export default function OnboardingBanner({ onSampleClick }: OnboardingBannerProp
               </span>
             </h3>
             <p className="text-xs text-[#6B655C] dark:text-[#9E9990] mt-0.5 font-sans">
-              How OmniBrain organizes raw fragments into an interconnected knowledge constellation.
+              How OmniBrain organizes raw fragments into synthesized knowledge clusters.
             </p>
           </div>
         </div>
@@ -152,20 +152,16 @@ export default function OnboardingBanner({ onSampleClick }: OnboardingBannerProp
           <div className="flex items-center justify-between mb-2">
             <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-[#2F4A3A] dark:text-[#B08D57] flex items-center gap-1.5">
               <span className="w-4 h-4 rounded-full bg-[#EAE5DC] dark:bg-[#2B2A27] text-[10px] flex items-center justify-center text-[#2B2B2B] dark:text-[#EDE8DF]">3</span>
-              Constellation Map
+              Pinned Directives
             </span>
-            <span className="text-[9px] font-mono text-[#6B655C] dark:text-[#9E9990]">Spatial</span>
+            <span className="text-[9px] font-mono text-[#6B655C] dark:text-[#9E9990]">Shelf</span>
           </div>
           <p className="text-xs text-[#4A453D] dark:text-[#C4BEB3] leading-relaxed mb-3 font-sans">
-            Open the Constellation Graph to view interconnected rounded .md cards and live flow lines.
+            Bookmark key directives and verified code recipes directly to your persistent Pinned Shelf.
           </p>
-          <Link
-            href="/graph"
-            className="text-[10px] font-mono text-[#2F4A3A] dark:text-[#B08D57] hover:underline flex items-center gap-1"
-          >
-            <span>Open Constellation Map</span>
-            <ArrowRight className="w-3 h-3" />
-          </Link>
+          <span className="text-[10px] font-mono text-[#2F4A3A] dark:text-[#B08D57] flex items-center gap-1">
+            <span>Persistent Directive Shelf</span>
+          </span>
         </div>
       </div>
     </div>

@@ -271,15 +271,7 @@ export default function DashboardPage() {
                   ))}
                 </div>
 
-                {searchResult.focusedNodeId && (
-                  <Link
-                    href={`/graph?focus=${searchResult.focusedNodeId}`}
-                    className="inline-flex items-center gap-1 text-xs font-medium text-[#2F4A3A] dark:text-[#B08D57] hover:underline font-mono shrink-0"
-                  >
-                    <span>Focus in Constellation</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </Link>
-                )}
+
               </div>
             </div>
           )}
@@ -334,16 +326,8 @@ export default function DashboardPage() {
           <div className="flex items-center justify-between mb-5">
             <div>
               <h2 className="font-serif text-xl font-medium text-[#2B2B2B] dark:text-[#EDE8DF] tracking-tight">Active Knowledge Clusters</h2>
-              <p className="text-xs text-[#6B655C] dark:text-[#9E9990] mt-0.5">Synthesize cluster briefs or inspect spatial relationships in the constellation</p>
+              <p className="text-xs text-[#6B655C] dark:text-[#9E9990] mt-0.5">Synthesize cluster briefs and explore AI-curated directives</p>
             </div>
-            <Link 
-              href="/graph" 
-              className="text-xs font-medium text-[#2F4A3A] dark:text-[#B08D57] hover:underline flex items-center gap-1.5 px-3 py-1.5 bg-[#F4EFE7] dark:bg-[#242422] border border-[#E4DDD2] dark:border-[#33312E] rounded transition-colors shadow-none font-mono"
-            >
-              <Compass className="w-3.5 h-3.5" />
-              <span>Constellation Map</span>
-              <ArrowUpRight className="w-3.5 h-3.5 text-[#6B655C] dark:text-[#9E9990]" />
-            </Link>
           </div>
 
           <ClusterCardsGrid refreshTrigger={refreshTrigger} />

@@ -8,7 +8,7 @@ import { LogOut, User, ChevronDown, Loader2, AlertCircle, Sparkles, CheckCircle2
 import { getSimulatedUser, setSimulatedUser } from '@/lib/auth-mode';
 
 interface HeaderProps {
-  currentView: 'dashboard' | 'graph' | 'settings';
+  currentView: 'dashboard' | 'settings';
 }
 
 export default function Header({ currentView }: HeaderProps) {
@@ -208,16 +208,6 @@ export default function Header({ currentView }: HeaderProps) {
             }`}
           >
             Dashboard
-          </Link>
-          <Link
-            href="/graph"
-            className={`px-3 py-1.5 text-xs font-medium rounded transition-colors ${
-              currentView === 'graph'
-                ? 'bg-[#EFEAE2] dark:bg-[#282725] text-[#2B2B2B] dark:text-[#EDE8DF] border border-[#DCD4C7] dark:border-[#383632]'
-                : 'text-[#6B655C] dark:text-[#9E9990] hover:text-[#2B2B2B] dark:hover:text-[#EDE8DF]'
-            }`}
-          >
-            Constellation Graph
           </Link>
         </nav>
 

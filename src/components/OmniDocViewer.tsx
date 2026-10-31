@@ -249,14 +249,6 @@ export default function OmniDocViewer({
         </div>
 
         <div className="flex items-center gap-2">
-          <Link
-            href={`/graph?focus=hub_${clusterTitle.toLowerCase().replace(/\s+/g, '_')}&expand=true`}
-            className="flex items-center gap-1 px-2.5 py-1 text-[11px] font-medium text-[#2F4A3A] dark:text-[#B08D57] bg-[#FAF7F2] dark:bg-[#2A2927] border border-[#DDD5C7] dark:border-[#383632] hover:border-[#2F4A3A] dark:hover:border-[#B08D57] rounded transition-colors"
-            title="Explore this cluster in the 40% Constellation Vitrine"
-          >
-            <Compass className="w-3 h-3" />
-            <span>Constellation</span>
-          </Link>
           <button
             onClick={handleCopy}
             className="flex items-center gap-1 px-2.5 py-1 text-[11px] font-medium text-[#4A453D] dark:text-[#C4BEB3] hover:text-[#2B2B2B] dark:hover:text-[#EDE8DF] bg-[#FAF7F2] dark:bg-[#2A2927] border border-[#DDD5C7] dark:border-[#383632] rounded transition-colors cursor-pointer"
