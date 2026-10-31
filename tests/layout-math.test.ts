@@ -19,13 +19,15 @@ function runTestSuite() {
   let passedTests = 0;
   let totalTests = 0;
 
-  function assert(condition: boolean, message: string) {
+  function assert(condition: boolean, message: string, verbose = true) {
     totalTests++;
     if (!condition) {
       console.error(`❌ FAILED: ${message}`);
       process.exit(1);
     }
-    console.log(`✅ PASSED: ${message}`);
+    if (verbose) {
+      console.log(`✅ PASSED: ${message}`);
+    }
     passedTests++;
   }
 
@@ -95,7 +97,7 @@ function runTestSuite() {
         minHubDistance = dist;
         minPair = [i, j];
       }
-      assert(dist >= 500, `Distance between Cluster ${i} and Cluster ${j} must be >= 500px (observed ${dist.toFixed(1)}px)`);
+      assert(dist >= 500, `Distance between Cluster ${i} and Cluster ${j} must be >= 500px (observed ${dist.toFixed(1)}px)`, false);
 
       // Fully expand all 8 cards around Cluster i and all 8 cards around Cluster j
       const cardsI = Array.from({ length: 8 }, (_, k) => getSatelliteSlot(k, a).rect);
@@ -104,12 +106,13 @@ function runTestSuite() {
       for (const cI of cardsI) {
         for (const cJ of cardsJ) {
           const overlap = doRectanglesOverlap(cI, cJ);
-          assert(!overlap, `Expanded cards between Cluster ${i} and Cluster ${j} must never collide`);
+          assert(!overlap, `Expanded cards between Cluster ${i} and Cluster ${j} must never collide`, false);
         }
       }
     }
   }
-  console.log(`   [Metric] Minimum Hub-to-Hub distance across first ${CLUSTER_COUNT} clusters: ${minHubDistance.toFixed(1)}px (between clusters ${minPair[0]} & ${minPair[1]})`);
+  console.log(`✅ PASSED: All 1,770 cluster pairs maintain >= 500px spacing (min ${minHubDistance.toFixed(1)}px between #${minPair[0]} & #${minPair[1]})`);
+  console.log(`✅ PASSED: All 113,280 expanded pairwise satellite card combinations verified collision-free`);
 
   // -------------------------------------------------------------------------
   // TEST 4: Slot Stability (Adding cluster k+1 never alters clusters 0..k)

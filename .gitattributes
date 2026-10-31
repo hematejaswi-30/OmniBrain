@@ -1,0 +1,2 @@
+# Collapse generated knowledge graph files in pull request diffs and reviews
+graphify-out/** linguist-generated=true

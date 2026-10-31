@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "test": "npx --yes tsx tests/layout-math.test.ts"
   },
   "dependencies": {
     "@google/generative-ai": "^0.11.1",
