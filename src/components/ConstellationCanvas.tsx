@@ -3,6 +3,7 @@
 
 import dynamic from 'next/dynamic';
 import { useRef, useCallback, useEffect, useState, useMemo } from 'react';
+import { Plus, Minus, Compass } from 'lucide-react';
 import {
   CARD_WIDTH,
   CARD_HEIGHT,
@@ -112,8 +113,11 @@ export default function ConstellationCanvas({
   onOpenOverflow,
 }: ConstellationCanvasProps) {
   const fgRef = useRef<any>(undefined);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [dimensions, setDimensions] = useState<{ width: number; height: number }>({ width: 0, height: 0 });
   const [hoverNode, setHoverNode] = useState<GraphNode | null>(null);
   const [hoverLink, setHoverLink] = useState<GraphLink | null>(null);
+  const hasCenteredInitialRef = useRef(false);
 
   const isLight = theme === 'light';
 
@@ -255,36 +259,86 @@ export default function ConstellationCanvas({
     return { nodes: computedNodes, links: computedLinks };
   }, [data, filterSource, expandedClusterId]);
 
-  // Initial auto-centering and bounds lock
+  // Measure container dimensions using ResizeObserver with sub-pixel rounding
   useEffect(() => {
-    if (fgRef.current) {
-      const timer = setTimeout(() => {
-        if (fgRef.current) {
-          fgRef.current.centerAt(0, 0, 400);
-          fgRef.current.zoom(0.80, 400);
+    const container = containerRef.current;
+    if (!container) return;
+
+    const measure = () => {
+      const rect = container.getBoundingClientRect();
+      if (rect.width > 0 && rect.height > 0) {
+        setDimensions({
+          width: Math.floor(rect.width),
+          height: Math.floor(rect.height),
+        });
+      }
+    };
+
+    measure();
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { width, height } = entry.contentRect;
+        if (width > 0 && height > 0) {
+          setDimensions({
+            width: Math.floor(width),
+            height: Math.floor(height),
+          });
         }
-      }, 250);
-      return () => clearTimeout(timer);
-    }
+      }
+    });
+
+    resizeObserver.observe(container);
+    return () => resizeObserver.disconnect();
   }, []);
 
-  // Programmatic camera focus when focusedNodeId or expandedClusterId changes
+  // Programmatic camera focus when dimensions, focusedNodeId, or expandedClusterId change
   useEffect(() => {
-    if (fgRef.current) {
+    if (!fgRef.current || dimensions.width === 0 || dimensions.height === 0) return;
+
+    const timer = setTimeout(() => {
+      if (!fgRef.current) return;
       const targetId = focusedNodeId || expandedClusterId;
       if (targetId) {
         const target = layoutGraph.nodes.find(n => n.id === targetId);
         if (target && typeof target.x === 'number' && typeof target.y === 'number') {
-          fgRef.current.centerAt(target.x, target.y, 600);
-          fgRef.current.zoom(0.85, 600);
+          fgRef.current.centerAt(target.x, target.y, hasCenteredInitialRef.current ? 500 : 0);
+          fgRef.current.zoom(0.85, hasCenteredInitialRef.current ? 500 : 0);
+          hasCenteredInitialRef.current = true;
           return;
         }
       }
-      // If no target focused, center at origin
-      fgRef.current.centerAt(0, 0, 500);
-      fgRef.current.zoom(0.78, 500);
+      // If no target focused, center exactly at geometric origin (0, 0)
+      fgRef.current.centerAt(0, 0, hasCenteredInitialRef.current ? 400 : 0);
+      fgRef.current.zoom(0.78, hasCenteredInitialRef.current ? 400 : 0);
+      hasCenteredInitialRef.current = true;
+    }, 40);
+
+    return () => clearTimeout(timer);
+  }, [dimensions.width, dimensions.height, focusedNodeId, expandedClusterId, layoutGraph.nodes]);
+
+  const handleRecenter = useCallback(() => {
+    if (!fgRef.current) return;
+    if (onToggleExpandCluster && expandedClusterId) {
+      onToggleExpandCluster(null);
     }
-  }, [focusedNodeId, expandedClusterId, layoutGraph.nodes]);
+    fgRef.current.centerAt(0, 0, 400);
+    fgRef.current.zoom(0.78, 400);
+  }, [onToggleExpandCluster, expandedClusterId]);
+
+  const handleZoomIn = useCallback(() => {
+    if (!fgRef.current) return;
+    const currentZoom = fgRef.current.zoom() || 0.78;
+    const nextZoom = Math.min(Number((currentZoom * 1.25).toFixed(3)), 2.4);
+    fgRef.current.zoom(nextZoom, 200);
+  }, []);
+
+  const handleZoomOut = useCallback(() => {
+    if (!fgRef.current) return;
+    const currentZoom = fgRef.current.zoom() || 0.78;
+    const nextZoom = Math.max(Number((currentZoom * 0.8).toFixed(3)), 0.5);
+    fgRef.current.zoom(nextZoom, 200);
+  }, []);
 
   // Handle clicking on nodes (Hub toggle, Satellite card inspect, Overflow open)
   const handleInternalNodeClick = useCallback((node: any) => {
@@ -519,20 +573,26 @@ export default function ConstellationCanvas({
   }, []);
 
   return (
-    <div className={`w-full h-full relative overflow-hidden select-none ${isLight ? 'bg-[#FAF7F2]' : 'bg-[#181817]'}`}>
-      <ForceGraph2D
-        ref={fgRef}
-        graphData={layoutGraph}
-        backgroundColor={isLight ? '#FAF7F2' : '#181817'}
-        onRenderFramePre={renderBackgroundArea}
-        nodeCanvasObject={drawNode}
-        nodePointerAreaPaint={drawPointerArea}
-        // Deterministic static positions: ZERO force physics drift!
-        cooldownTicks={0}
-        enableNodeDrag={false}
-        enableZoomInteraction={true}
-        minZoom={0.5}
-        maxZoom={2.4}
+    <div
+      ref={containerRef}
+      className={`w-full h-full relative overflow-hidden select-none ${isLight ? 'bg-[#FAF7F2]' : 'bg-[#181817]'}`}
+    >
+      {dimensions.width > 0 && dimensions.height > 0 ? (
+        <ForceGraph2D
+          ref={fgRef}
+          width={dimensions.width}
+          height={dimensions.height}
+          graphData={layoutGraph}
+          backgroundColor={isLight ? '#FAF7F2' : '#181817'}
+          onRenderFramePre={renderBackgroundArea}
+          nodeCanvasObject={drawNode}
+          nodePointerAreaPaint={drawPointerArea}
+          // Deterministic static positions: ZERO force physics drift!
+          cooldownTicks={0}
+          enableNodeDrag={false}
+          enableZoomInteraction={true}
+          minZoom={0.5}
+          maxZoom={2.4}
         // Clean links styling
         linkColor={(link: any) => {
           if (link.type === 'macro_bridge') {
@@ -563,6 +623,11 @@ export default function ConstellationCanvas({
         onLinkHover={(link: any) => setHoverLink(link ? (link as GraphLink) : null)}
         onNodeClick={handleInternalNodeClick}
       />
+      ) : (
+        <div className="w-full h-full flex flex-col items-center justify-center text-xs font-mono opacity-60">
+          <div className="w-6 h-6 border-2 border-[#2F4A3A] dark:border-[#B08D57] border-t-transparent rounded-full animate-spin" />
+        </div>
+      )}
 
       {/* Floating Link Tooltip Badge (Explains match_reason) */}
       {hoverLink && hoverLink.match_reason && (
@@ -580,44 +645,42 @@ export default function ConstellationCanvas({
       )}
 
       {/* Floating Canvas Navigation Dock */}
-      <div className="absolute bottom-3 right-3 z-20 flex items-center gap-1 p-1 rounded-lg border border-[#DDD5C7] dark:border-[#383632] bg-[#FAF7F2]/95 dark:bg-[#20201F]/95 backdrop-blur-md shadow-sm text-xs font-mono">
+      <div
+        role="toolbar"
+        aria-label="Constellation navigation controls"
+        className="absolute bottom-3 right-3 z-20 flex items-center gap-1 p-1 rounded-xl border border-[#DDD5C7] dark:border-[#383632] bg-[#FAF7F2]/95 dark:bg-[#20201F]/95 backdrop-blur-md shadow-md text-xs font-mono select-none"
+      >
         <button
-          onClick={() => {
-            if (fgRef.current) {
-              fgRef.current.centerAt(0, 0, 450);
-              fgRef.current.zoom(0.80, 450);
-            }
-          }}
-          className="px-2 py-1 rounded hover:bg-[#EDE7DE] dark:hover:bg-[#282725] text-[#2B2B2B] dark:text-[#EDE8DF] transition-colors flex items-center gap-1 cursor-pointer"
+          type="button"
+          onClick={handleRecenter}
+          aria-label="Recenter constellation to origin"
+          className="h-8 px-2.5 rounded-lg hover:bg-[#EDE7DE] dark:hover:bg-[#282725] active:scale-95 text-[#2B2B2B] dark:text-[#EDE8DF] transition-all flex items-center gap-1.5 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2F4A3A] dark:focus-visible:ring-[#B08D57]"
           title="Recenter Camera to Origin"
         >
-          <span>🎯</span>
-          <span className="text-[10px]">Center</span>
+          <Compass className="w-3.5 h-3.5 text-[#2F4A3A] dark:text-[#B08D57]" />
+          <span className="text-[11px] font-medium font-sans">Center</span>
         </button>
-        <div className="w-[1px] h-3.5 bg-[#DDD5C7] dark:bg-[#383632]" />
+
+        <div className="w-[1px] h-4 bg-[#DDD5C7] dark:bg-[#383632] mx-0.5" />
+
         <button
-          onClick={() => {
-            if (fgRef.current) {
-              const currentZoom = fgRef.current.zoom();
-              fgRef.current.zoom(Math.min(currentZoom * 1.25, 2.4), 250);
-            }
-          }}
-          className="p-1 rounded hover:bg-[#EDE7DE] dark:hover:bg-[#282725] text-[#2B2B2B] dark:text-[#EDE8DF] transition-colors cursor-pointer w-5 h-5 flex items-center justify-center font-bold text-xs"
+          type="button"
+          onClick={handleZoomIn}
+          aria-label="Zoom in"
+          className="w-8 h-8 rounded-lg hover:bg-[#EDE7DE] dark:hover:bg-[#282725] active:scale-95 text-[#2B2B2B] dark:text-[#EDE8DF] transition-all cursor-pointer flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2F4A3A] dark:focus-visible:ring-[#B08D57]"
           title="Zoom In"
         >
-          +
+          <Plus className="w-4 h-4" />
         </button>
+
         <button
-          onClick={() => {
-            if (fgRef.current) {
-              const currentZoom = fgRef.current.zoom();
-              fgRef.current.zoom(Math.max(currentZoom * 0.8, 0.5), 250);
-            }
-          }}
-          className="p-1 rounded hover:bg-[#EDE7DE] dark:hover:bg-[#282725] text-[#2B2B2B] dark:text-[#EDE8DF] transition-colors cursor-pointer w-5 h-5 flex items-center justify-center font-bold text-xs"
+          type="button"
+          onClick={handleZoomOut}
+          aria-label="Zoom out"
+          className="w-8 h-8 rounded-lg hover:bg-[#EDE7DE] dark:hover:bg-[#282725] active:scale-95 text-[#2B2B2B] dark:text-[#EDE8DF] transition-all cursor-pointer flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2F4A3A] dark:focus-visible:ring-[#B08D57]"
           title="Zoom Out"
         >
-          −
+          <Minus className="w-4 h-4" />
         </button>
       </div>
     </div>

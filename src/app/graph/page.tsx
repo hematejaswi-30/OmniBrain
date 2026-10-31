@@ -395,13 +395,13 @@ export default function GraphPage() {
         }`}>
           {viewMode === 'vitrine' ? (
             /* Dedicated Centered Showcase Vitrine Box */
-            <div className={`relative w-full max-w-[440px] aspect-square rounded-2xl border flex flex-col shadow-xl overflow-hidden transition-all duration-300 ${
+            <div className={`relative w-full max-w-[440px] max-h-full aspect-square rounded-2xl border flex flex-col shadow-xl overflow-hidden transition-all duration-300 ${
               isLight 
                 ? 'bg-[#FFFFFF] border-[#DCD4C7] shadow-[0_16px_40px_rgba(47,74,58,0.06)] ring-1 ring-[#ECE6DC]' 
                 : 'bg-[#181817] border-[#383632] shadow-[0_16px_40px_rgba(0,0,0,0.5)] ring-1 ring-[#282725]'
             }`}>
               {/* Vitrine Top Header Chrome */}
-              <div className={`px-4 py-2.5 border-b flex items-center justify-between text-xs font-mono select-none z-10 ${
+              <div className={`px-4 py-2.5 border-b flex items-center justify-between text-xs font-mono select-none z-10 shrink-0 ${
                 isLight ? 'bg-[#F4EFE7]/90 border-[#E8E2D8] text-[#2B2B2B]' : 'bg-[#222120]/90 border-[#33312E] text-[#EDE8DF]'
               }`}>
                 <div className="flex items-center gap-2">
@@ -431,7 +431,7 @@ export default function GraphPage() {
               </div>
 
               {/* Inside Canvas Render */}
-              <div className="relative flex-1 w-full h-full">
+              <div className="relative flex-1 w-full min-h-0 overflow-hidden">
                 {!isLoading && (
                   <ConstellationCanvas
                     data={{ nodes: displayedNodes, links: displayedLinks }}
