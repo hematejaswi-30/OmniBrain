@@ -30,7 +30,7 @@ const ConstellationCanvas = dynamic(
     loading: () => (
       <div className="w-full h-full flex flex-col items-center justify-center bg-[#FAF7F2] dark:bg-[#181817] text-[#6B655C] dark:text-[#9E9990] font-mono text-xs space-y-3">
         <div className="w-8 h-8 border-2 border-[#2F4A3A] dark:border-[#B08D57] border-t-transparent rounded-full animate-spin" />
-        <span className="font-semibold text-[#2B2B2B] dark:text-[#EDE8DF]">Initializing 40% Constellation Vitrine...</span>
+        <span className="font-semibold text-[#2B2B2B] dark:text-[#EDE8DF]">Initializing Compact Constellation Vitrine...</span>
       </div>
     ),
   }
@@ -193,7 +193,7 @@ export default function GraphPage() {
         {/* ========================================================================= */}
         {/* LEFT COLUMN: Controls, Search, Filter, Cluster Dock (~28% Width)          */}
         {/* ========================================================================= */}
-        <aside className={`w-full lg:w-[28%] max-w-sm flex flex-col border-b lg:border-b-0 lg:border-r z-10 transition-colors overflow-y-auto ${
+        <aside className={`w-full lg:w-[26%] max-w-xs flex flex-col border-b lg:border-b-0 lg:border-r z-10 transition-colors overflow-y-auto ${
           isLight ? 'bg-[#F4EFE7]/90 border-[#E4DDD2]' : 'bg-[#222120]/90 border-[#33312E]'
         }`}>
           <div className="p-4 space-y-3.5">
@@ -395,7 +395,7 @@ export default function GraphPage() {
         }`}>
           {viewMode === 'vitrine' ? (
             /* Dedicated Centered Showcase Vitrine Box */
-            <div className={`relative w-full max-w-[620px] aspect-square rounded-2xl border flex flex-col shadow-xl overflow-hidden transition-all duration-300 ${
+            <div className={`relative w-full max-w-[440px] aspect-square rounded-2xl border flex flex-col shadow-xl overflow-hidden transition-all duration-300 ${
               isLight 
                 ? 'bg-[#FFFFFF] border-[#DCD4C7] shadow-[0_16px_40px_rgba(47,74,58,0.06)] ring-1 ring-[#ECE6DC]' 
                 : 'bg-[#181817] border-[#383632] shadow-[0_16px_40px_rgba(0,0,0,0.5)] ring-1 ring-[#282725]'
@@ -408,7 +408,7 @@ export default function GraphPage() {
                   <span className="w-2 h-2 rounded-full bg-[#2F4A3A] dark:bg-[#B08D57]" />
                   <span className="font-serif font-semibold text-xs tracking-tight">Constellation Vitrine</span>
                   <span className="text-[10px] text-[#6B655C] dark:text-[#9E9990] hidden sm:inline">
-                    · Fixed 40% Showcase Orbit
+                    · Compact Showcase Orbit
                   </span>
                 </div>
 
@@ -521,7 +521,7 @@ export default function GraphPage() {
         {/* ========================================================================= */}
         {/* RIGHT COLUMN: Persistent Inspector & Details Panel (~28% Width)           */}
         {/* ========================================================================= */}
-        <aside className={`w-full lg:w-[28%] max-w-md flex flex-col border-t lg:border-t-0 lg:border-l z-10 transition-colors overflow-y-auto ${
+        <aside className={`w-full lg:w-[34%] max-w-lg flex flex-col border-t lg:border-t-0 lg:border-l z-10 transition-colors overflow-y-auto ${
           isLight ? 'bg-[#F4EFE7]/90 border-[#E4DDD2]' : 'bg-[#222120]/90 border-[#33312E]'
         }`}>
           {selectedNode ? (

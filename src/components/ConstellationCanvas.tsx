@@ -261,7 +261,7 @@ export default function ConstellationCanvas({
       const timer = setTimeout(() => {
         if (fgRef.current) {
           fgRef.current.centerAt(0, 0, 400);
-          fgRef.current.zoom(1.15, 400);
+          fgRef.current.zoom(0.80, 400);
         }
       }, 250);
       return () => clearTimeout(timer);
@@ -276,13 +276,13 @@ export default function ConstellationCanvas({
         const target = layoutGraph.nodes.find(n => n.id === targetId);
         if (target && typeof target.x === 'number' && typeof target.y === 'number') {
           fgRef.current.centerAt(target.x, target.y, 600);
-          fgRef.current.zoom(1.3, 600);
+          fgRef.current.zoom(0.85, 600);
           return;
         }
       }
       // If no target focused, center at origin
       fgRef.current.centerAt(0, 0, 500);
-      fgRef.current.zoom(1.1, 500);
+      fgRef.current.zoom(0.78, 500);
     }
   }, [focusedNodeId, expandedClusterId, layoutGraph.nodes]);
 
@@ -296,7 +296,7 @@ export default function ConstellationCanvas({
       onNodeClick(node as GraphNode);
       if (fgRef.current && typeof node.x === 'number' && typeof node.y === 'number') {
         fgRef.current.centerAt(node.x, node.y, 500);
-        fgRef.current.zoom(1.35, 500);
+        fgRef.current.zoom(0.85, 500);
       }
       return;
     }
@@ -585,7 +585,7 @@ export default function ConstellationCanvas({
           onClick={() => {
             if (fgRef.current) {
               fgRef.current.centerAt(0, 0, 450);
-              fgRef.current.zoom(1.15, 450);
+              fgRef.current.zoom(0.80, 450);
             }
           }}
           className="px-2 py-1 rounded hover:bg-[#EDE7DE] dark:hover:bg-[#282725] text-[#2B2B2B] dark:text-[#EDE8DF] transition-colors flex items-center gap-1 cursor-pointer"
