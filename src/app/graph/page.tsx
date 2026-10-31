@@ -1,6 +1,6 @@
 // src/app/graph/page.tsx
 import { redirect } from 'next/navigation';
 
-export default function GraphPage() {
-  redirect('/dashboard');
+export default function GraphRedirect() {
+  redirect('/explorer');
 }

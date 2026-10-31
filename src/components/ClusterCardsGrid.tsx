@@ -137,6 +137,14 @@ export default function ClusterCardsGrid({ refreshTrigger }: ClusterCardsGridPro
                   </div>
 
                   <div className="flex items-center gap-1.5">
+                    <Link
+                      href={`/explorer?cluster=${encodeURIComponent(c.cluster_name)}`}
+                      className="text-xs font-medium text-[#2F4A3A] dark:text-[#B08D57] hover:bg-[#EAE5DC] dark:hover:bg-[#2B2A27] border border-[#D6CEC1] dark:border-[#3B3935] px-2.5 py-1.5 rounded transition-colors flex items-center gap-1 cursor-pointer font-sans"
+                      title="Explore notes in this cluster"
+                    >
+                      <span>Explore</span>
+                    </Link>
+
                     <button 
                       onClick={() => openSynthesis(c.cluster_name)}
                       className="text-xs font-medium text-[#FAF7F2] dark:text-[#1C1C1C] bg-[#2F4A3A] hover:bg-[#243B2E] dark:bg-[#B08D57] dark:hover:bg-[#9E7C48] px-3 py-1.5 rounded transition-colors flex items-center gap-1.5 cursor-pointer shadow-none font-sans"

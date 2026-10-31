@@ -328,6 +328,13 @@ export default function DashboardPage() {
               <h2 className="font-serif text-xl font-medium text-[#2B2B2B] dark:text-[#EDE8DF] tracking-tight">Active Knowledge Clusters</h2>
               <p className="text-xs text-[#6B655C] dark:text-[#9E9990] mt-0.5">Synthesize cluster briefs and explore AI-curated directives</p>
             </div>
+            <Link 
+              href="/explorer" 
+              className="text-xs font-medium text-[#2F4A3A] dark:text-[#B08D57] hover:underline flex items-center gap-1.5 px-3 py-1.5 bg-[#F4EFE7] dark:bg-[#242422] border border-[#E4DDD2] dark:border-[#33312E] rounded transition-colors shadow-none font-mono"
+            >
+              <span>Explore Notes</span>
+              <ArrowUpRight className="w-3.5 h-3.5 text-[#6B655C] dark:text-[#9E9990]" />
+            </Link>
           </div>
 
           <ClusterCardsGrid refreshTrigger={refreshTrigger} />
