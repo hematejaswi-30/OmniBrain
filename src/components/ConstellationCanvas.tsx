@@ -406,7 +406,7 @@ export default function ConstellationCanvas({
     ctx.restore();
   }, [isLight]);
 
-  // Custom node rendering: Hubs, 44px Card Rectangles, and Overflow Card
+  // Custom node rendering: Adaptive typography across all zoom levels
   const drawNode = useCallback((node: any, ctx: CanvasRenderingContext2D, globalScale: number) => {
     const isHovered = hoverNode && hoverNode.id === node.id;
     ctx.save();
@@ -416,15 +416,18 @@ export default function ConstellationCanvas({
     // =========================================================================
     if (node.type === 'hub') {
       const isExpanded = expandedClusterId === node.id;
-      const radius = HUB_RADIUS / Math.sqrt(globalScale);
+      // Adapt hub sphere radius so it stays prominent across both macro and close-up views
+      const radius = globalScale < 0.45
+        ? Math.min(46, HUB_RADIUS / Math.pow(globalScale, 0.45))
+        : HUB_RADIUS;
 
       // 1. Radar Perimeter Circle (clears satellite cards at R=200px)
       ctx.save();
       ctx.beginPath();
-      ctx.arc(node.x, node.y, (HUB_RADAR_RADIUS) / Math.sqrt(globalScale), 0, 2 * Math.PI);
-      ctx.setLineDash([3 / globalScale, 5 / globalScale]);
-      ctx.strokeStyle = isLight ? 'rgba(47, 74, 58, 0.2)' : 'rgba(176, 141, 87, 0.25)';
-      ctx.lineWidth = 0.9 / globalScale;
+      ctx.arc(node.x, node.y, HUB_RADAR_RADIUS, 0, 2 * Math.PI);
+      ctx.setLineDash([4, 6]);
+      ctx.strokeStyle = isLight ? 'rgba(47, 74, 58, 0.22)' : 'rgba(176, 141, 87, 0.28)';
+      ctx.lineWidth = 1.0;
       ctx.stroke();
       ctx.restore();
 
@@ -434,7 +437,7 @@ export default function ConstellationCanvas({
       ctx.fillStyle = isLight ? (isExpanded ? '#243B2E' : '#2F4A3A') : (isExpanded ? '#C49E63' : '#B08D57');
       ctx.fill();
       ctx.strokeStyle = isLight ? '#FFFFFF' : '#1C1C1C';
-      ctx.lineWidth = 2.2 / globalScale;
+      ctx.lineWidth = 2.2;
       ctx.stroke();
 
       // 3. Central Inner Dot
@@ -443,34 +446,39 @@ export default function ConstellationCanvas({
       ctx.fillStyle = isLight ? '#FAF7F2' : '#1C1C1C';
       ctx.fill();
 
-      // 4. Cluster Label Card Below Hub
-      const fontSize = Math.max(10, 11 / Math.sqrt(globalScale));
+      // 4. Adaptive Cluster Label Pill: Scales font so cluster names stay crisp and readable at all zoom scales
+      const screenTargetFont = globalScale < 0.35 ? 13 : (globalScale < 0.7 ? 12 : 11);
+      const fontSize = Math.max(11, screenTargetFont / Math.pow(globalScale, 0.72));
       ctx.font = `600 ${fontSize}px Georgia, Newsreader, serif`;
       ctx.textAlign = 'center';
-      ctx.textBaseline = 'top';
+      ctx.textBaseline = 'middle';
 
       const labelText = node.label || 'Cluster';
       const textWidth = ctx.measureText(labelText).width;
-      const pillY = node.y + radius + 6 / globalScale;
-      const pillHeight = fontSize * 1.6;
-      const pillWidth = Math.max(textWidth + 20 / globalScale, 70 / globalScale);
+      const pillHeight = fontSize * 1.65;
+      const pillPaddingX = fontSize * 0.75;
+      const pillWidth = Math.max(textWidth + pillPaddingX * 2, 74);
+      const pillY = node.y + radius + fontSize * 0.45;
 
       ctx.fillStyle = isLight ? '#FAF7F2' : '#242321';
-      drawRoundedRect(ctx, node.x - pillWidth / 2, pillY, pillWidth, pillHeight, 4 / globalScale);
+      drawRoundedRect(ctx, node.x - pillWidth / 2, pillY, pillWidth, pillHeight, Math.max(4, fontSize * 0.28));
       ctx.fill();
       ctx.strokeStyle = isExpanded ? (isLight ? '#2F4A3A' : '#B08D57') : (isLight ? '#DDD5C8' : '#3A3834');
-      ctx.lineWidth = (isExpanded ? 1.6 : 0.9) / globalScale;
+      ctx.lineWidth = isExpanded ? 1.8 : 1.0;
       ctx.stroke();
 
       ctx.fillStyle = isLight ? '#2B2B2B' : '#EDE8DF';
-      ctx.fillText(labelText, node.x, pillY + 3 / globalScale);
+      ctx.fillText(labelText, node.x, pillY + pillHeight / 2);
 
-      // Micro badge indicating state
-      const subFontSize = Math.max(7.5, 8 / Math.sqrt(globalScale));
-      ctx.font = `500 ${subFontSize}px JetBrains Mono, monospace`;
-      ctx.fillStyle = isLight ? '#6B655C' : '#9E9990';
-      const statusText = isExpanded ? 'EXPANDED · ESC TO CLOSE' : `${node.val || 0} NOTES · CLICK`;
-      ctx.fillText(statusText, node.x, pillY + pillHeight + 2 / globalScale);
+      // Micro status badge below pill (shown when zoomed in enough)
+      if (globalScale >= 0.22) {
+        const subFontSize = Math.max(8, 8.5 / Math.pow(globalScale, 0.65));
+        ctx.font = `500 ${subFontSize}px JetBrains Mono, monospace`;
+        ctx.textBaseline = 'top';
+        ctx.fillStyle = isLight ? '#6B655C' : '#9E9990';
+        const statusText = isExpanded ? 'EXPANDED · ESC TO CLOSE' : `${node.val || 0} NOTES · CLICK`;
+        ctx.fillText(statusText, node.x, pillY + pillHeight + 3);
+      }
 
       ctx.restore();
       return;
@@ -486,14 +494,13 @@ export default function ConstellationCanvas({
       const y = node.y - halfH;
 
       ctx.save();
-      // Dashed border for overflow pill
-      ctx.setLineDash([4 / globalScale, 4 / globalScale]);
+      ctx.setLineDash([4, 4]);
       ctx.fillStyle = isLight ? '#F4EFE7' : '#232220';
       drawRoundedRect(ctx, x, y, CARD_WIDTH, CARD_HEIGHT, 8);
       ctx.fill();
 
       ctx.strokeStyle = isHovered ? (isLight ? '#2F4A3A' : '#B08D57') : (isLight ? '#B8AEA0' : '#4C4842');
-      ctx.lineWidth = (isHovered ? 1.8 : 1.2) / globalScale;
+      ctx.lineWidth = isHovered ? 1.8 : 1.2;
       ctx.stroke();
 
       ctx.font = `600 11px Plus Jakarta Sans, system-ui, sans-serif`;
@@ -518,7 +525,7 @@ export default function ConstellationCanvas({
     const x = node.x - halfW;
     const y = node.y - halfH;
 
-    // Card background & shadow
+    // Card background
     ctx.fillStyle = isLight ? '#FFFFFF' : '#242321';
     drawRoundedRect(ctx, x, y, CARD_WIDTH, CARD_HEIGHT, 8);
     ctx.fill();
@@ -527,7 +534,7 @@ export default function ConstellationCanvas({
     ctx.strokeStyle = isHovered
       ? (isLight ? '#2F4A3A' : '#B08D57')
       : (isLight ? '#E4DDD2' : '#383632');
-    ctx.lineWidth = (isHovered ? 2.0 : 1.0) / globalScale;
+    ctx.lineWidth = isHovered ? 2.0 : 1.0;
     ctx.stroke();
 
     // Top Row: Source provenance badge + bookmark
@@ -555,13 +562,15 @@ export default function ConstellationCanvas({
       ctx.fillText('★', x + CARD_WIDTH - 8, badgeY + badgeH / 2);
     }
 
-    // Bottom Row: Clean 2-line truncated title
-    ctx.font = `500 10px Plus Jakarta Sans, system-ui, sans-serif`;
+    // Dynamic Title Adjustment: expands detail at close zoom, stays legible at normal zoom
+    const maxChars = globalScale >= 1.3 ? 28 : (globalScale >= 0.85 ? 22 : 18);
+    const titleFontSize = globalScale < 0.6 ? 11 : 10;
+    ctx.font = `500 ${titleFontSize}px Plus Jakarta Sans, system-ui, sans-serif`;
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
     ctx.fillStyle = isLight ? '#2B2B2B' : '#EDE8DF';
 
-    const cleanTitle = truncateText(node.label || 'Note', 19);
+    const cleanTitle = truncateText(node.label || 'Note', maxChars);
     ctx.fillText(cleanTitle, x + 8, y + 29);
 
     ctx.restore();
