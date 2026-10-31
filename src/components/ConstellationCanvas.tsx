@@ -3,7 +3,7 @@
 
 import dynamic from 'next/dynamic';
 import { useRef, useCallback, useEffect, useState, useMemo } from 'react';
-import { Plus, Minus, Compass } from 'lucide-react';
+import { Plus, Minus, Compass, Globe } from 'lucide-react';
 import {
   CARD_WIDTH,
   CARD_HEIGHT,
@@ -317,6 +317,14 @@ export default function ConstellationCanvas({
     return () => clearTimeout(timer);
   }, [dimensions.width, dimensions.height, focusedNodeId, expandedClusterId, layoutGraph.nodes]);
 
+  const handleFitAll = useCallback(() => {
+    if (!fgRef.current) return;
+    if (onToggleExpandCluster && expandedClusterId) {
+      onToggleExpandCluster(null);
+    }
+    fgRef.current.zoomToFit(500, 40);
+  }, [onToggleExpandCluster, expandedClusterId]);
+
   const handleRecenter = useCallback(() => {
     if (!fgRef.current) return;
     if (onToggleExpandCluster && expandedClusterId) {
@@ -329,14 +337,14 @@ export default function ConstellationCanvas({
   const handleZoomIn = useCallback(() => {
     if (!fgRef.current) return;
     const currentZoom = fgRef.current.zoom() || 0.78;
-    const nextZoom = Math.min(Number((currentZoom * 1.25).toFixed(3)), 2.4);
+    const nextZoom = Math.min(Number((currentZoom * 1.35).toFixed(3)), 3.0);
     fgRef.current.zoom(nextZoom, 200);
   }, []);
 
   const handleZoomOut = useCallback(() => {
     if (!fgRef.current) return;
     const currentZoom = fgRef.current.zoom() || 0.78;
-    const nextZoom = Math.max(Number((currentZoom * 0.8).toFixed(3)), 0.5);
+    const nextZoom = Math.max(Number((currentZoom * 0.75).toFixed(3)), 0.08);
     fgRef.current.zoom(nextZoom, 200);
   }, []);
 
@@ -591,8 +599,8 @@ export default function ConstellationCanvas({
           cooldownTicks={0}
           enableNodeDrag={false}
           enableZoomInteraction={true}
-          minZoom={0.5}
-          maxZoom={2.4}
+          minZoom={0.05}
+          maxZoom={3.0}
         // Clean links styling
         linkColor={(link: any) => {
           if (link.type === 'macro_bridge') {
@@ -604,7 +612,7 @@ export default function ConstellationCanvas({
           return isLight ? 'rgba(216, 209, 197, 0.65)' : 'rgba(60, 58, 54, 0.65)';
         }}
         linkWidth={(link: any) => {
-          if (link.type === 'macro_bridge') return 2.2;
+          if (link.type === 'macro_bridge') return 3.0;
           if (link.type === 'item_link') return 1.8;
           return 0.8;
         }}
@@ -652,13 +660,24 @@ export default function ConstellationCanvas({
       >
         <button
           type="button"
+          onClick={handleFitAll}
+          aria-label="View overall constellation branches"
+          className="h-8 px-2.5 rounded-lg hover:bg-[#EDE7DE] dark:hover:bg-[#282725] active:scale-95 text-[#2F4A3A] dark:text-[#B08D57] font-semibold transition-all flex items-center gap-1.5 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2F4A3A] dark:focus-visible:ring-[#B08D57]"
+          title="Fit All: View Overall Constellation Branches"
+        >
+          <Globe className="w-3.5 h-3.5" />
+          <span className="text-[11px] font-sans">All</span>
+        </button>
+
+        <button
+          type="button"
           onClick={handleRecenter}
-          aria-label="Recenter constellation to origin"
+          aria-label="Focus on central deck"
           className="h-8 px-2.5 rounded-lg hover:bg-[#EDE7DE] dark:hover:bg-[#282725] active:scale-95 text-[#2B2B2B] dark:text-[#EDE8DF] transition-all flex items-center gap-1.5 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2F4A3A] dark:focus-visible:ring-[#B08D57]"
-          title="Recenter Camera to Origin"
+          title="Focus Central Deck"
         >
           <Compass className="w-3.5 h-3.5 text-[#2F4A3A] dark:text-[#B08D57]" />
-          <span className="text-[11px] font-medium font-sans">Center</span>
+          <span className="text-[11px] font-medium font-sans">Deck</span>
         </button>
 
         <div className="w-[1px] h-4 bg-[#DDD5C7] dark:bg-[#383632] mx-0.5" />
